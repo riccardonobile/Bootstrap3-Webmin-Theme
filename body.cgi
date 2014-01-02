@@ -280,6 +280,9 @@ if ($level == 0) {
 	print '</table>' . "\n";
 	print '</div>' . "\n";
 	print '</div>' . "\n";
+	print '<p id="about">Template developed and written by <a href="https://www.facebook.com/RiccardoNob" target="_blank">Riccardo Nobile</a> & <a href="https://www.facebook.com/simone.cragnolini" target="_blank">Simone Cragnolini</a></p>' . "\n";
+	print '<p id="about"><a href="http://winfuture.it/" target="_blank">WinFuture</a></p>' . "\n";
+	print '</div>' . "\n";
 	print '</div>' . "\n";
 
 	# Check for incorrect OS
@@ -289,12 +292,14 @@ if ($level == 0) {
 	}
 }
 elsif ($level == 3) {
-	print '<div class="panel panel-default">' . "\n";
+	print '<div id="wrapper" class="page">' . "\n";
+	print '<div class="container">' . "\n";
+	print '<div id="system-status" class="panel panel-default">' . "\n";
 	print '<div class="panel-heading">' . "\n";
 	print '<h3 class="panel-title">' . &text('body_header1') . '</h3>' . "\n";
 	print '</div>';
 	print '<div class="panel-body">' . "\n";
-	print '<table class="table table-striped">' . "\n";
+	print '<table class="table table-hover">' . "\n";
 
 	# Host and login info
 	print '<tr>' . "\n";
@@ -364,7 +369,9 @@ elsif ($level == 3) {
 	print '</table>' . "\n";
 	print '</div>' . "\n";
 	print '</div>' . "\n";
+	print '<p id="about">Template developed and written by <a href="https://www.facebook.com/RiccardoNob" target="_blank">Riccardo Nobile</a> & <a href="https://www.facebook.com/simone.cragnolini" target="_blank">Simone Cragnolini</a></p>' . "\n";
+	print '<p id="about"><a href="http://winfuture.it/" target="_blank">WinFuture</a></p>' . "\n";
 	print '</div>' . "\n";
 	print '</div>' . "\n";
 }
-&popup_footer();
+&footer();

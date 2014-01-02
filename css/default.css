@@ -151,3 +151,9 @@ iframe {
 #sidebar li .caret{
 	text-align: right;
 }
+#sidebar .form-group {
+    margin-bottom: 0;
+}
+#about {
+	text-align: center;
+}
