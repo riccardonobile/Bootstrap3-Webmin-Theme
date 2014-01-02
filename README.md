@@ -3,7 +3,7 @@ Bootstrap3 Webmin Theme
 
 A Bootstrap 3 and Font Awesome based Webmin Theme
 
-Bootstrap 3 Webmin Theme - Version 0.01
+Bootstrap 3 Webmin Theme - Version 0.1
 ------------------------------------------------------
 
 The package ready to install is available [here](http://winfuture.it/webminbootstrap3/)
