@@ -111,6 +111,10 @@ iframe {
 	padding: 0;
 }
 
+#sidebar ul.navigation {
+	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 #sidebar li {
 	display: block;
 	list-style: none;

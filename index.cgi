@@ -162,7 +162,8 @@ if ($gconfig{"notabs_${base_remote_user}"} == 2 || $gconfig{"notabs_${base_remot
 else {
 	foreach $c (@cats) {
 		# Show category opener, plus modules under it
-		&print_category_opener($c->{'code'}, $in{$c->{'code'}} ? 1 : 0, $c->{'unused'} ? "<span style=color: #888888;>$c->{'desc'}</span>" : $c->{'desc'});
+		# Modified the span 
+		&print_category_opener($c->{'code'}, $in{$c->{'code'}} ? 1 : 0, $c->{'unused'} ? '<span style="color: #888888">' . $c->{'desc'} . '</span>' : $c->{'desc'});
 		$cls = $in{$c->{'code'}} ? "itemshown" : "itemhidden";
 		print '<ul style="display: none;" id="' . $c->{'code'} . '">' . "\n";
 		foreach my $minfo (@{$c->{'modules'}}) {
