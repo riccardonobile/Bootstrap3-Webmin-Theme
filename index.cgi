@@ -191,7 +191,7 @@ print '<div id="wrapper" class="menu">' . "\n";
 print '<iframe name="page" src="' . $goto . '">' . "\n";
 print '</iframe>' . "\n";
 print '</div>' . "\n";
-print '</div>' . "\n";
+#print '</div>' . "\n";
 print '<script>' . "\n";
 print '$("[data-toggle=popover]").popover()' . "\n";
 print '</script>' . "\n";

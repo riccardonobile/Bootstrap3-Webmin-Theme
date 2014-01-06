@@ -110,16 +110,11 @@ for(my $i=0; $i+1<@_; $i+=2) {
 			$url = "/".&get_module_name()."/$url";
 			}
 		$url = "$gconfig{'webprefix'}$url" if ($url =~ /^\//);
-		if ($i == 0) {
-			print "<a href=\"$url\"><img alt=\"<-\" align=middle border=0 src=$gconfig{'webprefix'}/images/left.gif></a>\n";
-			print '</div>' . "\n";
-			}
-		else {
-			print "&nbsp;|\n";
-			}
-		print "&nbsp;<a href=\"$url\">",&text('main_return', $_[$i+1]),"</a>\n";
+		print "&nbsp;<a href=\"$url\"><i class='fa fa-arrow-left'></i> ",&text('main_return', $_[$i+1]),"</a>\n";
 		}
 	}
+	#If you comment this decomment the </div> in theme_ui_pre_footer, index.cgi, body.cgi
+	print "</div>\n";
 	print '</body>' , "\n";
 	print '</html>' , "\n";
 }
@@ -171,6 +166,100 @@ sub theme_ui_post_header {
 sub theme_ui_pre_footer {
 	my $rv;
 	$rv .= "<hr>\n";
-	$rv .= '</div>' . "\n";
+	#$rv .= '</div>' . "\n";
+	return $rv;
+}
+
+sub theme_generate_icon {
+my $icon = $_[0];
+$icon =~ s/.gif/.png/;
+my $w = !defined($_[4]) ? "width=48" : $_[4] ? "width=$_[4]" : "";
+my $h = !defined($_[5]) ? "height=48" : $_[5] ? "height=$_[5]" : "";
+if ($tconfig{'noicons'}) {
+	if ($_[2]) {
+		print "$_[6]<a href=\"$_[2]\" $_[3]>$_[1]</a>$_[7]\n";
+		}
+	else {
+		print "$_[6]$_[1]$_[7]\n";
+		}
+	}
+elsif ($_[2]) {
+	print "<table><tr><td width=48 height=48>\n",
+	      "<a href=\"$_[2]\" $_[3]><img src=\"$icon\" alt=\"\" border=0 ",
+	      "$w $h></a></td></tr></table>\n";
+	print "$_[6]<a href=\"$_[2]\" $_[3]>$_[1]</a>$_[7]\n";
+	}
+else {
+	print "<table><tr><td width=48 height=48>\n",
+	      "<img src=\"$icon\" alt=\"\" border=0 $w $h>",
+	      "</td></tr></table>\n$_[6]$_[1]$_[7]\n";
+	}
+}
+
+sub theme_ui_submit {
+	my ($label, $name, $dis, $tags) = @_;
+	my $rv;
+	my $fa;
+	my $btntype = 'btn-default';
+	if ($name eq 'delete') {
+		$btntype = 'btn-danger';
+		#$fa = '<i class="fa fa-times"></i>';
+	} elsif ($name eq 'stop') {
+		$btntype = 'btn-danger';
+		#$fa = '<i class="fa fa-exclamation"></i>';
+	} elsif ($name eq 'start') {
+		$btntype = 'btn-success';
+		#$fa = '<i class="fa fa-check"></i>';
+	} elsif ($name eq 'restart') {
+		$btntype = 'btn-warning';
+		#$fa = '<i class="fa fa-refresh"></i>';
+	}
+	$rv .= '<button type="submit" class="btn ' . $btntype . '" ';
+	$rv .= ($name ne '' ? 'name="' . &quote_escape($name) . '" ' : '');
+	$rv .= ($dis ? ' disabled="disabled"' : '');
+	$rv .= ($tags ? ' ' . $tags : ''). '>';
+	$rv .= $fa . ' ' . &quote_escape($label);
+	$rv .= '</button>';
+	$rv .= "\n";
+	return $rv;
+}
+sub theme_ui_reset {
+	my ($label, $dis) = @_;
+	my $rv;
+	$rv .= '<button class="btn btn-default" type="reset" ';
+	$rv .= ($dis ? 'disabled="disabled">' : '>');
+	$rv .= &quote_escape($label);
+	$rv .= '</button>';
+	$rv .= "\n";
+	return $rv;
+}
+sub theme_ui_button {
+	my ($label, $name, $dis, $tags) = @_;
+	my $rv;
+	$rv .= '<button class="btn btn-default" type="button" ';
+	$rv .= ($name ne '' ? 'name="' . &quote_escape($name) . '" ' : '');
+	$rv .= ($dis ? 'disabled="disabled"' : '');
+	$rv .= ($tags ? ' ' . $tags : ''). '>'
+	$rv .= &quote_escape($label);
+	$rv .= '</button>';
+	$rv .= "\n";
+	return $rv;
+}
+sub theme_ui_alert_box {
+	my ($msg, $class) = @_;
+	my ($rv, $type, $tmsg, $fa);
+	
+	if ($class eq "success") { $type = 'alert-success', $tmsg = 'Well done!', $fa = 'fa-check'; }
+	elsif ($class eq "info") { $type = 'alert-info', $tmsg = 'Heads up!', $fa = 'fa-info'; }
+	elsif ($class eq "warn") { $type = 'alert-warning', $tmsg = 'Warning!', $fa = 'fa-exclamation-triangle'; }
+	elsif ($class eq "danger") { $type = 'alert-danger', $tmsg = 'Oh snap!', $fa = 'fa-bolt'; }
+	
+	$rv .= '<div class="alert ' . $type . '">' . "\n";
+	$rv .= '<i class="fa fa-fw ' . $fa . '"></i> <strong>' . $tmsg . '</strong>';
+	$rv .= '<br>' . "\n";
+	$rv .= $msg . "\n";
+	$rv .= '</div>';
+	$rv .= "\n";
+	
 	return $rv;
 }
