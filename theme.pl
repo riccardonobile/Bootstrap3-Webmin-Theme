@@ -353,11 +353,11 @@ sub theme_ui_radio {
 		}
 		$rv .= '<input type="radio" ';
 		$rv .= 'name="' . &quote_escape($name) . '" ';
-		$rv .= 'value=' . &quote_escape($o->[0]) . '" ';
+		$rv .= 'value="' . &quote_escape($o->[0]) . '" ';
 		$rv .= ($o->[0] eq $value ? 'checked ' : '');
 		$rv .= ($dis ? 'disabled="true" ' : '');
 		$rv .= 'id="' . $id . '" ';
-		$rv .= ($o->[2] ? $o->[2] .  ' ' : '');
+		$rv .= $o->[2] .  ' ';
 		$rv .= '>' . "\n";
 		$rv .= '<label class="radio" ';
 		$rv .= 'for="' . $id .'">' . "\n";
@@ -369,10 +369,12 @@ sub theme_ui_radio {
 }
 
 sub theme_ui_yesno_radio {
+	my ($name, $value, $yes, $no, $dis) = @_;
+	my $rv;
+	
 	$yes = 1 if (!defined($yes));
 	$no = 0 if (!defined($no));
 	$value = int($value);
-	my $rf;
 	
 	$rv .= &ui_radio($name, $value, [ [ $yes, $text{'yes'} ], [ $no, $text{'no'} ] ], $dis);
 	
@@ -388,7 +390,7 @@ sub theme_ui_checkbox {
 	}
 	$rv .= '<input type="checkbox" ';
 	$rv .= 'name="' . &quote_escape($name) . '" ';
-	$rv .= 'value=' . &quote_escape($value) . '" ';
+	$rv .= 'value="' . &quote_escape($value) . '" ';
 	$rv .= ($sel ? 'checked ' : '');
 	$rv .= ($dis ? 'disabled="true" ' : '');
 	$rv .= 'id="' . &quote_escape("${name}_${value}") . '" ';
@@ -411,7 +413,7 @@ sub theme_ui_oneradio {
 	}
 	$rv .= '<input type="radio" ';
 	$rv .= 'name="' . &quote_escape($name) . '" ';
-	$rv .= 'value=' . &quote_escape($value) . '" ';
+	$rv .= 'value="' . &quote_escape($value) . '" ';
 	$rv .= ($sel ? 'checked ' : '');
 	$rv .= ($dis ? 'disabled="true" ' : '');
 	$rv .= 'id="' . &quote_escape("${name}_${value}") . '" ';
