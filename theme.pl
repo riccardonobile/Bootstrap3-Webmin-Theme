@@ -125,7 +125,7 @@ for(my $i=0; $i+1<@_; $i+=2) {
 
 sub theme_generate_icon {
 my $icon = $_[0];
-$icon =~ s/.gif/.png/;
+#$icon =~ s/.gif/.png/;
 my $w = !defined($_[4]) ? "width=48" : $_[4] ? "width=$_[4]" : "";
 my $h = !defined($_[5]) ? "height=48" : $_[5] ? "height=$_[5]" : "";
 if ($tconfig{'noicons'}) {
@@ -158,7 +158,7 @@ my ($w, $h) = (400, 300);
 if ($gconfig{'db_sizefile'}) {
 	($w, $h) = split(/x/, $gconfig{'db_sizefile'});
 	}
-return "<input class='btn btn-default' type=button onClick='ifield = form.$_[0]; chooser = window.open(\"$gconfig{'webprefix'}/chooser.cgi?add=$add&type=$_[1]&chroot=$chroot&file=\"+escape(ifield.value), \"chooser\", \"toolbar=no,menubar=no,scrollbars=no,resizable=yes,width=$w,height=$h\"); chooser.ifield = ifield; window.ifield = ifield' value=\"...\">\n";
+return "<button class='btn btn-default' type=button onClick='ifield = form.$_[0]; chooser = window.open(\"$gconfig{'webprefix'}/chooser.cgi?add=$add&type=$_[1]&chroot=$chroot&file=\"+escape(ifield.value), \"chooser\", \"toolbar=no,menubar=no,scrollbars=no,resizable=yes,width=$w,height=$h\"); chooser.ifield = ifield; window.ifield = ifield'>...</button>\n";
 }
 sub theme_popup_window_button
 {
@@ -184,7 +184,15 @@ foreach my $m (@$fields) {
 $rv .= "' value=\"...\">";
 return $rv;
 }
-
+sub theme_ui_upload
+{
+my ($name, $size, $dis, $tags) = @_;
+$size = &ui_max_text_width($size);
+return "<input style='margin: 4px 0;' class='ui_upload' type=file name=\"".&quote_escape($name)."\" ".
+       "size=$size ".
+       ($dis ? "disabled=true" : "").
+       ($tags ? " ".$tags : "").">";
+}
 
 # Thi is the theme.pl part dedicated to all theme functions.
 # WARNING!!! Work in progress - Not all is implemented!!!
@@ -202,17 +210,69 @@ return $rv;
 
 # theme_ui_table_span
 
-# theme_ui_columns_start
+sub theme_ui_columns_start {
+	my ($heads, $width, $noborder, $tdtags, $title) = @_;
+	my ($rv, $i);
+	
+	$rv .= '<table class="table table-striped table-rounded">' . "\n";
+	$rv .= '<thead>' . "\n";
+	$rv .= '<tr>' . "\n";
+	for($i=0; $i<@$heads; $i++) {
+		$rv .= '<th>';
+		$rv .= ($heads->[$i] eq '' ? '<br>' : $heads->[$i]);
+		$rv .= '</th>' . "\n";
+	}
+	$rv .= '</tr>' . "\n";
+	$rv .= '</thead>' . "\n";
+	
+	return $rv;
+}
 
-# theme_ui_columns_row
+sub theme_ui_columns_row {
+	my ($cols, $tdtags) = @_;
+	my ($rv, $i);
+	
+	#$rv .= '<tbody>' . "\n";
+	$rv .= '<tr>' . "\n";
+	for($i=0; $i<@$cols; $i++) {
+		$rv .= '<td>' . "\n";
+		$rv .= ($cols->[$i] !~ /\S/ ? '<br>' : $cols->[$i]);
+		$rv .= '</td>' . "\n";
+	}	
+	$rv .= '</tr>' . "\n";
+	#$rv .= '</tbody>' . "\n";
+	
+	return $rv;
+}
 
-# theme_ui_columns_header
+sub theme_ui_columns_header {
+	my ($cols, $tdtags) = @_;
+	my ($rv, $i);
+	
+	$rv .= '<thead>' . "\n";
+	$rv .= '<tr>' . "\n";
+	for($i=0; $i<@$cols; $i++) {
+		$rv .= '<th>';
+		$rv .= ($cols->[$i] eq '' ? '#' : $cols->[$i]);
+		$rv .= '</th>' . "\n";
+	}
+	$rv .= '</tr>' . "\n";
+	$rv .= '</thead>' . "\n";
+	
+	return $rv;
+}
 
 # theme_ui_checked_columns_row
 
 # theme_ui_radio_columns_row
 
-# theme_ui_columns_end
+sub theme_ui_columns_end {
+	my $rv;
+	
+	$rv .= '</table>' . "\n";
+	
+	return $rv;
+}
 
 # theme_ui_columns_table
 
@@ -280,13 +340,90 @@ sub theme_ui_password {
 
 # theme_ui_multiselect_javascript
 
-# theme_ui_radio
+sub theme_ui_radio {
+	my ($name, $value, $opts, $dis) = @_;
+	my ($rv, $o);
+	foreach $o (@$opts) {
+		my $id = &quote_escape($name."_".$o->[0]);
+		my $label = $o->[1] || $o->[0];
+		my $after;
+		if ($label =~ /^([\000-\377]*?)((<a\s+href|<input|<select|<textarea)[\000-\377]*)$/i) {
+			$label = $1;
+			$after = $2;
+		}
+		$rv .= '<input type="radio" ';
+		$rv .= 'name="' . &quote_escape($name) . '" ';
+		$rv .= 'value=' . &quote_escape($o->[0]) . '" ';
+		$rv .= ($o->[0] eq $value ? 'checked ' : '');
+		$rv .= ($dis ? 'disabled="true" ' : '');
+		$rv .= 'id="' . $id . '" ';
+		$rv .= ($o->[2] ? $o->[2] .  ' ' : '');
+		$rv .= '>' . "\n";
+		$rv .= '<label class="radio" ';
+		$rv .= 'for="' . $id .'">' . "\n";
+		$rv .= '<i class="fa"></i> ' . $label . "\n";
+		$rv .= '</label>' . $after . "\n";
+	}
+	
+	return $rv;
+}
 
-# theme_ui_yesno_radio
+sub theme_ui_yesno_radio {
+	$yes = 1 if (!defined($yes));
+	$no = 0 if (!defined($no));
+	$value = int($value);
+	my $rf;
+	
+	$rv .= &ui_radio($name, $value, [ [ $yes, $text{'yes'} ], [ $no, $text{'no'} ] ], $dis);
+	
+	return $rv;
+}
 
-# theme_ui_checkbox
+sub theme_ui_checkbox {
+	my ($name, $value, $label, $sel, $tags, $dis) = @_;
+	my ($rv, $after);
+	if ($label =~ /^([^<]*)(<[\000-\377]*)$/) {
+		$label = $1;
+		$after = $2;
+	}
+	$rv .= '<input type="checkbox" ';
+	$rv .= 'name="' . &quote_escape($name) . '" ';
+	$rv .= 'value=' . &quote_escape($value) . '" ';
+	$rv .= ($sel ? 'checked ' : '');
+	$rv .= ($dis ? 'disabled="true" ' : '');
+	$rv .= 'id="' . &quote_escape("${name}_${value}") . '" ';
+	$rv .= ($tags ? $tags .  ' ' : '');
+	$rv .= '>' . "\n";
+	$rv .= '<label class="checkbox" ';
+	$rv .= 'for="' . &quote_escape("${name}_${value}") .'">' . "\n";
+	$rv .= '<i class="fa"></i> ' . $label . "\n";
+	$rv .= '</label>' . "\n";
+	
+	return $rv;
+}
 
-# theme_ui_oneradio
+sub theme_ui_oneradio {
+	my ($name, $value, $label, $sel, $tags, $dis) = @_;
+	my ($rv, $after);
+	if ($label =~ /^([^<]*)(<[\000-\377]*)$/) {
+		$label = $1;
+		$after = $2;
+	}
+	$rv .= '<input type="radio" ';
+	$rv .= 'name="' . &quote_escape($name) . '" ';
+	$rv .= 'value=' . &quote_escape($value) . '" ';
+	$rv .= ($sel ? 'checked ' : '');
+	$rv .= ($dis ? 'disabled="true" ' : '');
+	$rv .= 'id="' . &quote_escape("${name}_${value}") . '" ';
+	$rv .= ($tags ? $tags .  ' ' : '');
+	$rv .= '>' . "\n";
+	$rv .= '<label class="radio" ';
+	$rv .= 'for="' . &quote_escape("${name}_${value}") .'">' . "\n";
+	$rv .= '<i class="fa"></i> ' . $label . "\n";
+	$rv .= '</label>' . "\n";
+	
+	return $rv;
+}
 
 sub theme_ui_textarea {
 	my ($name, $value, $rows, $cols, $wrap, $dis, $tags) = @_;
@@ -491,7 +628,13 @@ sub theme_ui_tabs_end_tab {
 
 # theme_ui_up_down_arrows
 
-# theme_ui_hr
+sub theme_ui_hr {
+	my $rv;
+	
+	$rv .= '<hr>' . "\n";
+	
+	return $rv;
+}
 
 # theme_ui_nav_link
 

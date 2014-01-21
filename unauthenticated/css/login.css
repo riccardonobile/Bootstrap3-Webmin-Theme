@@ -58,7 +58,7 @@ input[type='checkbox']:checked + label > i:before{
 
 input[type='checkbox'] + label > i{
 	text-align: left;
-	width: 1.28571em;
+	width: 1.0em;
 }
 
 .remember-me{
