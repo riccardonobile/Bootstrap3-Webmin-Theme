@@ -102,13 +102,14 @@ iframe {
 	position: fixed;
 	width: 240px;
 	border-right: 1px solid #e7e7e7;
-	overflow-y: auto;
+	overflow-y: none;
 }
 
 #sidebar ul {
 	display: block;
 	position: relative;
 	padding: 0;
+	margin: 0px;
 }
 
 #sidebar ul.navigation {
@@ -116,7 +117,6 @@ iframe {
 }
 
 #sidebar li {
-	display: block;
 	list-style: none;
 	position: relative;
 	padding: 10px;
@@ -161,7 +161,7 @@ iframe {
 #about {
 	text-align: center;
 }
-.tab-content img, .icons_table img {
+.tab-content img, .icons-table img {
 	padding: 7px;
 	border-radius: 4px;
 	border: 1px solid #dddddd;
@@ -251,4 +251,13 @@ input[type='radio']:checked + label > i:before{
 input[type='radio'] + label > i{
 	text-align: left;
 	width: 1.0em;
+}
+.navigation li {
+	cursor: pointer;
+}
+.navigation li a:hover, .navigation li a:focus {
+	text-decoration: none;
+}
+.navigation li.open-hidden {
+	display: none;
 }

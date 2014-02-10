@@ -7,26 +7,13 @@
 	border:0 !important;
 }
 /* ---------- Login ---------- */
-.form-signin .form-signin-heading {
-	padding-top: 0;
-	text-align: center;
-}
-.form-signin .form-signin-paragraph {
-	margin-bottom: 25px;
-	padding-top: 0;
-	text-align: center;
-}
-
-.form-signin .checkbox {
-	font-weight: normal;
-}
-
 body{
 	padding-top: 40px;
 	padding-bottom: 40px;
+	background-color: #4E5055;
 }
 
-.box {
+.form-signin {
 	max-width: 330px;
 	padding: 15px;
 	margin: 0 auto;
@@ -38,9 +25,23 @@ body{
 	background-color: #f8f8f8;
 }
 
+.form-signin-heading {
+	text-align: center;
+}
+
+.form-signin-paragraph {
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.remember-me{
+	color: #555555;
+}
+
 .checkbox{
 	padding-left: 0;
 	margin-bottom: 15px;
+	font-weight: normal;
 }
 
 input[type='checkbox'] {
@@ -59,8 +60,4 @@ input[type='checkbox']:checked + label > i:before{
 input[type='checkbox'] + label > i{
 	text-align: left;
 	width: 1.0em;
-}
-
-.remember-me{
-	color: #555555;
 }

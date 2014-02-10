@@ -149,8 +149,10 @@ print '</div>' . "\n";
 print '</nav>' . "\n";
 print '</header>' . "\n" . "\n";
 print '<aside id="sidebar" class="hidden-xs">' . "\n" . "\n";
-print '<div>' . "\n";
 print '<ul class="navigation">' . "\n";
+print '<li>' . "\n";
+print '<a href="#hide"><i class="fa fa-bars fa-fw"></i> <span>Hide menu</span></a>' . "\n";
+print '</li>' . "\n";
 @cats = &get_visible_modules_categories();
 @modules = map { @{$_->{'modules'}} } @cats;
 if ($gconfig{"notabs_${base_remote_user}"} == 2 || $gconfig{"notabs_${base_remote_user}"} == 0 && $gconfig{'notabs'} || @modules <= 1) {
@@ -165,7 +167,7 @@ else {
 		# Modified the span 
 		&print_category_opener($c->{'code'}, $in{$c->{'code'}} ? 1 : 0, $c->{'unused'} ? '<span style="color: #888888">' . $c->{'desc'} . '</span>' : $c->{'desc'});
 		$cls = $in{$c->{'code'}} ? "itemshown" : "itemhidden";
-		print '<ul style="display: none;" id="' . $c->{'code'} . '">' . "\n";
+		print '<ul class="sub" style="display: none;" id="' . $c->{'code'} . '">' . "\n";
 		foreach my $minfo (@{$c->{'modules'}}) {
 			&print_category_link("$minfo->{'dir'}/",
 					     $minfo->{'desc'},
@@ -177,8 +179,12 @@ else {
 		print '</ul>' . "\n";
 		}
 	}
+if (-r "$root_directory/webmin_search.cgi" && $gaccess{'webminsearch'}) {
+	print '<li class="open-hidden">' . "\n";
+	print '<a href="#search"><i class="fa fa-search fa-fw"></i></a>' . "\n";
+	print '</li>' . "\n";
+}
 print '</ul>' . "\n";
-print '</div>' . "\n";
 if (-r "$root_directory/webmin_search.cgi" && $gaccess{'webminsearch'}) {
 	print '<form action="webmin_search.cgi" target="page" role="search">' . "\n";
 	print '<div class="form-group">' . "\n";
@@ -186,6 +192,18 @@ if (-r "$root_directory/webmin_search.cgi" && $gaccess{'webminsearch'}) {
 	print '</div>' . "\n";
 	print '</form>' . "\n";
 }
+print '<ul class="navigation">' . "\n";
+if ($gconfig{'log'} && &foreign_available("webminlog")) {
+	print '<li><a target="page" href="webminlog/" onClick="show_logs(); return false;"><i class="fa fa-fw fa-exclamation-triangle"></i> <span>View Module\'s Logs</span></a></li>' . "\n";
+}
+print '<li><a target="page" href="body.cgi?open=system&open=status"><i class="fa fa-fw fa-info"></i> <span>System Information</span></a></li>' . "\n";
+if (&get_product_name() eq 'webmin' && !$ENV{'ANONYMOUS_USER'} && $gconfig{'nofeedbackcc'} != 2 && $gaccess{'feedback'} && $gconfig{'feedback_to'} || &get_product_name() eq 'usermin' && !$ENV{'ANONYMOUS_USER'} && $gconfig{'feedback'}) {
+	print '<li><a target="page" href="feedback_form.cgi"><i class="fa fa-fw fa-envelope"></i> <span>Send Feedback</span></a></li>' . "\n";
+}
+if (&foreign_available("webmin")) {
+	print '<li><a target="page" href="webmin/refresh_modules.cgi"><i class="fa fa-fw fa-refresh"></i> <span>Refresh Modules</span></a></li>' . "\n";
+}
+print '</ul>' . "\n";
 print '</aside>' . "\n";
 print '<div id="wrapper" class="menu">' . "\n";
 print '<iframe name="page" src="' . $goto . '">' . "\n";
@@ -196,7 +214,7 @@ print '<script>' . "\n";
 print '$("[data-toggle=popover]").popover()' . "\n";
 print '</script>' . "\n";
 print '<script src="js/ajax.js" type="text/javascript"></script>' , "\n";
-print '<script src="js/application.js" type="text/javascript"></script>' , "\n";
+print '<script src="js/offcanvas.js" type="text/javascript"></script>' , "\n";
 &footer();
 
 # print_category_opener(name, &allcats, label)
@@ -224,7 +242,7 @@ given($c){
 }
 # Show link to close or open catgory
 print '<li>' . "\n";
-print '<a href="#' . $c . '"><i class="fa ' . $icon . ' fa-fw"></i> ' . $label . '</a>' . "\n";
+print '<a href="#' . $c . '"><i class="fa ' . $icon . ' fa-fw"></i> <span>' . $label . '</span></a>' . "\n";
 print '</li>' . "\n";
 }
 

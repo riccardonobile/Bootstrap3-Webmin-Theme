@@ -137,16 +137,44 @@ if ($tconfig{'noicons'}) {
 		}
 	}
 elsif ($_[2]) {
-	print "<table><tr><td>\n",
+	print "<table style=\" margin: 0 auto;\"><tr><td>\n",
 	      "<a href=\"$_[2]\" $_[3]><img src=\"$icon\" alt=\"\" border=0 ",
 	      "$w $h></a></td></tr></table>\n";
 	print "$_[6]<a href=\"$_[2]\" $_[3]>$_[1]</a>$_[7]\n";
 	}
 else {
-	print "<table><tr><td>\n",
+	print "<table style=\" margin: 0 auto;\><tr><td>\n",
 	      "<img src=\"$icon\" alt=\"\" border=0 $w $h>",
 	      "</td></tr></table>\n$_[6]$_[1]$_[7]\n";
 	}
+}
+
+sub theme_icons_table {
+	my $need_tr;
+	my $cols = $_[3] ? $_[3] : 4;
+	my $per = int(100.0 / $cols);
+	
+	print '<table class="icons-table icons_table" width="100%">' . "\n";
+	print '<tr><td>';
+	print '<div class="icons-table">' . "\n";
+	print '<div class="row">' . "\n";
+	for(my $i=0; $i<@{$_[0]}; $i++) {
+		if ($i%$cols == 0) {
+			
+		}
+		print '<div style="text-align: center;" class="col-xs-6 col-sm-4 col-md-3">' . "\n";
+		&generate_icon($_[2]->[$i], $_[1]->[$i], $_[0]->[$i], ref($_[4]) ? $_[4]->[$i] : $_[4], $_[5], $_[6], $_[7]->[$i], $_[8]->[$i]);
+		print '</div>' . "\n";
+		if ($i%$cols == $cols-1) { 
+			
+		}
+	}
+	print '</div>' . "\n"; 
+	while($i++%$cols) { print "<td width=$per%></td>\n"; $need_tr++; }
+	print '</tr>' . "\n" if ($need_tr);
+	print '</div>' . "\n";
+	print '</tr></td>';
+	print '</table>' . "\n";
 }
 
 sub theme_file_chooser_button

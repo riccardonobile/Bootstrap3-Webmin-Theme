@@ -63,7 +63,7 @@ elsif ($in{'timed_out'}) {
 	print &text('session_timed_out', int($in{'timed_out'}/60)) . "\n";
 	print '</div>' . "\n";
 }
-print '<form method="post" action="' . $gconfig{'webprefix'} . '/session_login.cgi" class="form-signin box" role="form">' . "\n";
+print '<form method="post" action="' . $gconfig{'webprefix'} . '/session_login.cgi" class="form-signin" role="form">' . "\n";
 print '<h2 class="form-signin-heading"><i class="fa fa-cogs"></i> ' . $name . ' ' .  &get_webmin_version() . '</h2>' . "\n";
 # Login message
 if ($gconfig{'realname'}) {
