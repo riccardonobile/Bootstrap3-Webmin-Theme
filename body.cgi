@@ -63,7 +63,7 @@ if ($level == 0) {
 	if (&foreign_available("time")) {
 		$tm = '<a href=time/>' . $tm . '</a>';
 	}
-	print '<td>' . $tm. '</td>' . "\n";
+	print '<td>' . $tm . '</td>' . "\n";
 	print '</tr>' . "\n";
 
 	# Kernel and CPU

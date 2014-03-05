@@ -7,9 +7,13 @@ sub theme_header {
 	print '<meta name="viewport" content="width=device-width, initial-scale=1.0">' . "\n";
 	print '<link href="/css/bootstrap.css" rel="stylesheet" type="text/css">' , "\n";
 	print '<link href="/css/fontawesome.css" rel="stylesheet" type="text/css">' , "\n";
+	print '<link href="/css/select.css" rel="stylesheet" type="text/css">' , "\n";
 	print '<link href="/css/default.css" rel="stylesheet" type="text/css">' , "\n";
 	print '<script src="/js/jquery.js" type="text/javascript"></script>' , "\n";
 	print '<script src="/js/bootstrap.js" type="text/javascript"></script>' , "\n";
+	print '<script src="/js/select.js" type="text/javascript"></script>' , "\n";
+	print '<script src="js/offcanvas.js" type="text/javascript"></script>' , "\n";
+	print '<script src="js/ajax.js" type="text/javascript"></script>' , "\n";
 	print '</head>' , "\n";
 	print '<body>' , "\n";
 	

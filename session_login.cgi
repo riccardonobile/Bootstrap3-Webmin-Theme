@@ -63,7 +63,7 @@ elsif ($in{'timed_out'}) {
 	print &text('session_timed_out', int($in{'timed_out'}/60)) . "\n";
 	print '</div>' . "\n";
 }
-print '<form method="post" action="' . $gconfig{'webprefix'} . '/session_login.cgi" class="form-signin" role="form">' . "\n";
+print '<form method="post" action="' . $gconfig{'webprefix'} . '/session_login.cgi" class="form-signin clearfix" role="form">' . "\n";
 print '<h2 class="form-signin-heading"><i class="fa fa-cogs"></i> ' . $name . ' ' .  &get_webmin_version() . '</h2>' . "\n";
 # Login message
 if ($gconfig{'realname'}) {
@@ -96,8 +96,8 @@ if (!$gconfig{'noremember'}) {
 	print '<i class="fa"></i> ' . $text{'login_save'} . "\n";
 	print '</label>' . "\n";
 }
-print '<button class="btn btn-primary btn-block" type="submit"><i class="fa fa-sign-in"></i> ' . &text('login_signin') .'</button>' . "\n";
-print '<button class="btn btn-danger btn-block" type="reset"><i class="fa fa-pencil"></i> ' . &text('login_reset') .'</button>' . "\n";
+print '<button class="btn btn-danger pull-left" type="reset"><i class="fa fa-pencil"></i> ' . &text('login_reset') .'</button>' . "\n";
+print '<button class="btn btn-primary pull-right" type="submit"><i class="fa fa-sign-in"></i> ' . &text('login_signin') .'</button>' . "\n";
 print '</form>' . "\n";
 print '</div>' . "\n";
 &footer();

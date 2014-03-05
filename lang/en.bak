@@ -53,7 +53,7 @@ login_pass=Password
 login_token=Token
 login_save=Remember me
 login_signin=Sign in
-login_reset=Reset
+login_reset=Reset form
 
 session_failed=Login failed. Please try again.
 session_twofailed=Two-factor authentication failed: $1

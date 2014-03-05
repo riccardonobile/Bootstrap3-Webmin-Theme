@@ -5,19 +5,19 @@ use WebminCore;
 &init_config();
 if ($in{'mod'}) {
 	$minfo = { &get_module_info($in{'mod'}) };
-	}
+}
 else {
 	$minfo = &get_goto_module();
-	}
+}
 $goto = $minfo ? "$minfo->{'dir'}/" :
-	$in{'page'} ? "" :
-	       	      "body.cgi?open=system&open=status";
+$in{'page'} ? "" : "body.cgi";
+
 if ($minfo) {
 	$cat = "?$minfo->{'category'}=1";
-	}
+}
 if ($in{'page'}) {
 	$goto .= "/".$in{'page'};
-	}
+}
 %text = &load_language($current_theme);
 %gaccess = &get_module_acl(undef, "");
 $title = &get_html_framed_title();
@@ -36,10 +36,11 @@ print '<a class="navbar-brand" target="page" href="body.cgi?open=system&open=sta
 print '</div>' . "\n";
 print '<div class="collapse navbar-collapse" id="collapse">' . "\n";
 print '<ul class="nav navbar-nav visible-xs">' . "\n";
+print '<li><a target="page" href="menu.cgi"><i class="fa fa-tags"></i> Main menu</a></li>' . "\n";
 if ($gconfig{'log'} && &foreign_available("webminlog")) {
 	print '<li><a target="page" href="webminlog/" onClick="show_logs(); return false;"><i class="fa fa fa-exclamation-triangle"></i> View Module\'s Logs</a></li>' . "\n";
 }
-print '<li><a target="page" href="body.cgi?open=system&open=status"><i class="fa fa-home"></i> System Information</a></li>' . "\n";
+print '<li><a target="page" href="body.cgi"><i class="fa fa-home"></i> System Information</a></li>' . "\n";
 %gaccess = &get_module_acl(undef, "");
 if (&get_product_name() eq 'webmin' && !$ENV{'ANONYMOUS_USER'} && $gconfig{'nofeedbackcc'} != 2 && $gaccess{'feedback'} && $gconfig{'feedback_to'} || &get_product_name() eq 'usermin' && !$ENV{'ANONYMOUS_USER'} && $gconfig{'feedback'}) {
 	print '<li><a target="page" href="feedback_form.cgi"><i class="fa fa-envelope"></i> Send Feedback</a></li>' . "\n";
@@ -57,6 +58,7 @@ else {
 if ($level == 0) {
 	&foreign_require("system-status");
 	$info = &system_status::get_collected_info();
+	print '<div class="hidden-xs">';
 	print '<button style="margin-right: 20px;" class="btn btn-default navbar-btn navbar-left" data-html="true" data-content="';
 	print '<ul id=\'dashboard\' class=\'list-group\'>';
 	if ($info->{'cpu'}) {
@@ -110,13 +112,13 @@ if ($level == 0) {
 		print '<button style="margin-right: 20px;" class="btn btn-default navbar-btn navbar-left" data-html="true" data-content="';
 		print '<ul id=\'temp\' class=\'list-group\'>';
 		if ($info->{'cputemps'}) {
-			print '<li class=\'list-group-item title\'><strong class=\'text-danger\'>CPU temperatures</strong></li>';
+			print '<li class=\'list-group-item title\'><strong>CPU temperatures</strong></li>';
 			foreach my $t (@{$info->{'cputemps'}}) {
 				print '<li class=\'list-group-item\'><strong>Core ' . $t->{'core'} . '</strong><span class=\'pull-right\'>' . int($t->{'temp'}) . '&#176;C</span></li>';
 			}
 		}
 		if ($info->{'drivetemps'}) {
-			print '<li class=\'list-group-item title\'><strong  class=\'text-danger\'>Drive temperatures</strong></li>';
+			print '<li class=\'list-group-item title\'><strong>Drive temperatures</strong></li>';
 			foreach my $t (@{$info->{'drivetemps'}}) {
 				my $short = $t->{'device'};
 				$short =~ s/^\/dev\///;
@@ -127,23 +129,70 @@ if ($level == 0) {
 		print '" data-placement="bottom" data-toggle="popover" data-container="body" type="button" data-original-title="" title="Temperatures"><i class="fa fa-fw fa-fire"></i></button>' . "\n";
 	}
 	print '<button class="btn btn-default navbar-btn navbar-left" data-html="true" data-content="';
-	print '<p>Not implemented yet</p>';
-	print '" data-placement="bottom" data-toggle="popover" data-container="body" type="button" data-original-title="" title="Temperatures"><i class="fa fa-fw fa-info"></i></button>' . "\n";
+	print '<ul id=\'temp\' class=\'list-group\'>';
+	$ip = $info && $info->{'ips'} ? $info->{'ips'}->[0]->[0] :
+				&to_ipaddress(get_system_hostname());
+	$ip = " ($ip)" if ($ip);
+	$host = &get_system_hostname() . $ip;
+	print '<li class=\'list-group-item title\'><strong>System hostname</strong></li>';
+	if (&foreign_available('net')) {
+		$host = '<a href=\'net/list_dns.cgi\' target=\'page\'>' . $host . '</a>';
+	}
+	print '<li class=\'list-group-item text-center\'>' . $host . '</li>';
+	print '<li class=\'list-group-item title\'><strong>Operating system</strong></li>';
+	if ($gconfig{'os_version'} eq '*') {
+		print '<li class=\'list-group-item text-center\'>' . $gconfig{'real_os_type'} . '</li>' . "\n";
+	}
+	else {
+		print '<li class=\'list-group-item text-center\'>' . $gconfig{'real_os_type'} . ' ' . $gconfig{'real_os_version'} . '</li>' . "\n";
+	}
+	print '<li class=\'list-group-item title\'><strong>Time on system</strong></li>';
+	$tm = localtime(time());
+	if (&foreign_available("time")) {
+		$tm = '<a href=\'time/\' target=\'page\'>' . $tm . '</a>';
+	}
+	print '<li class=\'list-group-item text-center\'>' . $tm . '</li>';
+	print '<li class=\'list-group-item title\'><strong>Kernel and CPU</strong></li>';
+	print '<li class=\'list-group-item text-center\'>' . &text('body_kernelon', $info->{'kernel'}->{'os'}, $info->{'kernel'}->{'version'}, $info->{'kernel'}->{'arch'}) . '</li>';
+	&foreign_require("proc");
+	my $uptime;
+	my ($d, $h, $m) = &proc::get_system_uptime();
+	if ($d) {
+		$uptime = &text('body_updays', $d, $h, $m);
+	}
+	elsif ($m) {
+		$uptime = &text('body_uphours', $h, $m);
+	}
+	elsif ($m) {
+		$uptime = &text('body_upmins', $m);
+	}
+	if ($uptime) {
+		print '<li class=\'list-group-item title\'><strong>System uptime</strong></li>';
+		if (&foreign_available("init")) {
+			$uptime = '<a href=\'init/\'>' . $uptime . '</a>';
+		}
+		print '<li class=\'list-group-item text-center\'>' . $uptime . '</li>';
+	}
+	print '</ul>';
+	print '" data-placement="bottom" data-toggle="popover" data-container="body" type="button" data-original-title="" title="Sys Info"><i class="fa fa-fw fa-info"></i></button>' . "\n";
+	print '</div>';
 }
 print '<div class="navbar-right">' . "\n";
 $user = $remote_user;
 if (&foreign_available("net")) {
 	$user = '<a target="page" href="acl/edit_user.cgi?user=' . $user .'">' . $user . '</a>';
 }
-print '<p class="navbar-text">Welcome ' . $user . '</p>' . "\n";
+print '<div>';
+print '<p class="navbar-text pull-left">Welcome ' . $user . '</p>' . "\n";
 &get_miniserv_config(\%miniserv);
 if ($miniserv{'logout'} && !$ENV{'SSL_USER'} && !$ENV{'LOCAL_USER'} && $ENV{'HTTP_USER_AGENT'} !~ /webmin/i) {
 	if ($main::session_id) {
-		print '<a href="session_login.cgi?logout=1" class="btn btn-danger navbar-btn"><i class="fa fa-sign-out"></i> ' . $text{'main_logout'} . '</a>' . "\n";
+		print '<a href="session_login.cgi?logout=1" class="btn btn-danger navbar-btn pull-right"><i class="fa fa-sign-out"></i> ' . $text{'main_logout'} . '</a>' . "\n";
 	} else {
-		print '<a href="switch_user.cgi" class="btn btn-danger navbar-btn">' . $text{'main_switch'} . '</a>' . "\n";
+		print '<a href="switch_user.cgi" class="btn btn-danger navbar-btn pull-right">' . $text{'main_switch'} . '</a>' . "\n";
 	}
 }
+print '</div>';
 print '</div>' . "\n";
 print '</div>' . "\n";
 print '</nav>' . "\n";
@@ -196,7 +245,7 @@ print '<ul class="navigation">' . "\n";
 if ($gconfig{'log'} && &foreign_available("webminlog")) {
 	print '<li><a target="page" href="webminlog/" onClick="show_logs(); return false;"><i class="fa fa-fw fa-exclamation-triangle"></i> <span>View Module\'s Logs</span></a></li>' . "\n";
 }
-print '<li><a target="page" href="body.cgi?open=system&open=status"><i class="fa fa-fw fa-info"></i> <span>System Information</span></a></li>' . "\n";
+print '<li><a target="page" href="body.cgi"><i class="fa fa-fw fa-info"></i> <span>System Information</span></a></li>' . "\n";
 if (&get_product_name() eq 'webmin' && !$ENV{'ANONYMOUS_USER'} && $gconfig{'nofeedbackcc'} != 2 && $gaccess{'feedback'} && $gconfig{'feedback_to'} || &get_product_name() eq 'usermin' && !$ENV{'ANONYMOUS_USER'} && $gconfig{'feedback'}) {
 	print '<li><a target="page" href="feedback_form.cgi"><i class="fa fa-fw fa-envelope"></i> <span>Send Feedback</span></a></li>' . "\n";
 }
@@ -213,8 +262,6 @@ print '</div>' . "\n";
 print '<script>' . "\n";
 print '$("[data-toggle=popover]").popover()' . "\n";
 print '</script>' . "\n";
-print '<script src="js/ajax.js" type="text/javascript"></script>' , "\n";
-print '<script src="js/offcanvas.js" type="text/javascript"></script>' , "\n";
 &footer();
 
 # print_category_opener(name, &allcats, label)
