@@ -102,7 +102,7 @@ iframe {
 	position: fixed;
 	width: 240px;
 	border-right: 1px solid #e7e7e7;
-	overflow-y: none;
+	overflow-y: auto;
 }
 
 #sidebar ul {
@@ -260,4 +260,17 @@ input[type='radio'] + label > i{
 }
 .navigation li.open-hidden {
 	display: none;
+}
+.menu-row {
+	text-align: center;
+}
+.menu-row a i.fa {
+	font-size: 84px;
+}
+.menu-row a.menu-link {
+	color: #999;
+}
+.menu-row a.menu-link:hover {
+	color: #eee;
+	text-decoration: none;
 }

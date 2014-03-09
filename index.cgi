@@ -32,7 +32,7 @@ print '<span class="icon-bar"></span>' . "\n";
 print '<span class="icon-bar"></span>' . "\n";
 print '<span class="icon-bar"></span>' . "\n";
 print '</button>' . "\n";
-print '<a class="navbar-brand" target="page" href="body.cgi?open=system&open=status">Webmin ' . &get_webmin_version() . ' - ' . &get_display_hostname() . '</a>' . "\n";
+print '<a class="navbar-brand" target="page" href="body.cgi">Webmin ' . &get_webmin_version() . ' - ' . &get_display_hostname() . '</a>' . "\n";
 print '</div>' . "\n";
 print '<div class="collapse navbar-collapse" id="collapse">' . "\n";
 print '<ul class="nav navbar-nav visible-xs">' . "\n";
