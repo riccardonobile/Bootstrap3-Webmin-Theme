@@ -1,7 +1,7 @@
 Bootstrap3 Webmin Theme
 =======================
 
-A Bootstrap 3 and Font Awesome based Webmin Theme
+A pretty Bootstrap 3 based Webmin (and friends...) theme.
 
 Bootstrap 3 Webmin Theme
 ------------------------------------------------------
