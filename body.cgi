@@ -12,94 +12,99 @@ else {
 }
 %text = &load_language($current_theme);
 &header($title);
+print '<div id="wrapper" class="page">' . "\n";
+print '<div class="container">' . "\n";
+print '<div id="system-status" class="panel panel-default">' . "\n";
+print '<div class="panel-heading">' . "\n";
+print '<h3 class="panel-title">' . &text('body_header0') . '</h3>' . "\n";
+print '</div>';
+print '<div class="panel-body">' . "\n";
 if ($level == 0) {
-	print '<div id="wrapper" class="page">' . "\n";
-	print '<div class="container">' . "\n";
-	print '<div id="system-status" class="panel panel-default">' . "\n";
-	print '<div class="panel-heading">' . "\n";
-	print '<h3 class="panel-title">' . &text('body_header0') . '</h3>' . "\n";
-	print '</div>';
-	print '<div class="panel-body">' . "\n";
-	print '<table class="table table-hover">' . "\n";
-	
 	# Ask status module for collected info
 	&foreign_require("system-status");
 	$info = &system_status::get_collected_info();
-	
-	# Hostname
-	$ip = $info && $info->{'ips'} ? $info->{'ips'}->[0]->[0] :
-				&to_ipaddress(get_system_hostname());
+	# Circle Progress Container
+	print '<div class="row" style="margin: 0;">' . "\n";
+	# CPU Usage
+	if ($info->{'cpu'}) {
+		@c = @{$info->{'cpu'}};
+		print '<div class="col-xs-6 col-sm-3">' . "\n";
+		$used = $c[0]+$c[1]+$c[3];
+		&print_circle_progress($used, 'CPU');
+		print '</div>' . "\n";
+	}
+	# MEM Usage
+	if ($info->{'mem'}) {
+		print '<div class="col-xs-6 col-sm-3">' . "\n";
+		@m = @{$info->{'mem'}};
+		if (@m && $m[0]) {
+			$used = ($m[0]-$m[1])/$m[0]*100;
+		}
+		&print_circle_progress($used, 'MEM');
+		print '</div>' . "\n";
+	}
+	# VIRT Usage
+	if ($info->{'mem'}) {
+		print '<div class="col-xs-6 col-sm-3">' . "\n";
+		if (@m && $m[2]) {
+			$used = ($m[2]-$m[3])/$m[2]*100;
+		}
+		&print_circle_progress($used, 'VIRT');
+		print '</div>' . "\n";
+	}
+	# HDD Usage
+	if ($info->{'disk_total'}) {
+		print '<div class="col-xs-6 col-sm-3">' . "\n";
+		($total, $free) = ($info->{'disk_total'}, $info->{'disk_free'});
+		$used = ($total-$free)/$total*100;
+		print_circle_progress($used, 'HDD');
+		print '</div>' . "\n";
+	}
+	print '</div>' . "\n";
+	# Info table 
+	print '<table class="table table-hover">' . "\n";
+	# Hostname Info
+	$ip = $info && $info->{'ips'} ? $info->{'ips'}->[0]->[0] : &to_ipaddress(get_system_hostname());
 	$ip = " ($ip)" if ($ip);
 	$host = &get_system_hostname() . $ip;
-	print '<tr>' . "\n";
-	print '<td><strong>' . &text('body_host') . '</strong></td>' . "\n";
 	if (&foreign_available("net")) {
 		$host = '<a href="net/list_dns.cgi">' . $host . '</a>';
 	}
-	print '<td>' . $host . '</td>' . "\n";
-	print '</tr>' . "\n";
-	
-	# Operating system
-	print '<tr>' . "\n";
-	print '<td><strong>' . &text('body_os') . '</strong></td>' . "\n";
+	&print_table_row(&text('body_host'), $host);
+	# Operating System Info
 	if ($gconfig{'os_version'} eq '*') {
-		print '<td>' . $gconfig{'real_os_type'} . '</td>' . "\n";
+		$os = $gconfig{'real_os_type'};
+	} else {
+		$os = $gconfig{'real_os_type'} . ' ' . $gconfig{'real_os_version'};
 	}
-	else {
-		print '<td>' . $gconfig{'real_os_type'} . ' ' . $gconfig{'real_os_version'} . '</td>' . "\n";
-	}
-	print '</tr>' . "\n";
-	
+	&print_table_row(&text('body_os'), $os);
 	# Webmin version
-	print '<tr>' . "\n";
-	print '<td><strong>' . &text('body_webmin') . '</strong></td>' . "\n";
-	print '<td>' . &get_webmin_version() . '</td>' . "\n";
-	print '</tr>' . "\n";
-
-	# System time
+	&print_table_row(&text('body_webmin'), &get_webmin_version());
+	#System Time
 	$tm = localtime(time());
-	print '<tr>' . "\n";
-	print '<td><strong>' . &text('body_time') .'</strong></td>' . "\n";
 	if (&foreign_available("time")) {
 		$tm = '<a href=time/>' . $tm . '</a>';
 	}
-	print '<td>' . $tm . '</td>' . "\n";
-	print '</tr>' . "\n";
-
-	# Kernel and CPU
+	&print_table_row(&text('body_time'), $tm);
+	# Kernel and CPU Info
 	if ($info->{'kernel'}) {
-		print '<tr>' . "\n";
-		print '<td><strong>' . &text('body_kernel') .'</strong></td>' . "\n";
-		print '<td>' . &text('body_kernelon', $info->{'kernel'}->{'os'}, $info->{'kernel'}->{'version'}, $info->{'kernel'}->{'arch'}) . '</td>' . "\n";
-		print '</tr>' . "\n";
+		&print_table_row(&text('body_kernel'), &text('body_kernelon', $info->{'kernel'}->{'os'}, $info->{'kernel'}->{'version'}, $info->{'kernel'}->{'arch'}));
 	}
-
-	# CPU type and cores
+	# CPU Type and cores
 	if ($info->{'load'}) {
 		@c = @{$info->{'load'}};
 		if (@c > 3) {
-			print '<tr>' . "\n";
-			print '<td><strong>' . $text{'body_cpuinfo'} . '</strong></td>' . "\n";
-			print '<td>' . &text('body_cputype', @c) . '</td>' . "\n";
-			print '</tr>' . "\n";
+			&print_table_row($text{'body_cpuinfo'}, &text('body_cputype', @c));
 		}
 	}
-	
-	# Temperatures, if available
+	# Temperatures Info (if available)
 	if ($info->{'cputemps'}) {
-		print '<tr>' . "\n";
-		print '<td><strong>' . $text{'body_cputemps'} . '</strong></td>' . "\n";
-		print '<td>' . "\n";
 		foreach my $t (@{$info->{'cputemps'}}) {
-			print 'Core ' . $t->{'core'} . ': ' . int($t->{'temp'}) . '&#176;C ';
+			$cputemp .= 'Core ' . $t->{'core'} . ': ' . int($t->{'temp'}) . '&#176;C<br>';
 		}
-		print '</td>' . "\n";
-		print '</tr>' . "\n";
+		&print_table_row($text{'body_cputemps'}, $cputemp);
 	}
 	if ($info->{'drivetemps'}) {
-		print '<tr>' . "\n";
-		print '<td><strong>' . $text{'body_drivetemps'} . '</strong></td>' . "\n";
-		print '<td>' . "\n";
 		foreach my $t (@{$info->{'drivetemps'}}) {
 			my $short = $t->{'device'};
 			$short =~ s/^\/dev\///;
@@ -110,12 +115,10 @@ if ($level == 0) {
 			elsif ($t->{'failed'}) {
 				$emsg .= ' (<span class="text-danger">' . &text('body_drivefailed') . '</span>)';
 			}
-			print $short .  ': ' . int($t->{'temp'}) . '&#176;C ' . $emsg;
+			$hddtemp .= $short .  ': ' . int($t->{'temp'}) . '&#176;C<br>' . $emsg;
 		}
-		print '</td>' . "\n";
-		print '</tr>' . "\n";
+		&print_table_row($text{'body_drivetemps'}, $hddtemp);
 	}
-	
 	# System uptime
 	&foreign_require("proc");
 	my $uptime;
@@ -130,136 +133,29 @@ if ($level == 0) {
 		$uptime = &text('body_upmins', $m);
 	}
 	if ($uptime) {
-		print '<tr>' . "\n";
-		print '<td><strong>' . $text{'body_uptime'} . '</strong></td>' . "\n";
 		if (&foreign_available("init")) {
 			$uptime = '<a href=init/>' . $uptime . '</a>';
 		}
-		print '<td>' . $uptime . '</td>' . "\n";
-		print '</tr>' . "\n";
+		&print_table_row($text{'body_uptime'}, $uptime);
 	}
-
 	# Running processes
 	if (&foreign_check("proc")) {
 		@procs = &proc::list_processes();
 		$pr = scalar(@procs);
-		print '<tr>' . "\n";
-		print '<td><strong>' . $text{'body_procs'} . '</strong></td>' . "\n";
 		if (&foreign_available("proc")) {
 			$pr = '<a href=proc/>' . $pr . '</a>';
 		}
-		print '<td>' . $pr . '</td>' . "\n";
-		print '</tr>' . "\n";
+		&print_table_row($text{'body_procs'}, $pr);
 	}
-
 	# Load averages
 	if ($info->{'load'}) {
 		@c = @{$info->{'load'}};
 		if (@c) {
-			print "<tr> <td><b>$text{'body_cpu'}</b></td>\n";
-			print "<td>",&text('body_load', @c),"</td> </tr>\n";
-			}
-		}
-
-	# CPU usage
-	if ($info->{'cpu'}) {
-		@c = @{$info->{'cpu'}};
-		while ($c[0]+$c[1]+$c[2]+$c[3] > 100) {
-			$c[2] = $c[2]-1;
-		}
-		while ($c[0]+$c[1]+$c[2]+$c[3] < 100) {
-			$c[2] = $c[2]+1;
-		}
-		print '<tr>' . "\n";
-		print '<td><strong>' . $text{'body_cpuuse'} . '</strong></td>' . "\n";
-		print '<td>' . &text('body_cpustats', @c) . '</td>' . "\n";
-		print '</tr>' . "\n";
-		print '<tr>' . "\n";
-		print '<td></td>' . "\n";
-		print '<td>' . "\n";
-		print '<div class="progress">' . "\n";
-		print '<div class="progress-bar progress-bar-warning" style="width: ' . $c[0] . '%">' . "\n";
-		print '</div>' . "\n";
-		print '<div class="progress-bar progress-bar-info" style="width: ' . $c[1] . '%">' . "\n";
-		print '</div>' . "\n";
-		print '<div class="progress-bar progress-bar-danger" style="width: ' . $c[3] . '%">' . "\n";
-		print '</div>' . "\n";
-		print '<div class="progress-bar progress-bar-success" style="width: ' . $c[2] . '%">' . "\n";
-		print '</div>' . "\n";
-		print '</div>' . "\n";
-		print '</td>' . "\n";
-		print '</tr>' . "\n";
-	}
-
-	# Memory usage
-	if ($info->{'mem'}) {
-		@m = @{$info->{'mem'}};
-		if (@m && $m[0]) {
-			print '<tr>' . "\n";
-			print '<td><strong>' . $text{'body_real'} . '</strong></td>' . "\n";
-			$mem = &text('body_used', &nice_size($m[0]*1024), &nice_size(($m[0]-$m[1])*1024));
-			if (&foreign_available("proc")) {
-				$mem = '<a href="proc/index_size.cgi">' . $mem . '</a>';
-			}
-			print '<td>' . $mem . '</td>' . "\n";
-			print '</tr>' . "\n";
-			print '<tr>' . "\n";
-			print '<td></td>' . "\n";
-			print '<td>' . "\n";
-			print '<div class="progress">' . "\n";
-			$used = ($m[0]-$m[1])/$m[0]*100;
-			print '<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="' . $used . '" aria-valuemin="0" aria-valuemax="100" style="width: ' . $used . '%">' . "\n";
-			print '</div>' . "\n";
-			print '</div>' . "\n";
-			print '</td>' . "\n";
-			print '</tr>' . "\n";
-		}
-
-		if (@m && $m[2]) {
-			print '<tr>' . "\n";
-			print '<td><strong>' . $text{'body_virt'} . '</strong></td>' . "\n";
-			print '<td>' . &text('body_used', &nice_size($m[2]*1024), &nice_size(($m[2]-$m[3])*1024)), '</td>' . "\n";
-			print '</tr>' . "\n";
-			print '<tr>' . "\n";
-			print '<td></td>' . "\n";
-			print '<td>' . "\n";
-			print '<div class="progress">' . "\n";
-			$used = ($m[2]-$m[3])/$m[2]*100;
-			print '<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="' . $used . '" aria-valuemin="0" aria-valuemax="100" style="width: ' . $used . '%">' . "\n";
-			print '</div>' . "\n";
-			print '</div>' . "\n";
-			print '</td>' . "\n";
-			print '</tr>' . "\n";
+			&print_table_row($text{'body_cpu'}, &text('body_load', @c));
 		}
 	}
-
-	# Disk space on local drives
-	if ($info->{'disk_total'}) {
-		($total, $free) = ($info->{'disk_total'}, $info->{'disk_free'});
-		print '<tr>' . "\n";
-		print '<td><strong>' . $text{'body_disk'} . '</strong></td>' . "\n";
-		$disk = &text('body_used', &nice_size($total), &nice_size($total-$free));
-		if (&foreign_available("mount")) {
-			$disk = '<a href=mount/>' . $disk . '</a>';
-		}
-		print '<td>' , $disk , '</td>' . "\n";
-		print '</tr>' . "\n";
-		print '<tr>' . "\n";
-		print '<td></td>' . "\n";
-		print '<td>' . "\n";
-		print '<div class="progress">' . "\n";
-		$used = ($total-$free)/$total*100;
-		print '<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="' . $used . '" aria-valuemin="0" aria-valuemax="100" style="width: ' . $used . '%">' . "\n";
-		print '</div>' . "\n";
-		print '</div>' . "\n";
-		print '</td>' . "\n";
-		print '</tr>' . "\n";
-	}
-
 	# Package updates
 	if ($info->{'poss'}) {
-		print '<tr>' . "\n";
-		print '<td><strong>' . $text{'body_updates'} . '</strong></td>' . "\n";
 		@poss = @{$info->{'poss'}};
 		@secs = grep { $_->{'security'} } @poss;
 		if (@poss && @secs) {
@@ -274,65 +170,40 @@ if ($level == 0) {
 		if (&foreign_available("package-updates")) {
 			$msg = '<a href="package-updates/index.cgi?mode=updates">' . $msg  . '</a>';
 		}
-		print '<td>' . $msg . '</td>' . "\n";
-		print '</tr>' . "\n";
+		&print_table_row($text{'body_updates'}, $msg);
 	}
 	print '</table>' . "\n";
-	print '</div>' . "\n";
-	print '</div>' . "\n";
-	#print '<p id="about">Template developed and written by <a href="https://www.facebook.com/RiccardoNob" target="_blank">Riccardo Nobile</a> & <a href="https://www.facebook.com/simone.cragnolini" target="_blank">Simone Cragnolini</a></p>' . "\n";
-	#print '<p id="about"><a href="http://winfuture.it/" target="_blank">WinFuture</a></p>' . "\n";
-	print '</div>' . "\n";
-	#print '</div>' . "\n";
-
-	# Check for incorrect OS
+	# Webmin notifications
 	if (&foreign_check("webmin")) {
 		&foreign_require("webmin", "webmin-lib.pl");
-		&webmin::show_webmin_notifications();
+		my @notifs = &webmin::get_webmin_notifications();
+		if (@notifs) {
+			print '<div>' . "\n";
+			print "<center>\n",join("<hr>\n", @notifs),"</center>\n";
+			print '</div>' . "\n";
+		}
+		# print scalar(@notifs);
 	}
-}
-elsif ($level == 3) {
-	print '<div id="wrapper" class="page">' . "\n";
-	print '<div class="container">' . "\n";
-	print '<div id="system-status" class="panel panel-default">' . "\n";
-	print '<div class="panel-heading">' . "\n";
-	print '<h3 class="panel-title">' . &text('body_header1') . '</h3>' . "\n";
-	print '</div>';
-	print '<div class="panel-body">' . "\n";
+} elsif ($level == 3) {
 	print '<table class="table table-hover">' . "\n";
-
 	# Host and login info
-	print '<tr>' . "\n";
-	print '<td><strong>' . &text('body_host') . '</strong></td>' . "\n";
-	print '<td>' . &get_system_hostname() . '</td>' . "\n";
-	print '</tr>' . "\n";
-	
-	# Operating system
-	print '<tr>' . "\n";
-	print '<td><strong>' . &text('body_os') . '</strong></td>' . "\n";
+	&print_table_row(&text('body_host'), &get_system_hostname());
+	# Operating System Info
 	if ($gconfig{'os_version'} eq '*') {
-		print '<td>' . $gconfig{'real_os_type'} . '</td>' . "\n";
+		$os = $gconfig{'real_os_type'};
+	} else {
+		$os = $gconfig{'real_os_type'} . ' ' . $gconfig{'real_os_version'};
 	}
-	else {
-		print '<td>' . $gconfig{'real_os_type'} . ' ' . $gconfig{'real_os_version'} . '</td>' . "\n";
-	}
-	print '</tr>' . "\n";
-
-	# Usermin version
-	print '<tr>' . "\n";
-	print '<td><strong>' . &text('body_usermin') . '</strong></td>' . "\n";
-	print '<td>' . &get_webmin_version() . '</td>' . "\n";
-	print '</tr>' . "\n";
-
-	# System time
+	&print_table_row(&text('body_os'), $os);
+	# Webmin version
+	&print_table_row(&text('body_usermin'), &get_webmin_version());
+	#System Time
 	$tm = localtime(time());
-	print '<tr>' . "\n";
-	print '<td><strong>' . &text('body_time') .'</strong></td>' . "\n";
-	print '<td>' . $tm. '</td>' . "\n";
-	print '</tr>' . "\n";
-	
-
-	# Disk quotas
+	if (&foreign_available("time")) {
+		$tm = '<a href=time/>' . $tm . '</a>';
+	}
+	&print_table_row(&text('body_time'), $tm);
+	# Disk quotas -- !!!!!
 	if (&foreign_installed("quota")) {
 		&foreign_require("quota", "quota-lib.pl");
 		$n = &quota::user_filesystems($remote_user);
@@ -367,11 +238,52 @@ elsif ($level == 3) {
 		}
 	}
 	print '</table>' . "\n";
-	print '</div>' . "\n";
-	print '</div>' . "\n";
-	#print '<p id="about">Template developed and written by <a href="https://www.facebook.com/RiccardoNob" target="_blank">Riccardo Nobile</a> & <a href="https://www.facebook.com/simone.cragnolini" target="_blank">Simone Cragnolini</a></p>' . "\n";
-	#print '<p id="about"><a href="http://winfuture.it/" target="_blank">WinFuture</a></p>' . "\n";
-	print '</div>' . "\n";
-	#print '</div>' . "\n";
 }
+# End of page
+print '</div>' . "\n";
+print '</div>' . "\n";
+#print '<p id="about">Template developed and written by <a href="https://www.facebook.com/RiccardoNob" target="_blank">Riccardo Nobile</a> & <a href="https://www.facebook.com/simone.cragnolini" target="_blank">Simone Cragnolini</a></p>' . "\n";
+#print '<p id="about"><a href="http://winfuture.it/" target="_blank">WinFuture</a></p>' . "\n";
+print '</div>' . "\n";
+#print '</div>' . "\n";
 &footer();
+
+sub print_circle_progress {
+	local ($percent, $label) = @_;
+	use POSIX;
+	$percent = ceil($percent);
+	if ($percent < 75) {
+		$class = 'success';
+	} elsif ($percent < 90) {
+		$class = 'warning';
+	} else {
+		$class = 'danger';
+	}
+	print '<div data-progress="' . $percent . '" class="progress progress-circle">' . "\n";
+	print '<div class="progress-bar-circle progress-bar-' . $class . '">' . "\n";
+	print '<div class="progress-bar-circle-mask progress-bar-circle-full">' . "\n";
+	print '<div class="progress-bar-circle-fill"></div>' . "\n";
+	print '</div>' . "\n";
+	print '<div class="progress-bar-circle-mask progress-bar-circle-half">' . "\n";
+	print '<div class="progress-bar-circle-fill"></div>' . "\n";
+	print '<div class="progress-bar-circle-fill progress-bar-circle-fix"></div>' . "\n";
+	print '</div>' . "\n";
+	print '<div class="progress-bar-circle-inset">' . "\n";
+	print '<div class="progress-bar-circle-title">' . "\n";
+	print '<strong class="text-muted">' . $label . '</strong>' . "\n";
+	print '</div>' . "\n";
+	print '<div class="progress-bar-circle-percent">' . "\n";
+	print '<span></span>' . "\n";
+	print '</div>' . "\n";
+	print '</div>' . "\n";
+	print '</div>' . "\n";
+	print '</div>' . "\n";
+}
+
+sub print_table_row {
+	local ($title, $content) = @_;
+	print '<tr>' . "\n";
+	print '<td><strong>' . $title . '</strong></td>' . "\n";
+	print '<td>' . $content . '</td>' . "\n";
+	print '</tr>' . "\n";
+}

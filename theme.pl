@@ -9,6 +9,7 @@ sub theme_header {
 	print '<link href="/css/fontawesome.css" rel="stylesheet" type="text/css">' , "\n";
 	print '<link href="/css/select.css" rel="stylesheet" type="text/css">' , "\n";
 	print '<link href="/css/default.css" rel="stylesheet" type="text/css">' , "\n";
+	print '<link href="/css/circleprogress.css" rel="stylesheet" type="text/css">' , "\n";
 	print '<script src="/js/jquery.js" type="text/javascript"></script>' , "\n";
 	print '<script src="/js/bootstrap.js" type="text/javascript"></script>' , "\n";
 	print '<script src="/js/select.js" type="text/javascript"></script>' , "\n";
@@ -127,60 +128,6 @@ for(my $i=0; $i+1<@_; $i+=2) {
 	print '</html>' , "\n";
 }
 
-sub theme_generate_icon {
-my $icon = $_[0];
-#$icon =~ s/.gif/.png/;
-my $w = !defined($_[4]) ? "width=48" : $_[4] ? "width=$_[4]" : "";
-my $h = !defined($_[5]) ? "height=48" : $_[5] ? "height=$_[5]" : "";
-if ($tconfig{'noicons'}) {
-	if ($_[2]) {
-		print "$_[6]<a href=\"$_[2]\" $_[3]>$_[1]</a>$_[7]\n";
-		}
-	else {
-		print "$_[6]$_[1]$_[7]\n";
-		}
-	}
-elsif ($_[2]) {
-	print "<table style=\" margin: 0 auto;\"><tr><td>\n",
-	      "<a href=\"$_[2]\" $_[3]><img src=\"$icon\" alt=\"\" border=0 ",
-	      "$w $h></a></td></tr></table>\n";
-	print "$_[6]<a href=\"$_[2]\" $_[3]>$_[1]</a>$_[7]\n";
-	}
-else {
-	print "<table style=\" margin: 0 auto;\><tr><td>\n",
-	      "<img src=\"$icon\" alt=\"\" border=0 $w $h>",
-	      "</td></tr></table>\n$_[6]$_[1]$_[7]\n";
-	}
-}
-
-sub theme_icons_table {
-	my $need_tr;
-	my $cols = $_[3] ? $_[3] : 4;
-	my $per = int(100.0 / $cols);
-	
-	print '<table class="icons-table icons_table" width="100%">' . "\n";
-	print '<tr><td>';
-	print '<div class="icons-table">' . "\n";
-	print '<div class="row">' . "\n";
-	for(my $i=0; $i<@{$_[0]}; $i++) {
-		if ($i%$cols == 0) {
-			
-		}
-		print '<div style="text-align: center;" class="col-xs-6 col-sm-4 col-md-3">' . "\n";
-		&generate_icon($_[2]->[$i], $_[1]->[$i], $_[0]->[$i], ref($_[4]) ? $_[4]->[$i] : $_[4], $_[5], $_[6], $_[7]->[$i], $_[8]->[$i]);
-		print '</div>' . "\n";
-		if ($i%$cols == $cols-1) { 
-			
-		}
-	}
-	print '</div>' . "\n"; 
-	while($i++%$cols) { print "<td width=$per%></td>\n"; $need_tr++; }
-	print '</tr>' . "\n" if ($need_tr);
-	print '</div>' . "\n";
-	print '</tr></td>';
-	print '</table>' . "\n";
-}
-
 sub theme_file_chooser_button
 {
 my $form = defined($_[2]) ? $_[2] : 0;
@@ -224,6 +171,60 @@ return "<input style='margin: 4px 0;' class='ui_upload' type=file name=\"".&quot
        "size=$size ".
        ($dis ? "disabled=true" : "").
        ($tags ? " ".$tags : "").">";
+}
+
+# Thi is the web-lib-funcs.pl part dedicated to all web lib functions.
+# WARNING!!! Work in progress - Not all is implemented!!!
+
+################################# Theme icons generation functions #################################
+
+# ff
+sub theme_icons_table {
+	print '<div class="row icons-row">' . "\n";
+	for(my $i=0; $i<@{$_[0]}; $i++) {
+		print '<div style="text-align: center;" class="col-xs-6 col-sm-4 col-md-3">' . "\n";
+		&generate_icon($_[2]->[$i], $_[1]->[$i], $_[0]->[$i], ref($_[4]) ? $_[4]->[$i] : $_[4], $_[5], $_[6], $_[7]->[$i], $_[8]->[$i]);
+		print '</div>' . "\n";
+	}
+	print '</div>' . "\n";
+}
+
+sub theme_generate_icon {
+	my ($icon, $title, $link, $href, $width, $height, $before, $after) = @_;
+	# Decomment only when new icons are ready
+	# $icon =~ s/.gif/.png/;
+	$width = !defined($width) ? '48' : $width;
+	$height = !defined($height) ? '48' : $height;
+	
+	if ($tconfig{'noicons'}) {
+		if ($link) {
+			print '<div>';
+			print $before;
+			print '<a href="' . $link . '" ' . $href . '>' . $title . '</a>';
+			print $after;
+			print '</div>';
+		} else {
+			print '<div>';
+			print $before;
+			print $title;
+			print $after;
+			print '</div>';
+		}
+	} elsif ($link) {
+		print '<div class="icon-container">';
+		print '<a href="' . $link . '" ' . $href . '><img style="padding: 7px; border-radius: 4px; border: 1px solid #DDD; background: linear-gradient(to bottom, #FCFCFC 0%, #F5F5F5 100%) repeat scroll 0% 0% transparent; width: 64px; height: 64px; box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);" src="' . $icon . '" width="' . $width . '" height="' . $height . '">';
+		print $before;
+		print '<a href="' . $link . '" ' . $href . '><p>' . $title . '</p></a>';
+		print $after;
+		print '</div>';
+	} else {
+		print '<div class="icon-container">';
+		print '<img style="padding: 7px; border-radius: 4px; border: 1px solid #DDD; background: linear-gradient(to bottom, #FCFCFC 0%, #F5F5F5 100%) repeat scroll 0% 0% transparent; width: 64px; height: 64px; box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);" src="' . $icon . '" width="' . $width . '" height="' . $height . '">';
+		print $before;
+		print '<p>' . $title . '</p>';
+		print $after;
+		print '</div>';
+	}
 }
 
 # Thi is the theme.pl part dedicated to all theme functions.
@@ -428,10 +429,17 @@ sub theme_ui_checkbox {
 	$rv .= 'id="' . &quote_escape("${name}_${value}") . '" ';
 	$rv .= ($tags ? $tags .  ' ' : '');
 	$rv .= '>' . "\n";
-	$rv .= '<label class="checkbox" ';
-	$rv .= 'for="' . &quote_escape("${name}_${value}") .'">' . "\n";
-	$rv .= '<i class="fa"></i> ' . $label . "\n";
-	$rv .= '</label>' . "\n";
+	if ($label eq '') {
+		$rv .= '<label class="checkbox" ';
+		$rv .= 'for="' . &quote_escape("${name}_${value}") .'">' . "\n";
+		$rv .= '<i class="fa"></i> ' . $after . "\n";
+		$rv .= '</label>' . "\n";
+	} else {
+		$rv .= '<label class="checkbox" ';
+		$rv .= 'for="' . &quote_escape("${name}_${value}") .'">' . "\n";
+		$rv .= '<i class="fa"></i> ' . $label . "\n";
+		$rv .= '</label>' . "\n";
+	}
 	
 	return $rv;
 }

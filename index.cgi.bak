@@ -129,17 +129,17 @@ if ($level == 0) {
 		print '" data-placement="bottom" data-toggle="popover" data-container="body" type="button" data-original-title="" title="Temperatures"><i class="fa fa-fw fa-fire"></i></button>' . "\n";
 	}
 	# Webmin notifications
-	#if (&foreign_check("webmin")) {
-		#&foreign_require("webmin", "webmin-lib.pl");
-		#my @notifs = &webmin::get_webmin_notifications();
-		#print '<button style="margin-right: 20px; width: 44px;" class="btn btn-default navbar-btn navbar-left" data-html="true" data-content="';
-		
-		#print '" data-placement="bottom" data-toggle="popover" data-container="body" type="button" data-original-title="" title="Notifications"><i class="fa fa-fw fa-tags"></i>';
-		#if (@notifs) {
-			#print '<span class="badge" style="position: relative; top: -15px; left: 2px; background-color: rgb(217, 83, 79);">' . scalar(@notifs) . '</span>';
+		#if (&foreign_check("webmin")) {
+			#&foreign_require("webmin", "webmin-lib.pl");
+			#my @notifs = &webmin::get_webmin_notifications();
+			#print '<button style="margin-right: 20px; width: 44px;" class="btn btn-default navbar-btn navbar-left" data-html="true" data-content="';
+			
+			#print '" data-placement="bottom" data-toggle="popover" data-container="body" type="button" data-original-title="" title="Notifications"><i class="fa fa-fw fa-tags"></i>';
+			#if (@notifs) {
+				#print '<span class="badge" style="position: relative; top: -15px; left: 2px; background-color: rgb(217, 83, 79);">' . scalar(@notifs) . '</span>';
+			#}
+			#print '</button>' . "\n";
 		#}
-		#print '</button>' . "\n";
-	#}
 	print '<button class="btn btn-default navbar-btn navbar-left" data-html="true" data-content="';
 	print '<ul id=\'temp\' class=\'list-group\'>';
 	$ip = $info && $info->{'ips'} ? $info->{'ips'}->[0]->[0] :
