@@ -40,5 +40,6 @@ $(document).ready(function() {
 				$('#sidebar input[name="search"]').focus();
 			}
 		}
+		return false;
 	});
 });

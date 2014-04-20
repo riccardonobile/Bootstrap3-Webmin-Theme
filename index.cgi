@@ -22,6 +22,9 @@ if ($in{'page'}) {
 %gaccess = &get_module_acl(undef, "");
 $title = &get_html_framed_title();
 &header($title);
+print '<script src="js/offcanvas.js" type="text/javascript"></script>' , "\n";
+print '<script src="js/ajax.js" type="text/javascript"></script>' , "\n";
+#print '<script src="js/loader.js" type="text/javascript"></script>' , "\n";
 print '<div id="wrapper" class="index">' . "\n";
 print '<header>' . "\n";
 print '<nav class="navbar navbar-default navbar-fixed-top" role="navigation">' . "\n";
@@ -36,17 +39,17 @@ print '<a class="navbar-brand" target="page" href="body.cgi">Webmin - ' . &get_d
 print '</div>' . "\n";
 print '<div class="collapse navbar-collapse" id="collapse">' . "\n";
 print '<ul class="nav navbar-nav visible-xs">' . "\n";
-print '<li><a target="page" href="menu.cgi"><i class="fa fa-tags"></i> Main menu</a></li>' . "\n";
+print '<li><a data-toggle="collapse" data-target="#collapse" target="page" href="menu.cgi"><i class="fa fa-tags"></i> Main menu</a></li>' . "\n";
 if ($gconfig{'log'} && &foreign_available("webminlog")) {
-	print '<li><a target="page" href="webminlog/" onClick="show_logs(); return false;"><i class="fa fa fa-exclamation-triangle"></i> View Module\'s Logs</a></li>' . "\n";
+	print '<li><a data-toggle="collapse" data-target="#collapse" target="page" href="webminlog/" onClick="show_logs(); return false;"><i class="fa fa fa-exclamation-triangle"></i> View Module\'s Logs</a></li>' . "\n";
 }
-print '<li><a target="page" href="body.cgi"><i class="fa fa-home"></i> System Information</a></li>' . "\n";
+print '<li><a data-toggle="collapse" data-target="#collapse" target="page" href="body.cgi"><i class="fa fa-home"></i> System Information</a></li>' . "\n";
 %gaccess = &get_module_acl(undef, "");
 if (&get_product_name() eq 'webmin' && !$ENV{'ANONYMOUS_USER'} && $gconfig{'nofeedbackcc'} != 2 && $gaccess{'feedback'} && $gconfig{'feedback_to'} || &get_product_name() eq 'usermin' && !$ENV{'ANONYMOUS_USER'} && $gconfig{'feedback'}) {
-	print '<li><a target="page" href="feedback_form.cgi"><i class="fa fa-envelope"></i> Send Feedback</a></li>' . "\n";
+	print '<li><a data-toggle="collapse" data-target="#collapse" target="page" href="feedback_form.cgi"><i class="fa fa-envelope"></i> Send Feedback</a></li>' . "\n";
 }
 if (&foreign_available("webmin")) {
-	print '<li><a target="page" href="webmin/refresh_modules.cgi"><i class="fa fa-refresh"></i> Refresh Modules</a></li>' . "\n";
+	print '<li><a data-toggle="collapse" data-target="#collapse" target="page" href="webmin/refresh_modules.cgi"><i class="fa fa-refresh"></i> Refresh Modules</a></li>' . "\n";
 }
 print '</ul>' . "\n";
 if (&get_product_name() eq "usermin") {
@@ -192,7 +195,7 @@ if ($level == 0) {
 print '<div class="navbar-right">' . "\n";
 $user = $remote_user;
 if (&foreign_available("net")) {
-	$user = '<a target="page" href="acl/edit_user.cgi?user=' . $user .'">' . $user . '</a>';
+	$user = '<a data-toggle="collapse" data-target="#collapse" target="page" href="acl/edit_user.cgi?user=' . $user .'">' . $user . '</a>';
 }
 print '<div>';
 print '<p class="navbar-text pull-left">Welcome ' . $user . '</p>' . "\n";
@@ -209,7 +212,7 @@ print '</div>' . "\n";
 print '</div>' . "\n";
 print '</nav>' . "\n";
 print '</header>' . "\n" . "\n";
-print '<aside id="sidebar" class="hidden-xs">' . "\n" . "\n";
+print '<aside style="z-index:10;" id="sidebar" class="hidden-xs">' . "\n" . "\n";
 print '<ul class="navigation">' . "\n";
 print '<li>' . "\n";
 print '<a href="#hide"><i class="fa fa-bars fa-fw"></i> <span>Hide menu</span></a>' . "\n";
@@ -267,6 +270,9 @@ if (&foreign_available("webmin")) {
 print '</ul>' . "\n";
 print '</aside>' . "\n";
 print '<div id="wrapper" class="menu">' . "\n";
+#print '<div class="loader-container" style="background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.5); position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; z-index:5; display: none;">'  . "\n";
+#print '<div class="loader"><i class="fa fa-spinner fa-spin"></i></div>' . "\n";
+#print '</div>' . "\n";
 print '<iframe name="page" src="' . $goto . '">' . "\n";
 print '</iframe>' . "\n";
 print '</div>' . "\n";

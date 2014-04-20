@@ -4,15 +4,11 @@
 
 BEGIN { push(@INC, ".."); };
 use WebminCore;
-if (&get_product_name() eq "usermin") {
-	$name = 'Usermin';
-}
-else {
-	$name = 'Webmin'
-}
+$name = (&get_product_name() eq 'usermin') ? 'Usermin' : 'Webmin';
 $pragma_no_cache = 1;
 &ReadParse();
 &init_config();
+
 %text = &load_language($current_theme);
 %gaccess = &get_module_acl(undef, "");
 &get_miniserv_config(\%miniserv);

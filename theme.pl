@@ -13,8 +13,6 @@ sub theme_header {
 	print '<script src="/js/jquery.js" type="text/javascript"></script>' , "\n";
 	print '<script src="/js/bootstrap.js" type="text/javascript"></script>' , "\n";
 	print '<script src="/js/select.js" type="text/javascript"></script>' , "\n";
-	print '<script src="js/offcanvas.js" type="text/javascript"></script>' , "\n";
-	print '<script src="js/ajax.js" type="text/javascript"></script>' , "\n";
 	print '</head>' , "\n";
 	print '<body>' , "\n";
 	
@@ -211,7 +209,7 @@ sub theme_generate_icon {
 			print '</div>';
 		}
 	} elsif ($link) {
-		print '<div class="icon-container">';
+		print '<div style="height: 120px;" class="icon-container">';
 		print '<a href="' . $link . '" ' . $href . '><img style="padding: 7px; border-radius: 4px; border: 1px solid #DDD; background: linear-gradient(to bottom, #FCFCFC 0%, #F5F5F5 100%) repeat scroll 0% 0% transparent; width: 64px; height: 64px; box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);" src="' . $icon . '" width="' . $width . '" height="' . $height . '">';
 		print $before;
 		print '<a href="' . $link . '" ' . $href . '><p>' . $title . '</p></a>';

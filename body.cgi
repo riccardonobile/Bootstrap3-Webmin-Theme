@@ -25,40 +25,30 @@ if ($level == 0) {
 	$info = &system_status::get_collected_info();
 	# Circle Progress Container
 	print '<div class="row" style="margin: 0;">' . "\n";
+	$col_width = &get_col_num($info, 12);
 	# CPU Usage
 	if ($info->{'cpu'}) {
 		@c = @{$info->{'cpu'}};
-		print '<div class="col-xs-6 col-sm-3">' . "\n";
 		$used = $c[0]+$c[1]+$c[3];
-		&print_circle_progress($used, 'CPU');
-		print '</div>' . "\n";
+		&print_progressbar_colum(6, $col_width, $used, 'CPU');
 	}
-	# MEM Usage
+	# MEM e VIRT Usage
 	if ($info->{'mem'}) {
-		print '<div class="col-xs-6 col-sm-3">' . "\n";
 		@m = @{$info->{'mem'}};
 		if (@m && $m[0]) {
 			$used = ($m[0]-$m[1])/$m[0]*100;
+			&print_progressbar_colum(6, $col_width, $used, 'MEM');
 		}
-		&print_circle_progress($used, 'MEM');
-		print '</div>' . "\n";
-	}
-	# VIRT Usage
-	if ($info->{'mem'}) {
-		print '<div class="col-xs-6 col-sm-3">' . "\n";
 		if (@m && $m[2]) {
 			$used = ($m[2]-$m[3])/$m[2]*100;
+			&print_progressbar_colum(6, $col_width, $used, 'VIRT');
 		}
-		&print_circle_progress($used, 'VIRT');
-		print '</div>' . "\n";
 	}
 	# HDD Usage
 	if ($info->{'disk_total'}) {
-		print '<div class="col-xs-6 col-sm-3">' . "\n";
 		($total, $free) = ($info->{'disk_total'}, $info->{'disk_free'});
 		$used = ($total-$free)/$total*100;
-		print_circle_progress($used, 'HDD');
-		print '</div>' . "\n";
+		&print_progressbar_colum(6, $col_width, $used, 'HDD');
 	}
 	print '</div>' . "\n";
 	# Info table 
@@ -174,11 +164,12 @@ if ($level == 0) {
 	}
 	print '</table>' . "\n";
 	# Webmin notifications
+	print '</div>' . "\n";
 	if (&foreign_check("webmin")) {
 		&foreign_require("webmin", "webmin-lib.pl");
 		my @notifs = &webmin::get_webmin_notifications();
 		if (@notifs) {
-			print '<div>' . "\n";
+			print '<div class="panel-footer">' . "\n";
 			print "<center>\n",join("<hr>\n", @notifs),"</center>\n";
 			print '</div>' . "\n";
 		}
@@ -241,15 +232,14 @@ if ($level == 0) {
 }
 # End of page
 print '</div>' . "\n";
-print '</div>' . "\n";
 #print '<p id="about">Template developed and written by <a href="https://www.facebook.com/RiccardoNob" target="_blank">Riccardo Nobile</a> & <a href="https://www.facebook.com/simone.cragnolini" target="_blank">Simone Cragnolini</a></p>' . "\n";
 #print '<p id="about"><a href="http://winfuture.it/" target="_blank">WinFuture</a></p>' . "\n";
 print '</div>' . "\n";
 #print '</div>' . "\n";
 &footer();
 
-sub print_circle_progress {
-	local ($percent, $label) = @_;
+sub print_progressbar_colum {
+	my ($xs, $sm, $percent, $label) = @_;
 	use POSIX;
 	$percent = ceil($percent);
 	if ($percent < 75) {
@@ -259,6 +249,7 @@ sub print_circle_progress {
 	} else {
 		$class = 'danger';
 	}
+	print '<div class="col-xs-' . $xs . ' col-sm-' . $sm . '">' . "\n";
 	print '<div data-progress="' . $percent . '" class="progress progress-circle">' . "\n";
 	print '<div class="progress-bar-circle progress-bar-' . $class . '">' . "\n";
 	print '<div class="progress-bar-circle-mask progress-bar-circle-full">' . "\n";
@@ -278,6 +269,21 @@ sub print_circle_progress {
 	print '</div>' . "\n";
 	print '</div>' . "\n";
 	print '</div>' . "\n";
+	print '</div>' . "\n";
+}
+
+sub get_col_num {
+	my ($info, $max_col) = @_;
+	my $num_col = 0;
+	if ($info->{'cpu'}) { $num_col++; }
+	if ($info->{'mem'}) {
+		@m = @{$info->{'mem'}};
+		if (@m && $m[0]) { $num_col++; }
+		if (@m && $m[2]) { $num_col++; }
+	}
+	if ($info->{'disk_total'}) { $num_col++; }
+	my $col = $max_col / $num_col;
+	return $col;
 }
 
 sub print_table_row {
