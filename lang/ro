@@ -50,7 +50,7 @@ body_uquota=Cote de disc şi utilizare
 login_message=Trebuie să introduci un utilizator şi parolă pentru a te autentifica în Serverul Webmin 
 login_user=Utilizator
 login_pass=Parola
-login_token=Semn(Token=
+login_token=Semn(Token)
 login_save=Ţine-mă minte
 login_signin=Conectare
 login_reset=Restabileşte
