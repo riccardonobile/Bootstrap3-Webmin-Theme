@@ -5,17 +5,17 @@ sub theme_header {
 	print '<title>' , $_[0] , '</title>' , "\n";
 	print '<meta charset="utf-8">' , "\n";
 	print '<meta name="viewport" content="width=device-width, initial-scale=1.0">' . "\n";
-	print '<link href="/css/bootstrap.css" rel="stylesheet" type="text/css">' , "\n";
-	print '<link href="/css/fontawesome.css" rel="stylesheet" type="text/css">' , "\n";
-	print '<link href="/css/select.css" rel="stylesheet" type="text/css">' , "\n";
-	print '<link href="/css/default.css" rel="stylesheet" type="text/css">' , "\n";
-	print '<link href="/css/circleprogress.css" rel="stylesheet" type="text/css">' , "\n";
-	print '<script src="/js/jquery.js" type="text/javascript"></script>' , "\n";
-	print '<script src="/js/bootstrap.js" type="text/javascript"></script>' , "\n";
-	print '<script src="/js/select.js" type="text/javascript"></script>' , "\n";
+	print '<link href="',  $gconfig{'webprefix'}, '/css/bootstrap.css" rel="stylesheet" type="text/css">' , "\n";
+	print '<link href="',  $gconfig{'webprefix'}, '/css/fontawesome.css" rel="stylesheet" type="text/css">' , "\n";
+	print '<link href="',  $gconfig{'webprefix'}, '/css/select.css" rel="stylesheet" type="text/css">' , "\n";
+	print '<link href="',  $gconfig{'webprefix'}, '/css/default.css" rel="stylesheet" type="text/css">' , "\n";
+	print '<link href="',  $gconfig{'webprefix'}, '/css/circleprogress.css" rel="stylesheet" type="text/css">' , "\n";
+	print '<script src="', $gconfig{'webprefix'}, '/js/jquery.js" type="text/javascript"></script>' , "\n";
+	print '<script src="', $gconfig{'webprefix'}, '/js/bootstrap.js" type="text/javascript"></script>' , "\n";
+	print '<script src="', $gconfig{'webprefix'}, '/js/select.js" type="text/javascript"></script>' , "\n";
 	print '</head>' , "\n";
 	print '<body>' , "\n";
-	
+
 if (@_ > 1) {
 	print '<div class="container">' . "\n";
 	my %this_module_info = &get_module_info(&get_module_name());
@@ -193,7 +193,7 @@ sub theme_generate_icon {
 	# $icon =~ s/.gif/.png/;
 	$width = !defined($width) ? '48' : $width;
 	$height = !defined($height) ? '48' : $height;
-	
+
 	if ($tconfig{'noicons'}) {
 		if ($link) {
 			print '<div>';
@@ -244,7 +244,7 @@ sub theme_generate_icon {
 sub theme_ui_columns_start {
 	my ($heads, $width, $noborder, $tdtags, $title) = @_;
 	my ($rv, $i);
-	
+
 	$rv .= '<table class="table table-striped table-rounded">' . "\n";
 	$rv .= '<thead>' . "\n";
 	$rv .= '<tr>' . "\n";
@@ -255,31 +255,31 @@ sub theme_ui_columns_start {
 	}
 	$rv .= '</tr>' . "\n";
 	$rv .= '</thead>' . "\n";
-	
+
 	return $rv;
 }
 
 sub theme_ui_columns_row {
 	my ($cols, $tdtags) = @_;
 	my ($rv, $i);
-	
+
 	#$rv .= '<tbody>' . "\n";
 	$rv .= '<tr>' . "\n";
 	for($i=0; $i<@$cols; $i++) {
 		$rv .= '<td>' . "\n";
 		$rv .= ($cols->[$i] !~ /\S/ ? '<br>' : $cols->[$i]);
 		$rv .= '</td>' . "\n";
-	}	
+	}
 	$rv .= '</tr>' . "\n";
 	#$rv .= '</tbody>' . "\n";
-	
+
 	return $rv;
 }
 
 sub theme_ui_columns_header {
 	my ($cols, $tdtags) = @_;
 	my ($rv, $i);
-	
+
 	$rv .= '<thead>' . "\n";
 	$rv .= '<tr>' . "\n";
 	for($i=0; $i<@$cols; $i++) {
@@ -289,7 +289,7 @@ sub theme_ui_columns_header {
 	}
 	$rv .= '</tr>' . "\n";
 	$rv .= '</thead>' . "\n";
-	
+
 	return $rv;
 }
 
@@ -299,9 +299,9 @@ sub theme_ui_columns_header {
 
 sub theme_ui_columns_end {
 	my $rv;
-	
+
 	$rv .= '</table>' . "\n";
-	
+
 	return $rv;
 }
 
@@ -314,14 +314,14 @@ sub theme_ui_columns_end {
 sub theme_ui_form_start {
 	my ($script, $method, $target, $tags) = @_;
 	my $rv;
-	
+
 	$rv .= '<form role="form" ';
 	$rv .= 'action="' . &html_escape($script) . '" ';
 	$rv .= ($method eq 'post' ? 'method="post" ' : $method eq 'form-data' ? 'method="post" enctype="multipart/form-data" ' : 'method="get" ');
 	$rv .= ($target ? 'target="' . $target . '" ' : '');
 	$rv .= ($tags ? $tags : '');
 	$rv .= '>' . "\n";
-	
+
 	return $rv;
 }
 
@@ -330,7 +330,7 @@ sub theme_ui_form_start {
 sub theme_ui_textbox {
 	my ($name, $value, $size, $dis, $max, $tags) = @_;
 	my $rv;
-	
+
 	$rv .= '<input style="display: inline; width: auto;" class="form-control" type="text" ';
 	$rv .= 'name="' . &quote_escape($name) . '" ';
 	$rv .= 'value="' . &quote_escape($value) . '" ';
@@ -339,7 +339,7 @@ sub theme_ui_textbox {
 	$fv .= ($max ? 'maxlength="' . $max . '" ' : '');
 	$rv .= ($tags ? $tags : '');
 	$rv .= '>' . "\n";
-	
+
 	return $rv;
 }
 
@@ -350,7 +350,7 @@ sub theme_ui_textbox {
 sub theme_ui_password {
 	my ($name, $value, $size, $dis, $max, $tags) = @_;
 	my $rv;
-	
+
 	$rv .= '<input style="display: inline; width: auto;" class="form-control" type="password" ';
 	$rv .= 'name="' . &quote_escape($name) . '" ';
 	$rv .= 'value="' . &quote_escape($value) . '" ';
@@ -359,7 +359,7 @@ sub theme_ui_password {
 	$fv .= ($max ? 'maxlength="' . $max . '" ' : '');
 	$rv .= ($tags ? $tags : '');
 	$rv .= '>' . "\n";
-	
+
 	return $rv;
 }
 
@@ -395,20 +395,20 @@ sub theme_ui_radio {
 		$rv .= '<i class="fa"></i> ' . $label . "\n";
 		$rv .= '</label>' . $after . "\n";
 	}
-	
+
 	return $rv;
 }
 
 sub theme_ui_yesno_radio {
 	my ($name, $value, $yes, $no, $dis) = @_;
 	my $rv;
-	
+
 	$yes = 1 if (!defined($yes));
 	$no = 0 if (!defined($no));
 	$value = int($value);
-	
+
 	$rv .= &ui_radio($name, $value, [ [ $yes, $text{'yes'} ], [ $no, $text{'no'} ] ], $dis);
-	
+
 	return $rv;
 }
 
@@ -438,7 +438,7 @@ sub theme_ui_checkbox {
 		$rv .= '<i class="fa"></i> ' . $label . "\n";
 		$rv .= '</label>' . "\n";
 	}
-	
+
 	return $rv;
 }
 
@@ -461,7 +461,7 @@ sub theme_ui_oneradio {
 	$rv .= 'for="' . &quote_escape("${name}_${value}") .'">' . "\n";
 	$rv .= '<i class="fa"></i> ' . $label . "\n";
 	$rv .= '</label>' . "\n";
-	
+
 	return $rv;
 }
 
@@ -469,7 +469,7 @@ sub theme_ui_textarea {
 	my ($name, $value, $rows, $cols, $wrap, $dis, $tags) = @_;
 	my $rv;
 	$cols = &ui_max_text_width($cols, 1);
-	
+
 	$rv .= '<textarea style="display: inline; width: auto;" class="form-control" ';
 	$rv .= 'name="' . &quote_escape($name) . '" ';
 	$rv .= 'rows="' . $rows . '" ';
@@ -480,7 +480,7 @@ sub theme_ui_textarea {
 	$rv .= '>' . "\n";
 	$rv .= &html_escape($value) . "\n";
 	$rv .= '</textarea>' . "\n";
-	
+
 	return $rv;
 }
 
@@ -494,7 +494,7 @@ sub theme_ui_submit {
 	my ($label, $name, $dis, $tags) = @_;
 	my ($rv, $fa);
 	my $btntype = 'btn-default';
-	 
+
 	if ($name eq 'delete') {
 		$btntype = 'btn-danger';
 		#$fa = '<i class="fa fa-times"></i>';
@@ -508,40 +508,40 @@ sub theme_ui_submit {
 		$btntype = 'btn-warning';
 		#$fa = '<i class="fa fa-refresh"></i>';
 	}
-	
+
 	$rv .= '<button type="submit" class="btn ' . $btntype . '" ';
 	$rv .= ($name ne '' ? 'name="' . &quote_escape($name) . '" ' : '');
 	$rv .= ($dis ? ' disabled="disabled"' : '');
 	$rv .= ($tags ? ' ' . $tags : ''). '>';
 	$rv .= $fa . ' ' . &quote_escape($label);
 	$rv .= '</button>' . "\n";
-	
+
 	return $rv;
 }
 
 sub theme_ui_reset {
 	my ($label, $dis) = @_;
 	my $rv;
-	
+
 	$rv .= '<button class="btn btn-default" type="reset" ';
 	$rv .= ($dis ? 'disabled="disabled">' : '>');
 	$rv .= &quote_escape($label);
 	$rv .= '</button>' . "\n";
-	
+
 	return $rv;
 }
 
 sub theme_ui_button {
 	my ($label, $name, $dis, $tags) = @_;
 	my $rv;
-	
+
 	$rv .= '<button type="button" class="btn btn-default" ';
 	$rv .= ($name ne '' ? 'name="' . &quote_escape($name) . '" ' : '');
 	$rv .= ($dis ? 'disabled="disabled"' : '');
 	$rv .= ($tags ? ' ' . $tags : ''). '>';
 	$rv .= &quote_escape($label);
 	$rv .= '</button>' . "\n";
-	
+
 	return $rv;
 }
 
@@ -559,21 +559,21 @@ sub theme_ui_button {
 
 sub theme_ui_post_header {
 	my ($text) = @_;
-	
+
 	my $rv;
 	#$rv .= '<hr>' . "\n";
-	
+
 	return $rv;
 }
 
 sub theme_ui_pre_footer {
 	my $rv;
-	
+
 	#$rv .= '<hr>' . "\n";
 	$rv .= '</div>' . "\n";
 	$rv .= '</div>' . "\n";
 	#$rv .= '</div>' . "\n";
-	
+
 	return $rv;
 }
 
@@ -610,7 +610,7 @@ sub theme_ui_pre_footer {
 sub theme_ui_tabs_start {
 	my ($tabs, $name, $sel, $border) = @_;
 	my $rv;
-	
+
 	$rv .= '<ul class="nav nav-tabs">' . "\n";
 	foreach my $t (@$tabs) {
 		my $tabid = "tab_".$t->[0];
@@ -623,16 +623,16 @@ sub theme_ui_tabs_start {
 	$rv .= '</ul>' . "\n";
 	$rv .= '<div class="tab-content">' . "\n";
 	$main::ui_tabs_selected = $sel;
-	
+
 	return $rv;
 }
 
 sub theme_ui_tabs_end {
 	my ($border) = @_;
 	my $rv;
-	
+
 	$rv .= '</div>' . "\n";
-	
+
 	return $rv;
 }
 
@@ -640,9 +640,9 @@ sub theme_ui_tabs_start_tab {
 	my ($name, $tab) = @_;
 	my $rv;
 	my $defclass = $tab eq $main::ui_tabs_selected ? 'active' : '';
-	
+
 	$rv .= '<div id="' . $tab . '" class="tab-pane ' . $defclass . '">' . "\n";
-	
+
 	return $rv;
 }
 
@@ -650,9 +650,9 @@ sub theme_ui_tabs_start_tab {
 
 sub theme_ui_tabs_end_tab {
 	my $rv;
-	
+
 	$rv .= '</div>' . "\n";
-	
+
 	return $rv;
 }
 
@@ -670,9 +670,9 @@ sub theme_ui_tabs_end_tab {
 
 sub theme_ui_hr {
 	my $rv;
-	
+
 	$rv .= '<hr>' . "\n";
-	
+
 	return $rv;
 }
 
@@ -683,18 +683,18 @@ sub theme_ui_hr {
 sub theme_ui_alert_box {
 	my ($msg, $class) = @_;
 	my ($rv, $type, $tmsg, $fa);
-	
+
 	if ($class eq "success") { $type = 'alert-success', $tmsg = 'Well done!', $fa = 'fa-check'; }
 	elsif ($class eq "info") { $type = 'alert-info', $tmsg = 'Heads up!', $fa = 'fa-info'; }
 	elsif ($class eq "warn") { $type = 'alert-warning', $tmsg = 'Warning!', $fa = 'fa-exclamation-triangle'; }
 	elsif ($class eq "danger") { $type = 'alert-danger', $tmsg = 'Oh snap!', $fa = 'fa-bolt'; }
-	
+
 	$rv .= '<div class="alert ' . $type . '">' . "\n";
 	$rv .= '<i class="fa fa-fw ' . $fa . '"></i> <strong>' . $tmsg . '</strong>';
 	$rv .= '<br>' . "\n";
 	$rv .= $msg . "\n";
 	$rv .= '</div>' . "\n";
-	
+
 	return $rv;
 }
 

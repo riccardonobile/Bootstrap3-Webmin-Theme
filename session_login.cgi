@@ -29,8 +29,8 @@ print '<meta name="viewport" content="width=device-width, initial-scale=1.0">' .
 print '<link href="unauthenticated/css/bootstrap.css" rel="stylesheet" type="text/css">' , "\n";
 print '<link href="unauthenticated/css/fontawesome.css" rel="stylesheet" type="text/css">' , "\n";
 print '<link href="unauthenticated/css/login.css" rel="stylesheet" type="text/css">' , "\n";
-print '<script src="unauthenticated/js/jquery.js" type="text/javascript"></script>' , "\n";
-print '<script src="unauthenticated/js/bootstrap.js" type="text/javascript"></script>' , "\n";
+print '<script src="' , $gconfig{'webprefix'} , '/unauthenticated/js/jquery.js" type="text/javascript"></script>' , "\n";
+print '<script src="' , $gconfig{'webprefix'} , '/unauthenticated/js/bootstrap.js" type="text/javascript"></script>' , "\n";
 print '</head>' , "\n";
 print '<body>' . "\n";
 print '<div class="container">' . "\n";

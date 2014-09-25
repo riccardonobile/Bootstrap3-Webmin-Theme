@@ -22,9 +22,9 @@ if ($in{'page'}) {
 %gaccess = &get_module_acl(undef, "");
 $title = &get_html_framed_title();
 &header($title);
-print '<script src="js/offcanvas.js" type="text/javascript"></script>' , "\n";
-print '<script src="js/ajax.js" type="text/javascript"></script>' , "\n";
-#print '<script src="js/loader.js" type="text/javascript"></script>' , "\n";
+print '<script src="', $gconfig{'webprefix'}, '/js/offcanvas.js" type="text/javascript"></script>' , "\n";
+print '<script src="', $gconfig{'webprefix'}, '/js/ajax.js" type="text/javascript"></script>' , "\n";
+#print '<script src="', $gconfig{'webprefix'}, '/js/loader.js" type="text/javascript"></script>' , "\n";
 print '<div id="wrapper" class="index">' . "\n";
 print '<header>' . "\n";
 print '<nav class="navbar navbar-default navbar-fixed-top" role="navigation">' . "\n";
@@ -136,7 +136,7 @@ if ($level == 0) {
 		#&foreign_require("webmin", "webmin-lib.pl");
 		#my @notifs = &webmin::get_webmin_notifications();
 		#print '<button style="margin-right: 20px; width: 44px;" class="btn btn-default navbar-btn navbar-left" data-html="true" data-content="';
-		
+
 		#print '" data-placement="bottom" data-toggle="popover" data-container="body" type="button" data-original-title="" title="Notifications"><i class="fa fa-fw fa-tags"></i>';
 		#if (@notifs) {
 			#print '<span class="badge" style="position: relative; top: -15px; left: 2px; background-color: rgb(217, 83, 79);">' . scalar(@notifs) . '</span>';
@@ -202,9 +202,9 @@ print '<p class="navbar-text pull-left">Welcome ' . $user . '</p>' . "\n";
 &get_miniserv_config(\%miniserv);
 if ($miniserv{'logout'} && !$ENV{'SSL_USER'} && !$ENV{'LOCAL_USER'} && $ENV{'HTTP_USER_AGENT'} !~ /webmin/i) {
 	if ($main::session_id) {
-		print '<a href="session_login.cgi?logout=1" class="btn btn-danger navbar-btn pull-right"><i class="fa fa-sign-out"></i> ' . $text{'main_logout'} . '</a>' . "\n";
+		print '<a href="', $gconfig{'webprefix'}, '/session_login.cgi?logout=1" class="btn btn-danger navbar-btn pull-right"><i class="fa fa-sign-out"></i> ' . $text{'main_logout'} . '</a>' . "\n";
 	} else {
-		print '<a href="switch_user.cgi" class="btn btn-danger navbar-btn pull-right">' . $text{'main_switch'} . '</a>' . "\n";
+		print '<a href="', $gconfig{'webprefix'}, '/switch_user.cgi" class="btn btn-danger navbar-btn pull-right">' . $text{'main_switch'} . '</a>' . "\n";
 	}
 }
 print '</div>';
@@ -228,7 +228,7 @@ if ($gconfig{"notabs_${base_remote_user}"} == 2 || $gconfig{"notabs_${base_remot
 else {
 	foreach $c (@cats) {
 		# Show category opener, plus modules under it
-		# Modified the span 
+		# Modified the span
 		&print_category_opener($c->{'code'}, $in{$c->{'code'}} ? 1 : 0, $c->{'unused'} ? '<span style="color: #888888">' . $c->{'desc'} . '</span>' : $c->{'desc'});
 		$cls = $in{$c->{'code'}} ? "itemshown" : "itemhidden";
 		print '<ul class="sub" style="display: none;" id="' . $c->{'code'} . '">' . "\n";
