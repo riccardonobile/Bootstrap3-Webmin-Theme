@@ -5,21 +5,20 @@ sub theme_header {
 	print '<title>' , $_[0] , '</title>' , "\n";
 	print '<meta charset="utf-8">' , "\n";
 	print '<meta name="viewport" content="width=device-width, initial-scale=1.0">' . "\n";
-	print '<link href="',  $gconfig{'webprefix'}, '/css/bootstrap.css" rel="stylesheet" type="text/css">' , "\n";
-	print '<link href="',  $gconfig{'webprefix'}, '/css/fontawesome.css" rel="stylesheet" type="text/css">' , "\n";
-	print '<link href="',  $gconfig{'webprefix'}, '/css/select.css" rel="stylesheet" type="text/css">' , "\n";
-	print '<link href="',  $gconfig{'webprefix'}, '/css/default.css" rel="stylesheet" type="text/css">' , "\n";
-	print '<link href="',  $gconfig{'webprefix'}, '/css/circleprogress.css" rel="stylesheet" type="text/css">' , "\n";
-	print '<script src="', $gconfig{'webprefix'}, '/js/jquery.js" type="text/javascript"></script>' , "\n";
-	print '<script src="', $gconfig{'webprefix'}, '/js/bootstrap.js" type="text/javascript"></script>' , "\n";
-	print '<script src="', $gconfig{'webprefix'}, '/js/select.js" type="text/javascript"></script>' , "\n";
+	print '<link href="'. $gconfig{'webprefix'} . '/css/bootstrap.css" rel="stylesheet" type="text/css">' , "\n";
+	print '<link href="'. $gconfig{'webprefix'} . '/css/fontawesome.css" rel="stylesheet" type="text/css">' , "\n";
+	print '<link href="'. $gconfig{'webprefix'} . '/css/webmin.css" rel="stylesheet" type="text/css">' , "\n";
+	print '<link href="'. $gconfig{'webprefix'} . '/css/circleprogress.css" rel="stylesheet" type="text/css">' , "\n";
+	print '<script src="'. $gconfig{'webprefix'} . '/js/jquery.js" type="text/javascript"></script>' , "\n";
+	print '<script src="'. $gconfig{'webprefix'} . '/js/bootstrap.js" type="text/javascript"></script>' , "\n";
+	print '<script src="'. $gconfig{'webprefix'} . '/js/webmin.js" type="text/javascript"></script>' , "\n";
 	print '</head>' , "\n";
 	print '<body>' , "\n";
-
+	
 if (@_ > 1) {
 	print '<div class="container">' . "\n";
 	my %this_module_info = &get_module_info(&get_module_name());
-	print '<div class="panel panel-default" style="margin-top: 20px;">' . "\n";
+	print '<div class="panel panel-default" style="margin-top: 20px">' . "\n";
 	print '<div class="panel-heading">' . "\n";
 	print "<table class='header' width=100%><tr>\n";
 	if ($gconfig{'sysinfo'} == 2 && $remote_user) {
@@ -100,7 +99,7 @@ if (@_ > 1) {
 	print '</div>' . "\n";
 	print '<div class="panel-body">' . "\n";
 	}
-$miniserv::page_capture = 1;
+	$miniserv::page_capture = 1;
 }
 sub theme_footer {
 for(my $i=0; $i+1<@_; $i+=2) {
@@ -125,7 +124,6 @@ for(my $i=0; $i+1<@_; $i+=2) {
 	print '</body>' , "\n";
 	print '</html>' , "\n";
 }
-
 sub theme_file_chooser_button
 {
 my $form = defined($_[2]) ? $_[2] : 0;
@@ -371,99 +369,11 @@ sub theme_ui_password {
 
 # theme_ui_multiselect_javascript
 
-sub theme_ui_radio {
-	my ($name, $value, $opts, $dis) = @_;
-	my ($rv, $o);
-	foreach $o (@$opts) {
-		my $id = &quote_escape($name."_".$o->[0]);
-		my $label = $o->[1] || $o->[0];
-		my $after;
-		if ($label =~ /^([\000-\377]*?)((<a\s+href|<input|<select|<textarea)[\000-\377]*)$/i) {
-			$label = $1;
-			$after = $2;
-		}
-		$rv .= '<input type="radio" ';
-		$rv .= 'name="' . &quote_escape($name) . '" ';
-		$rv .= 'value="' . &quote_escape($o->[0]) . '" ';
-		$rv .= ($o->[0] eq $value ? 'checked ' : '');
-		$rv .= ($dis ? 'disabled="true" ' : '');
-		$rv .= 'id="' . $id . '" ';
-		$rv .= $o->[2] .  ' ';
-		$rv .= '>' . "\n";
-		$rv .= '<label class="radio" ';
-		$rv .= 'for="' . $id .'">' . "\n";
-		$rv .= '<i class="fa"></i> ' . $label . "\n";
-		$rv .= '</label>' . $after . "\n";
-	}
+# theme_ui_yesno_radio 
 
-	return $rv;
-}
+# theme_ui_checkbox 
 
-sub theme_ui_yesno_radio {
-	my ($name, $value, $yes, $no, $dis) = @_;
-	my $rv;
-
-	$yes = 1 if (!defined($yes));
-	$no = 0 if (!defined($no));
-	$value = int($value);
-
-	$rv .= &ui_radio($name, $value, [ [ $yes, $text{'yes'} ], [ $no, $text{'no'} ] ], $dis);
-
-	return $rv;
-}
-
-sub theme_ui_checkbox {
-	my ($name, $value, $label, $sel, $tags, $dis) = @_;
-	my ($rv, $after);
-	if ($label =~ /^([^<]*)(<[\000-\377]*)$/) {
-		$label = $1;
-		$after = $2;
-	}
-	$rv .= '<input type="checkbox" ';
-	$rv .= 'name="' . &quote_escape($name) . '" ';
-	$rv .= 'value="' . &quote_escape($value) . '" ';
-	$rv .= ($sel ? 'checked ' : '');
-	$rv .= ($dis ? 'disabled="true" ' : '');
-	$rv .= 'id="' . &quote_escape("${name}_${value}") . '" ';
-	$rv .= ($tags ? $tags .  ' ' : '');
-	$rv .= '>' . "\n";
-	if ($label eq '') {
-		$rv .= '<label class="checkbox" ';
-		$rv .= 'for="' . &quote_escape("${name}_${value}") .'">' . "\n";
-		$rv .= '<i class="fa"></i> ' . $after . "\n";
-		$rv .= '</label>' . "\n";
-	} else {
-		$rv .= '<label class="checkbox" ';
-		$rv .= 'for="' . &quote_escape("${name}_${value}") .'">' . "\n";
-		$rv .= '<i class="fa"></i> ' . $label . "\n";
-		$rv .= '</label>' . "\n";
-	}
-
-	return $rv;
-}
-
-sub theme_ui_oneradio {
-	my ($name, $value, $label, $sel, $tags, $dis) = @_;
-	my ($rv, $after);
-	if ($label =~ /^([^<]*)(<[\000-\377]*)$/) {
-		$label = $1;
-		$after = $2;
-	}
-	$rv .= '<input type="radio" ';
-	$rv .= 'name="' . &quote_escape($name) . '" ';
-	$rv .= 'value="' . &quote_escape($value) . '" ';
-	$rv .= ($sel ? 'checked ' : '');
-	$rv .= ($dis ? 'disabled="true" ' : '');
-	$rv .= 'id="' . &quote_escape("${name}_${value}") . '" ';
-	$rv .= ($tags ? $tags .  ' ' : '');
-	$rv .= '>' . "\n";
-	$rv .= '<label class="radio" ';
-	$rv .= 'for="' . &quote_escape("${name}_${value}") .'">' . "\n";
-	$rv .= '<i class="fa"></i> ' . $label . "\n";
-	$rv .= '</label>' . "\n";
-
-	return $rv;
-}
+# theme_ui_oneradio
 
 sub theme_ui_textarea {
 	my ($name, $value, $rows, $cols, $wrap, $dis, $tags) = @_;
@@ -511,6 +421,8 @@ sub theme_ui_submit {
 
 	$rv .= '<button type="submit" class="btn ' . $btntype . '" ';
 	$rv .= ($name ne '' ? 'name="' . &quote_escape($name) . '" ' : '');
+	$rv .= ($name ne '' ? 'id="' . &quote_escape($name) . '" ' : '');
+	$rv .= ' value="' . &quote_escape($label) . '"'.
 	$rv .= ($dis ? ' disabled="disabled"' : '');
 	$rv .= ($tags ? ' ' . $tags : ''). '>';
 	$rv .= $fa . ' ' . &quote_escape($label);

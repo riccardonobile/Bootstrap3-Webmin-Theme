@@ -1,0 +1,8 @@
+Fixed:
+	Fixed buttons isseu when not correctly submit the request
+	Checkbox problems with costum css (temporarily disabled)
+	Minor bug fixes
+New:
+	Update Bootstrap from 3.1.1 to 3.2.0
+	Update FontAwesome from 4.1.0 to 4.2.0
+	New design partially implemented

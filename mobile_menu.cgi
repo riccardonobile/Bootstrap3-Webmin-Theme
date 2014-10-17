@@ -14,19 +14,13 @@ print '<div class="container">' . "\n";
 $category = $in{'category'};
 $row = 1;
 if ($category eq '') {
+	print '<div class="row menu-row" style="margin-top: 20px">' . "\n";
 	foreach $cat (@cats) {
-		if($row eq 1) {
-			print '<div class="row menu-row">' . "\n";
-			&print_category_menu($cat->{'code'}, $in{$cat->{'code'}} ? 1 : 0, $cat->{'desc'});
-			$row = 0;
-		} else {
-			&print_category_menu($cat->{'code'}, $in{$cat->{'code'}} ? 1 : 0, $cat->{'desc'});
-			print '</div>' . "\n";
-			$row = 1;
-		}
+		&print_category_menu($cat->{'code'}, $in{$cat->{'code'}} ? 1 : 0, $cat->{'desc'});
 	}
+	print '</div>' . "\n";
 } else {
-	print '<div class="list-group">' . "\n";
+	print '<div class="list-group" style="margin-top: 20px">' . "\n";
 	foreach $cat (@cats) {
 		next if ($cat->{'code'} ne $category);
 		foreach my $module (@{$cat->{'modules'}}) {
@@ -61,7 +55,7 @@ given($cat){
 }
 print '<div class="col-xs-6">' . "\n";
 print '<div class="menu-col" style="background-color: #222; border-radius: 4px; margin: 0 auto 30px; width: 140px; height: 140px;">' . "\n";
-print '<a class="menu-link" href="menu.cgi?category=' . $cat . '">' . "\n";
+print '<a class="menu-link" href="mobile_menu.cgi?category=' . $cat . '">' . "\n";
 print '<div style="padding: 15px 10px;">' . "\n";
 print '<i class="fa ' . $icon . ' fa-fw"></i>' . "\n";
 print '<div style="margin-top: 6px;">' . $label . '</div>' . "\n";
@@ -74,6 +68,6 @@ print '</div>' . "\n";
 
 sub print_category_link {
 local ($link, $label, $image, $noimage, $target) = @_;
-$target ||= "page";
-print '<a class="list-group-item" target="' . $target . '" href="' . $link . '"> ' . $label . '</a>' . "\n";
+	$target ||= "page-container";
+	print '<a class="list-group-item" target="' . $target . '" href="' . $link . '"> ' . $label . '</a>' . "\n";
 }

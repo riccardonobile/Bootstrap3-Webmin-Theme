@@ -1,6 +1,6 @@
 desc=Bootstrap 3 Webmin Theme
-longdesc=A simple theme made using Bootstrap 3 and Font Awesome
-version=0.2.1
+longdesc=A simple theme made using Bootstrap 3.1 and Font Awesome 4.1
+version=0.5
 depends=1.336 1.480 1.660
 webmin=1
 usermin=1

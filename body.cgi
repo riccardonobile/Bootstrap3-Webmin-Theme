@@ -14,7 +14,7 @@ else {
 &header($title);
 print '<div id="wrapper" class="page">' . "\n";
 print '<div class="container">' . "\n";
-print '<div id="system-status" class="panel panel-default">' . "\n";
+print '<div id="system-status" class="panel panel-default" style="margin-top: 20px">' . "\n";
 print '<div class="panel-heading">' . "\n";
 print '<h3 class="panel-title">' . &text('body_header0') . '</h3>' . "\n";
 print '</div>';
