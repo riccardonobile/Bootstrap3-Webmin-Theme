@@ -266,3 +266,24 @@ input[type='checkbox'] + label > i{
 	color: #eee;
 	text-decoration: none;
 }
+
+/*Added by piersg to improve the look of ui tables*/
+.ui_table td {
+ padding-bottom: 0.25em;
+ padding-left: 0.5em;
+ padding-right: 0.5em;
+ padding-top: .25em;
+}
+.ui_table { 
+ border-width: 0px;
+ border-color:#fff;
+}
+.ui_table_head {background-color: #eee}
+.ui_table_body {background-color: #f4f4f4}
+.ui_label{
+ text-align: right;
+ vertical-align: middle;
+}
+.ui_table_row {border-bottom: 1px solid #ddd;}
+/*makes non-form text line up better w/ form elements:*/
+.ui_value {vertical-align: middle}
