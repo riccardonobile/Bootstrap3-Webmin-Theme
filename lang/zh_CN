@@ -1,0 +1,63 @@
+left_login=Login: $1
+left_home=系统信息
+left_oc=由 OpenCountry 赞助
+left_feedback=发送反馈
+left_search_webmin=搜索 Webmin:
+left_search_usermin=搜索 Usermin:
+left_search=搜索:
+left_logs=查看模块日志
+left_others=其它
+
+right_login=登入 作为
+right_from=登入自
+
+body_header0=系统信息
+body_host=主机名称
+body_os=操作系统
+body_webmin=Webmin 版本
+body_time=系统时间
+body_kernel=内核与 CPU 架构
+body_cpuinfo=处理器信息
+body_cputype=$5, $8 个核心
+body_uptime=运行时间
+body_updays=$1 天, $2 小时, $3 分钟
+body_uphours=$1 小时, $2 分钟
+body_upmins=$1 分钟
+body_procs=运行中的进程
+body_cpuuse=CPU 使用
+body_cpustats=$1% 用户, $2% 内核, $4% IO, $3% 空闲
+body_real=物理内存
+body_virt=虚拟内存
+body_used=总计 $1 - 已使用 $2
+body_cpu=CPU 负载
+body_load=$1 (1 分钟) $2 (5 分钟) $3 (15 分钟)
+body_disk=本地磁盘空间
+body_kernelon=$1 $2 on $3
+body_updates=软件包更新
+body_upok=所有已安装的软件包已是最新
+body_upneed=$1 个软件包更新可用
+body_upsec=$1 个软件包更新可用, 其中 $2 个为安全更新
+body_cputemps=CPU 温度
+body_drivetemps=驱动器温度
+body_driveerr=$1 错误!
+body_drivefailed=SMART 检测失败!
+
+body_header1=账户信息
+body_usermin=Usermin 版本
+body_out=$1&nbsp;of&nbsp;$2
+body_uquota=磁盘配额与使用状况
+
+login_message=您必须输入用户名和密码以登入 Webmin 服务器 构建于 
+login_user=用户名
+login_pass=密码
+login_token=Token
+login_save=记住我
+login_signin=登入
+login_reset=重置
+
+session_failed=登入失败。请重试。
+session_twofailed=两步认证失败: $1
+session_logout=登出成功。 使用下方的表单再次登入。
+session_timed_out=会话超时。
+
+__norefs=1
