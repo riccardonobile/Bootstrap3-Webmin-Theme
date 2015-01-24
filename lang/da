@@ -11,6 +11,12 @@ left_others=Andre
 right_login=Logget ind som
 right_from=Logget ind fra
 
+top_main_menu=Main Menu
+top_logs=Logs
+top_refresh=Refresh
+top_webmin_server=Webmin-Server
+top_welcome=Welcome
+
 body_header0=System Information
 body_host=System hostnavn
 body_os=Styresystem

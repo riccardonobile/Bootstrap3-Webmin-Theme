@@ -11,6 +11,12 @@ left_others=Andere
 right_login=Eingeloggt als
 right_from=Eingeloggt von
 
+top_main_menu=Hauptmenü
+top_logs=Logs
+top_refresh=Aktualisieren
+top_webmin_server=Webmin-Server
+top_welcome=Willkommen
+
 body_header0=Systeminformation
 body_host=System Hostname
 body_os=Betriebssystem

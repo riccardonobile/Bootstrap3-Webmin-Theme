@@ -11,6 +11,12 @@ left_others=其它
 right_login=登入为
 right_from=登入自
 
+top_main_menu=Main Menu
+top_logs=Logs
+top_refresh=Refresh
+top_webmin_server=Webmin-Server
+top_welcome=Welcome
+
 body_header0=系统信息
 body_host=主机名称
 body_os=操作系统

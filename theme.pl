@@ -9,9 +9,10 @@ sub theme_header {
 	print '<link href="'. $gconfig{'webprefix'} . '/css/fontawesome.css" rel="stylesheet" type="text/css">' , "\n";
 	print '<link href="'. $gconfig{'webprefix'} . '/css/webmin.css" rel="stylesheet" type="text/css">' , "\n";
 	print '<link href="'. $gconfig{'webprefix'} . '/css/circleprogress.css" rel="stylesheet" type="text/css">' , "\n";
-	print '<script src="'. $gconfig{'webprefix'} . '/js/jquery.js" type="text/javascript"></script>' , "\n";
-	print '<script src="'. $gconfig{'webprefix'} . '/js/bootstrap.js" type="text/javascript"></script>' , "\n";
-	print '<script src="'. $gconfig{'webprefix'} . '/js/webmin.js" type="text/javascript"></script>' , "\n";
+	print '<script src="'. $gconfig{'webprefix'} . '/js/jquery.min.js" type="text/javascript"></script>' , "\n";
+	print '<script src="'. $gconfig{'webprefix'} . '/js/sizzle.min.js" type="text/javascript"></script>' , "\n";
+	print '<script src="'. $gconfig{'webprefix'} . '/js/bootstrap.min.js" type="text/javascript"></script>' , "\n";
+	print '<script src="'. $gconfig{'webprefix'} . '/js/webmin.min.js" type="text/javascript"></script>' , "\n";
 	print '</head>' , "\n";
 	print '<body>' , "\n";
 	
