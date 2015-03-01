@@ -26,6 +26,7 @@
 }
 html, body {
 	height: 100%;
+	position: relative;
 }
 body {
 	font-family: 'Lato Regular', sans-serif;
@@ -38,6 +39,7 @@ body {
 	background-color: #206ECF;
 	/* border-color: #1B5EB1; */
 	border-color: #195aa8;
+	margin-bottom: 0;
 }
 .navbar-webmin  a {
 	color: #eee;
@@ -96,12 +98,13 @@ body {
 	height: calc(100% - 51px);
 	position: fixed;
 	width: 260px;
-	margin-top: -20px;
 	overflow-y: auto;
 	transition: all 0.4s ease;
     -webkit-transition: all 0.4s ease;
     -moz-transition: all 0.4s ease;
     -o-transition: all 0.4s ease;
+    z-index: 100;
+    top: 51px;
 }
 .aside-nav {
 	margin-bottom: 0px;
@@ -186,25 +189,30 @@ body {
 	width: 60px;
 }
 .iframe-container {
-	margin-left: 260px;
 	transition: all 0.4s ease;
 	-webkit-transition: all 0.4s ease;
+	width: 100%;
+	padding-left: 260px;
 	height: calc(100% - 51px);
-	margin-top: -20px;
-	overflow: hidden;
+	top: 51px;
+	position: fixed;
 }
 .iframe-container.iframe-close {
-	margin-left: 60px;
+	padding-left: 60px;
+}
+.iframe-container.ios {
+	-webkit-overflow-scrolling: touch !important;
+	overflow: scroll !important;
 }
 @media (max-width: 767px) {
 	.iframe-container {
-		margin-left: 0;
+		padding-left: 0;
 	}
 }
 iframe {
-	border: 0px none;
 	height: 100%;
 	width: 100%;
+	border: 0 none;
 }
 /* ----- */
 .btn {
@@ -266,7 +274,6 @@ input[type='checkbox'] + label > i{
 	color: #eee;
 	text-decoration: none;
 }
-
 /*Added by piersg to improve the look of ui tables*/
 .ui_table td {
 	padding-bottom: 0.25em;
@@ -294,4 +301,8 @@ input[type='checkbox'] + label > i{
 /*makes non-form text line up better w/ form elements:*/
 .ui_value {
 	vertical-align: middle;
+}
+/* Fix for -15px margin-right in .navbar-right bootstrap.css class */
+.navbar-right {
+	margin-right: 0px;
 }

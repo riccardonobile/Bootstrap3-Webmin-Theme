@@ -1,8 +1,11 @@
 Fixed:
-	Fixed buttons isseu when not correctly submit the request
-	Checkbox problems with costum css (temporarily disabled)
-	Minor bug fixes
+	Add Webmin Servers Backlink
+	No Welcome Massage then use Webmin Servers with no validate user.
+	
 New:
-	Update Bootstrap from 3.1.1 to 3.2.0
-	Update FontAwesome from 4.1.0 to 4.2.0
-	New design partially implemented
+	Update Bootstrap from 3.2.0 to 3.3.2
+	Update FontAwesome from 4.2.0 to 4.3.0
+	Update jQuery from 2.1.1 to 2.1.3
+	Add new Dynamic Text strings for any languages
+	Add German language for this Template
+	Add compressed version of javascript libraries

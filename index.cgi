@@ -35,13 +35,16 @@ print '<a class="navbar-brand" href=""><i class="fa fa-cloud"></i> Webmin ' . &g
 print '</div>' . "\n";
 print '<div class="collapse navbar-collapse" id="navbar-collapse">' . "\n";
 print '<ul class="nav navbar-nav">' . "\n";
-print '<li class="visible-xs"><a data-toggle="collapse" data-target="#navbar-collapse" target="page-container" href="'. $gconfig{'webprefix'} . '/mobile_menu.cgi"><i class="fa fa-tags"></i> Main Menu</a></li>' . "\n";
+print '<li class="visible-xs"><a data-toggle="collapse" data-target="#navbar-collapse" target="page-container" href="'. $gconfig{'webprefix'} . '/mobile_menu.cgi"><i class="fa fa-tags"></i> '.$text{'top_main_menu'}.'</a></li>' . "\n";
 %gaccess = &get_module_acl(undef, "");
 if ($gconfig{'log'} && &foreign_available("webminlog")) {
-	print '<li><a data-toggle="collapse" data-target="#navbar-collapse" target="page-container" href="'. $gconfig{'webprefix'} . '/webminlog/"><i class="fa fa-file-text"></i> Logs</a></li>' . "\n";
+	print '<li><a data-toggle="collapse" data-target="#navbar-collapse" target="page-container" href="'. $gconfig{'webprefix'} . '/webminlog/"><i class="fa fa-file-text"></i> '.$text{'top_logs'}.'</a></li>' . "\n";
 }
 if (&foreign_available("webmin")) {
-	print '<li><a data-toggle="collapse" data-target="#navbar-collapse" target="page-container" href="'. $gconfig{'webprefix'} . '/webmin/refresh_modules.cgi"><i class="fa fa-refresh"></i> Refresh</a></li>' . "\n";
+	print '<li><a data-toggle="collapse" data-target="#navbar-collapse" target="page-container" href="'. $gconfig{'webprefix'} . '/webmin/refresh_modules.cgi"><i class="fa fa-refresh"></i> '.$text{'top_refresh'}.'</a></li>' . "\n";
+}
+if ($ENV{'HTTP_WEBMIN_SERVERS'}) {
+	print '<li><a data-toggle="collapse" data-target="#navbar-collapse" target="_self" href="'. $ENV{'HTTP_WEBMIN_SERVERS'} . '"><i class="fa fa-home"></i> '.$text{'top_webmin_server'}.'</a></li>' . "\n";
 }
 print '</ul>' . "\n";
 print '<div class="navbar-right">' . "\n";
@@ -49,7 +52,11 @@ $user = $remote_user;
 if (&foreign_available("net")) {
 	$user = '<a data-toggle="collapse" data-target="#navbar-collapse" target="page-container" href="' . $gconfig{'webprefix'} . '/acl/edit_user.cgi?user=' . $user .'">' . $user . '</a>';
 }
-print '<p class="navbar-text pull-left">Welcome, ' . $user . '</p>' . "\n";
+
+if (!$ENV{'HTTP_WEBMIN_SERVERS'} || !&foreign_available("net")) {
+	print '<p class="navbar-text pull-left">'.$text{'top_welcome'}.', ' . $user . '</p>' . "\n";
+}
+
 &get_miniserv_config(\%miniserv);
 if ($miniserv{'logout'} && !$ENV{'SSL_USER'} && !$ENV{'LOCAL_USER'} && $ENV{'HTTP_USER_AGENT'} !~ /webmin/i) {
 	if ($main::session_id) {
