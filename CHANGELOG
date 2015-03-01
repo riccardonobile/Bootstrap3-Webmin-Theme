@@ -1,11 +1,15 @@
 Fixed:
-	Add Webmin Servers Backlink
-	No Welcome Massage then use Webmin Servers with no validate user.
-	
+	Improved the look of ui_tables (Thanks to piersg)
+	Fixed iOS (iPad, iPhone, iPod) iframe scrolling (Work In Progress)
+	Minor bug fixes
+	Fixed textarea "\ln" bug
+	Changed .btn-default button background color to #fbfbfb to make it more usable/visible
 New:
-	Update Bootstrap from 3.2.0 to 3.3.2
-	Update FontAwesome from 4.2.0 to 4.3.0
-	Update jQuery from 2.1.1 to 2.1.3
-	Add new Dynamic Text strings for any languages
-	Add German language for this Template
-	Add compressed version of javascript libraries
+	Updated Bootstrap from 3.3.1 to 3.3.2 (See Bootstrap changelog for details)
+	Updated FontAwesome from 4.2.0 to 4.3.0 (See FontAwesome changelog for details)
+	Updated jQuery from 2.1.1 to 2.1.3 (See jQuery changelog for details)
+	Add Simplified Chinese translation (Thanks to Dreista)
+	Add Spanish translation (Thanks to XxCoolGamesxX)
+	Add German translation (Thanks to hammermaps)
+	Add Romanian translation (Thanks to sealview)
+	Partially implemented new design

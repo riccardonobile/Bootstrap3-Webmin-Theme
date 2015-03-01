@@ -224,6 +224,9 @@ iframe {
 	border-left-color: transparent;
 	border-right-color: transparent;
 }
+.btn-default {
+	background-color: #fbfbfb;
+}
 .btn:hover, .btn:focus {
 	border-top-color: transparent;
 	border-left-color: transparent;
