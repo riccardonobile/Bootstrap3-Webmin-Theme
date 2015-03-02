@@ -45,7 +45,7 @@ You can do it with [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations
 
 ## License
 
-*BWTheme* is released under the [GPLv2 License](http://opensource.org/licenses/GPL-2.0).
+**BWTheme** is released under the [GPLv2 License](http://opensource.org/licenses/GPL-2.0).
 
 ## Credits
 
