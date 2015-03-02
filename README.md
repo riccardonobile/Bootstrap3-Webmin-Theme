@@ -47,6 +47,8 @@ You can do it with [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations
 
 **BWTheme** is released under the [GPLv2 License](http://opensource.org/licenses/GPL-2.0).
 
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+
 ## Credits
 
 Browser logos by [MARINAD](http://marinad.com.ar/free-flat-browser-logotypes/)
