@@ -1,5 +1,14 @@
 ##Changelog
 
+####Version 0.7.0 (March 16, 2015)
+* Completely rewritten **login page**. Now the code is well optimized, commented and indented
+* Reintroduced the ability to insert a **Banner** before login screen
+* Moved all the CSS, JavaScript, Fonts, etc to `/unauthenticated/assets/`
+* Switch to the **minified** versione of all CSS and JavaScript frameworks files (Boostrap, FontAwesome, jQuery)
+* Checkboxes and radios stylized in pure css with [Awesome Bootstrap Checkbox](https://github.com/flatlogic/awesome-bootstrap-checkbox)
+* Fixed an issue with an animation of the **aside menu**
+* Update licence from GNU GPLv2 to GNU GPLv3 
+
 ####Version 0.5.3 (March 1, 2015)
 * Improved the look of **ui_tables** (Thanks to piersg) [#3](https://github.com/winfuture/Bootstrap3-Webmin-Theme/pull/3)
 * Fixed **iOS (iPad, iPhone, iPod)** iframe scrolling (Work In Progress)

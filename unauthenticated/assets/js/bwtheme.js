@@ -3,7 +3,7 @@ $(function() {
 	var time;
 	$('[data-open="hideMenu"]').click(function() {
 		$('[data-open]').parent().removeClass('active');
-		$('[data-open] > .aside-arrow > i').removeClass('rotated');
+		$('.aside-arrow > i').removeClass('rotated');
 		if (menu.isClose)
 			time = 400;
 		else

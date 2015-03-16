@@ -5,13 +5,14 @@ sub theme_header {
 	print '<title>' , $_[0] , '</title>' , "\n";
 	print '<meta charset="utf-8">' , "\n";
 	print '<meta name="viewport" content="width=device-width, initial-scale=1.0">' . "\n";
-	print '<link href="'. $gconfig{'webprefix'} . '/css/bootstrap.css" rel="stylesheet" type="text/css">' , "\n";
-	print '<link href="'. $gconfig{'webprefix'} . '/css/fontawesome.css" rel="stylesheet" type="text/css">' , "\n";
-	print '<link href="'. $gconfig{'webprefix'} . '/css/webmin.css" rel="stylesheet" type="text/css">' , "\n";
-	print '<link href="'. $gconfig{'webprefix'} . '/css/circleprogress.css" rel="stylesheet" type="text/css">' , "\n";
-	print '<script src="'. $gconfig{'webprefix'} . '/js/jquery.js" type="text/javascript"></script>' , "\n";
-	print '<script src="'. $gconfig{'webprefix'} . '/js/bootstrap.js" type="text/javascript"></script>' , "\n";
-	print '<script src="'. $gconfig{'webprefix'} . '/js/webmin.js" type="text/javascript"></script>' , "\n";
+	print '<link href="'. $gconfig{'webprefix'} . '/unauthenticated/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">' , "\n";
+	print '<link href="'. $gconfig{'webprefix'} . '/unauthenticated/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">' , "\n";
+	print '<link href="'. $gconfig{'webprefix'} . '/unauthenticated/assets/css/bootstrap-checkbox.css" rel="stylesheet" type="text/css">' , "\n";
+	print '<link href="'. $gconfig{'webprefix'} . '/unauthenticated/assets/css/bwtheme.css" rel="stylesheet" type="text/css">' , "\n";
+	print '<link href="'. $gconfig{'webprefix'} . '/unauthenticated/assets/css/circleprogress.css" rel="stylesheet" type="text/css">' , "\n";
+	print '<script src="'. $gconfig{'webprefix'} . '/unauthenticated/assets/js/jquery.min.js" type="text/javascript"></script>' , "\n";
+	print '<script src="'. $gconfig{'webprefix'} . '/unauthenticated/assets/js/bootstrap.min.js" type="text/javascript"></script>' , "\n";
+	print '<script src="'. $gconfig{'webprefix'} . '/unauthenticated/assets/js/bwtheme.js" type="text/javascript"></script>' , "\n";
 	print '</head>' , "\n";
 	print '<body>' , "\n";
 	
@@ -369,11 +370,72 @@ sub theme_ui_password {
 
 # theme_ui_multiselect_javascript
 
+sub theme_ui_radio {
+	my ($name, $value, $opts, $dis) = @_;
+	my $rv;
+	my $o;
+	foreach $o (@$opts) {
+		my $id = &quote_escape($name."_".$o->[0]);
+		my $label = $o->[1] || $o->[0];
+		my $after;
+
+		if ($label =~ /^([\000-\377]*?)((<a\s+href|<input|<select|<textarea|<span|<br|<p)[\000-\377]*)$/i) {
+			$label = $1;
+			$after = $2;
+		}
+
+		$rv .= '<div style="margin: 0" class="radio">';
+		$rv .= '<input type="radio" name="' . &quote_escape($name) . '" value="' . &quote_escape($o->[0]) . '" id="' . $id . '"';
+		$rv .= ($o->[0] eq $value ? ' checked' : '') . ($dis ? ' disabled=true' : '') . ($o->[2] ? ' ' . $o->[2] : '');
+		$rv .= '>';
+		$rv .= '<label for="' . $id . '">' . $label . "</label>" . $after;
+		$rv .= '</div>' . "\n";
+	}
+	
+	return $rv;
+}
+
 # theme_ui_yesno_radio 
 
-# theme_ui_checkbox 
+sub theme_ui_checkbox {
+	my ($name, $value, $label, $sel, $tags, $dis) = @_;
+	my $after, $rv;
+	my $id = &quote_escape("${name}_${value}");
 
-# theme_ui_oneradio
+	if ($label =~ /^([^<]*)(<[\000-\377]*)$/) {
+		$label = $1;
+		$after = $2;
+	}
+
+	$rv = '<div style="margin: 0" class="checkbox">';
+	$rv .= '<input type="checkbox" name="' . &quote_escape($name) . '" value="' . &quote_escape($value) . '" id="' . $id . '"';
+	$rv .= ($sel ? ' checked' : '') . ($dis ? ' disabled=true' : '');
+	$rv .= '>';
+	$rv .= '<label for="' . $id . '">' . $label . "</label>" . $after;
+	$rv .= '</div>' . "\n";
+
+	return $rv;
+}
+
+sub theme_ui_oneradio {
+	my ($name, $value, $label, $sel, $tags, $dis) = @_;
+	my $id = &quote_escape("${name}_${value}");
+	my $after, $rv;
+
+	if ($label =~ /^([^<]*)(<[\000-\377]*)$/) {
+		$label = $1;
+		$after = $2;
+	}
+
+	$rv = '<div style="margin: 0" class="radio">';
+	$rv .= '<input type="radio" name="' . &quote_escape($name) . '" value="' . &quote_escape($value) . '" id="' . $id . '"';
+	$rv .= ($sel ? ' checked' : '') . ($dis ? ' disabled=true' : '');
+	$rv .= '>';
+	$rv .= '<label for="' . $id . '">' . $label . "</label>" . $after;
+	$rv .= '</div>' . "\n";
+	
+	return $rv;
+}
 
 sub theme_ui_textarea {
 	my ($name, $value, $rows, $cols, $wrap, $dis, $tags) = @_;

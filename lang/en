@@ -47,17 +47,18 @@ body_usermin=Usermin Version
 body_out=$1&nbsp;of&nbsp;$2
 body_uquota=Disk quota and usage
 
-login_message=You must enter a username and password to login to the Webmin server on 
-login_user=Username
-login_pass=Password
+login_danger=Danger
+login_warning=Warning
+login_success=Success
+login_username=Username
+login_password=Password
 login_token=Token
-login_save=Remember me
+login_remember=Remember me
 login_signin=Sign in
-login_reset=Reset
+
+banner_login=Go to login
 
 session_failed=Login failed. Please try again.
 session_twofailed=Two-factor authentication failed: $1
-session_logout=Logout successful. Use the form below to login again.
-session_timed_out=Session timed out after $1 minutes of inactivity.
-
-__norefs=1
+session_logout=Logout successful. Use the form below to login again. 
+session_timeout=Session timed out after $1 minutes of inactivity.

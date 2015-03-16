@@ -1,6 +1,7 @@
-desc=Bootstrap 3 Webmin Theme
-longdesc=A simple theme made using Bootstrap 3.1 and Font Awesome 4.1
-version=0.5.3
-depends=1.336 1.480 1.660
+desc=BWTheme - Bootstrap Webmin Theme
+longdesc=A simple and beautiful theme for Webmin, Usermin, Virtualmin and Cloudmin made using Bootstrap and Font Awesome
+version=0.7.0
 webmin=1
 usermin=1
+depends=1.660
+usermin_depends=1.510

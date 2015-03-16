@@ -5,34 +5,28 @@ Visit the [site](http://theme.winfuture.it) for more info.
 
 ##Changelog
 
-####Version 0.5.3 (March 1, 2015)
-* Improved the look of **ui_tables** (Thanks to piersg) [#3](https://github.com/winfuture/Bootstrap3-Webmin-Theme/pull/3)
-* Fixed **iOS (iPad, iPhone, iPod)** iframe scrolling (Work In Progress)
-* Fixed textarea **"\ln"** bug
-* Minor bug fixes
-* Changed **.btn-default** button background color to #fbfbfb to make it more usable/visible
-* Updated **Bootstrap** from 3.3.1 to 3.3.2 (See Bootstrap changelog for details)
-* Updated **FontAwesome** from 4.2.0 to 4.3.0 (See FontAwesome changelog for details)
-* Updated **jQuery** from 2.1.1 to 2.1.3 (See jQuery changelog for details)
-* Add **Simplified Chinese** translation (Thanks to Dreista) [#5](https://github.com/winfuture/Bootstrap3-Webmin-Theme/pull/5)
-* Add **Spanish** translation (Thanks to XxCoolGamesxX) [#8](https://github.com/winfuture/Bootstrap3-Webmin-Theme/pull/8)
-* Add **German** translation (Thanks to hammermaps) [#7](https://github.com/winfuture/Bootstrap3-Webmin-Theme/pull/7)
-* Add **Romanian** translation (Thanks to sealview) [#6](https://github.com/winfuture/Bootstrap3-Webmin-Theme/pull/6)
-* Partially implemented new design
+####Version 0.7.0 (March 16, 2015)
+* Completely rewritten **login page**. Now the code is well optimized, commented and indented
+* Reintroduced the ability to insert a **Banner** before login screen
+* Moved all the CSS, JavaScript, Fonts, etc to `/unauthenticated/assets/`
+* Switch to the **minified** versione of all CSS and JavaScript frameworks files (Boostrap, FontAwesome, jQuery)
+* Checkboxes and radios stylized in pure css with [Awesome Bootstrap Checkbox](https://github.com/flatlogic/awesome-bootstrap-checkbox)
+* Fixed an issue with an animation of the **aside menu**
+* Update licence from GNU GPLv2 to GNU GPLv3 
 
 >[Changelog History](https://github.com/winfuture/Bootstrap3-Webmin-Theme/blob/testing/CHANGELOG.md)
 
 ##Browser support
 
-###![](http://theme.winfuture.it/pub/icons/firefox.png) Firefox
+####![](http://theme.winfuture.it/pub/icons/firefox.png) Firefox
 
-###![](http://theme.winfuture.it/pub/icons/chrome.png) Chrome
+####![](http://theme.winfuture.it/pub/icons/chrome.png) Chrome
 
-###![](http://theme.winfuture.it/pub/icons/opera.png) Opera
+####![](http://theme.winfuture.it/pub/icons/opera.png) Opera
 
-###![](http://theme.winfuture.it/pub/icons/safari.png) Safari
+####![](http://theme.winfuture.it/pub/icons/safari.png) Safari
 
-###![](http://theme.winfuture.it/pub/icons/ie.png) Internet Explorer
+####![](http://theme.winfuture.it/pub/icons/ie.png) Internet Explorer
 
 ##Theme developers
 * [Riccardo Nobile](mailto:riccardo.nobile@winfuture.it)
@@ -45,10 +39,8 @@ You can do it with [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations
 
 ## License
 
-**BWTheme** is released under the [GPLv2 License](http://opensource.org/licenses/GPL-2.0).
-
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+**BWTheme** is released under the [GPLv3 License](http://opensource.org/licenses/GPL-3.0).
 
 ## Credits
 
-Browser logos by [MARINAD](http://marinad.com.ar/free-flat-browser-logotypes/)
+Browser Logos by [MARINAD](http://marinad.com.ar/free-flat-browser-logotypes/)
