@@ -1,7 +1,5 @@
 ##Changelog
 
-####Version 0.9.0 (April x, 2015)
-
 ####Version 0.7.5 (April 17, 2015)
 * Completely rewritten **index page**. Now the code is well optimized, commented and indented
 * **Added FontAwesome icons** (Work In Progress)
