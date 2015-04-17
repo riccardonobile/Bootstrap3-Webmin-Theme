@@ -1,0 +1,63 @@
+left_login=Login: $1
+left_home=System Information
+left_oc=Sponseret af OpenCountry
+left_feedback=Send Feedback
+left_search_webmin=Søg Webmin:
+left_search_usermin=Søgh Usermin:
+left_search=Søg:
+left_logs=Vis Modulernes Logs
+left_others=Andre
+
+right_login=Logget ind som
+right_from=Logget ind fra
+
+body_header0=System Information
+body_host=System hostnavn
+body_os=Styresystem
+body_webmin=Webmin version
+body_time=Tid på systemet
+body_kernel=Kernel og CPU
+body_cpuinfo=Processor information
+body_cputype=$5, $8 kerner
+body_uptime=System oppetid
+body_updays=$1 dage, $2 timer, $3 minutter
+body_uphours=$1 timer, $2 minutter
+body_upmins=$1 minutter
+body_procs=Kørende processer
+body_cpuuse=CPU brug
+body_cpustats=$1% bruger, $2% kernel, $4% IO, $3% inaktiv
+body_real=Rigtig hukommelse
+body_virt=Virtuel hukommelse
+body_used=$1 total - $2 brugt
+body_cpu=CPU gennemsnits forbrug
+body_load=$1 (1 min) $2 (5 mins) $3 (15 mins)
+body_disk=Local diskplads
+body_kernelon=$1 $2 på $3
+body_updates= Opdateringer
+body_upok=All instalerrede pakker er opdaterede
+body_upneed=$1 opdateringer er tilgænglige
+body_upsec=$1 opdateringer er tilgænglige, hvor af $2 er sikkerhedsopdateringer
+body_cputemps=CPU tempratur
+body_drivetemps=Disk tempratur
+body_driveerr=$1 fejl!
+body_drivefailed=SMART check fejlede!
+
+body_header1=Profil Information
+body_usermin=Usermin Version
+body_out=$1&nbsp;of&nbsp;$2
+body_uquota=Diskkvote og brug
+
+login_message=Du skal indtaste et brugernavn og adgangskode for at logge ind på Webmin serveren på
+login_user=Brugernavn
+login_pass=Adgangskode
+login_token=Token
+login_save=Husk mig
+login_signin=Log ind
+login_reset=Nulstil
+
+session_failed=Logind fejlede. Prøv venligst igen.
+session_twofailed=To-faktor godkendelse fejlede: $1
+session_logout=Du er nu logget ud. Brug formen under for at logge ind igen.
+session_timed_out=Der opstod timeout for Sessionen efter $1 minuts inaktivitet.
+
+__norefs=1

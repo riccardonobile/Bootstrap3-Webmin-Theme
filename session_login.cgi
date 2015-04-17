@@ -1,5 +1,5 @@
 #############################################################################################################################
-# BWTheme 0.7.0 (https://github.com/winfuture/Bootstrap3-Webmin-Theme) - (http://theme.winfuture.it)						#
+# BWTheme 0.7.5 (https://github.com/winfuture/Bootstrap3-Webmin-Theme) - (http://theme.winfuture.it)						#
 # Copyright (c) 2015 Riccardo Nobile <riccardo.nobile@winfuture.it> and Simone Cragnolini <simone.cragnolini@winfuture.it>	#
 # Licensed under GPLv3 License (https://github.com/winfuture/Bootstrap3-Webmin-Theme/blob/testing/LICENSE)					#
 #############################################################################################################################
@@ -37,7 +37,7 @@ if ($realname) {
 	$host = $ENV{'HTTP_HOST'};
 	$host =~ s/:\d+//g;
 	$host = &html_escape($host);
-} 
+}
 
 # Show pre login banner if exist
 if ($loginbanner && $ENV{'HTTP_COOKIE'} !~ /banner=1/ && !$in{'logout'} && !$in{'failed'} && !$in{'timed_out'} ) {
@@ -57,7 +57,7 @@ if ($loginbanner && $ENV{'HTTP_COOKIE'} !~ /banner=1/ && !$in{'logout'} && !$in{
 	close(BANNER);
 	print '</div>' . "\n";
 	print '<div class="input-group pull-right">' . "\n";
-	print '<a href="' . $webprefix . '" type="submit" class="btn btn-danger"><i class="fa fa-unlock"></i> ' . &text('banner_login') . '</a>' . "\n";
+	print '<a href="' . $webprefix . '" type="submit" class="btn btn-bwtheme btn-danger"><i class="fa fa-unlock"></i> ' . &text('banner_login') . '</a>' . "\n";
 	print '</div>' . "\n";
 	print '</div>' . "\n";
 	print '</div>' . "\n";
@@ -120,7 +120,7 @@ if (!$noremember) {
 	print '</div>' . "\n";
 }
 print '<div class="input-group pull-right">' . "\n";
-print '<button type="submit" class="btn btn-primary"><i class="fa fa-sign-in"></i> ' . $text{'login_signin'} . '</button>' . "\n";
+print '<button type="submit" class="btn btn-bwtheme btn-primary"><i class="fa fa-sign-in"></i> ' . $text{'login_signin'} . '</button>' . "\n";
 print '</div>' . "\n";
 print '</form>' . "\n";
 print '</div>' . "\n";

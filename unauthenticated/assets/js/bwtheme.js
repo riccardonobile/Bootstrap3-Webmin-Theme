@@ -44,5 +44,17 @@ $(function() {
 	var userAgent = navigator.userAgent.toLowerCase();
 	if (userAgent.match(/(iphone|ipod|ipad)/)) {
 		$('.iframe-container').addClass('ios');
-	}
+	};
+	var menuElement = {};
+	menuElement.removeClass = function(){return}													//create a virtual empty function to avoid issues on first call
+	var iframe =  $("iframe[name=page-container]");													//get the iframe
+	iframe.load(function(){																			//when the iframe loads
+		var iframePath = iframe.contents().get(0).location.pathname;								//get the iframe location path
+		if (iframePath.substring(0, 1) == '/') { 													//if the first charter is "/"
+		  iframePath = iframePath.substring(1);														//remove it
+		}
+		menuElement.removeClass("selected");															//remove active class from previous <li>
+		menuElement = $("a[href='"+iframePath+"']").parent();												//get new <li>
+		menuElement.addClass("selected");																//add active class to new <li>
+	});
 });

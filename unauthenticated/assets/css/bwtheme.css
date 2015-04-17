@@ -30,23 +30,22 @@ html, body {
 }
 body {
 	font-family: 'Lato Regular', sans-serif;
-	background-color: #f9f9f9;
+	background-color: #F9F9F9;
 }
 .container-inner {
 	margin-top: 20px;
 }
 .navbar-webmin {
 	background-color: #206ECF;
-	/* border-color: #1B5EB1; */
-	border-color: #195aa8;
+	border-color: #195AA8;
 	margin-bottom: 0;
 }
 .navbar-webmin  a {
-	color: #eee;
+	color: #EEE;
 }
 .navbar-webmin a:hover,
 .navbar-webmin a:focus {
-	color: #fff;
+	color: #FFF;
 }
 .navbar-webmin .navbar-toggle-webmin {
 	border: none;
@@ -67,25 +66,25 @@ body {
 	font-size: 15px;
 	margin-left: 4px;
 }
-.navbar-webmin .navbar-brand:hover, 
+.navbar-webmin .navbar-brand:hover,
 .navbar-webmin .navbar-brand:focus {
 	color: #FFF;
 }
 .navbar-webmin .navbar-collapse, .navbar-webmin .navbar-form {
-	border-color: #195aa8;
+	border-color: #195AA8;
 }
-.navbar-webmin .navbar-nav > .active > a, 
-.navbar-webmin .navbar-nav > .active > a:hover, 
+.navbar-webmin .navbar-nav > .active > a,
+.navbar-webmin .navbar-nav > .active > a:hover,
 .navbar-webmin .navbar-nav > .active > a:focus {
-	color: #fff;
-	background-color: #195aa8;
+	color: #FFF;
+	background-color: #195AA8;
 }
 .navbar-webmin .navbar-nav > li > a {
-	color: #eee;
+	color: #EEE;
 }
 .navbar-webmin .navbar-nav > li > a:hover,
 .navbar-webmin .navbar-nav > li > a:focus {
-	color: #fff;
+	color: #FFF;
 }
 .navbar-webmin .navbar-nav > li > a > i {
 	margin-right: 5px;
@@ -119,47 +118,56 @@ body {
     position: relative;
     display: block;
     padding: 10px 15px;
+	transition: color 0.4s ease 0s, border-color 0.2s ease 0s;
 }
-.aside-nav li > a, .aside-nav li > a:focus {
+.aside-nav > li > a, .aside-nav li > a:focus {
 	background-color: #23272D;
 	color: #999;
 	border-left: 4px solid transparent;
 	text-decoration: none;
 }
-.aside-nav li > ul > li > a, .aside-nav  li > ul > li > a:focus {
+.aside-nav > li > ul > li > a, .aside-nav > li > ul > li > a:focus {
 	background-color: #2A2E36;
 }
-.aside-nav li > a:hover {
+.aside-nav > li > a:hover {
 	border-left-color: #1A7AB9;
-	color: #eee;
+	color: #EEE;
 	text-decoration: none;
-	transition: color 0.4s ease 0s, border-color 0.2s ease 0s;
 }
-.aside-nav li.active > a, .aside-nav li.active > a:hover {
+.aside-nav > li.active > a, .aside-nav li.active > a:hover {
 	border-left-color: #1A7AB9;
 	background-color: #181B1F;
-	color: #eee;
+	color: #EEE;
 }
-.aside-nav li i {
+.aside-nav > li.selected > a, .aside-nav li.selected > a:hover {
+	border-left-color: #EEE;
+	color: #EEE;
+}
+.aside-nav > li > ul > li.selected > a, .aside-nav > li > ul > li.selected > a:hover {
+	border-left-color: #EEE;
+	color: #EEE;
+	background-color: #2A2E36;
+}
+.aside-nav > li > a > i {
 	margin-right: 15px;
 }
-.aside-nav li.submenu {
+.aside-nav > li.submenu {
 	display: none;
 }
-.aside-nav li > ul > li > a {
+.aside-nav > li > ul > li > a {
 	padding-left: 48px;
 }
 .aside-arrow {
 	float: right;
-	margin-right: -10px;
+	margin-right: 6px;
 }
-.aside-arrow i {
+.aside-arrow > i {
 	transition: all 0.4s ease;
 	-webkit-transition: all 0.4s ease;
 	-moz-transition: all 0.4s ease;
 	-o-transition: all 0.4s ease;
 }
-.aside-arrow i.rotated {
+.aside-arrow > i.rotated {
 	transform: rotate(90deg);
 	-webkit-transform: rotate(90deg);
 	-moz-transform: rotate(90deg);
@@ -170,7 +178,7 @@ body {
 }
 .update-header {
 	font-size: 20px;
-	color: #ddd;
+	color: #DDD;
 	margin-bottom: 0;
 }
 .update-header i {
@@ -179,7 +187,7 @@ body {
 .update-body {
 	font-size: 12px;
 	font-family: 'Lato Light', sans-serif;
-	color: #ccc;
+	color: #CCC;
 	margin-left: 34px;
 }
 .btn-update {
@@ -215,7 +223,7 @@ iframe {
 	border: 0 none;
 }
 /* ----- */
-.btn {
+.btn-bwtheme {
 	padding: 6px 13px;
 	border-radius: 3px;
 	border-width: 0;
@@ -224,10 +232,10 @@ iframe {
 	border-left-color: transparent;
 	border-right-color: transparent;
 }
-.btn-default {
-	background-color: #fbfbfb;
+.btn-bwtheme.btn-default {
+	background-color: #FBFBFB;
 }
-.btn:hover, .btn:focus {
+.btn-bwtheme:hover, .btn-bwtheme:focus {
 	border-top-color: transparent;
 	border-left-color: transparent;
 	border-right-color: transparent;
@@ -236,33 +244,6 @@ iframe {
 	box-shadow: none;
 	-webkit-appearance: none;
 }
-/*.checkbox{
-	margin: 0px;
-	font-size: 14px;
-	line-height: 1.42857;
-	text-align: left;
-	padding: 6px 12px;
-	font-weight: normal;
-	color: #555;
-}
-input[type='checkbox'] {
-	position: absolute;
-	clip: rect(1px, 1px, 1px, 1px);
-}
-
-input[type='checkbox'] + label > i:before{
-	content: "\f096";
-}
-
-input[type='checkbox']:checked + label > i:before{
-	content: "\f046";
-}
-
-input[type='checkbox'] + label > i{
-	text-align: left;
-	width: 1.0em;
-	cursor: pointer;
-}*/
 .menu-row {
 	text-align: center;
 }
@@ -274,7 +255,7 @@ input[type='checkbox'] + label > i{
 }
 .menu-row a.menu-link:hover,
 .menu-row a.menu-link:focus {
-	color: #eee;
+	color: #EEE;
 	text-decoration: none;
 }
 /*Added by piersg to improve the look of ui tables*/
@@ -284,22 +265,22 @@ input[type='checkbox'] + label > i{
 	padding-right: 0.5em;
 	padding-top: .25em;
 }
-.ui_table { 
+.ui_table {
 	border-width: 0px;
-	border-color:#fff;
+	border-color: #FFF;
 }
 .ui_table_head {
-	background-color: #eee;
+	background-color: #EEE;
 }
 .ui_table_body {
-	background-color: #f4f4f4;
+	background-color: #F4F4F4;
 }
 .ui_label{
  text-align: right;
  vertical-align: middle;
 }
 .ui_table_row {
-	border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid #DDD;
 }
 /*makes non-form text line up better w/ form elements:*/
 .ui_value {

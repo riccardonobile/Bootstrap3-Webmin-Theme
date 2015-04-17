@@ -1,3 +1,9 @@
+#############################################################################################################################
+# BWTheme 0.7.5 (https://github.com/winfuture/Bootstrap3-Webmin-Theme) - (http://theme.winfuture.it)						#
+# Copyright (c) 2015 Riccardo Nobile <riccardo.nobile@winfuture.it> and Simone Cragnolini <simone.cragnolini@winfuture.it>	#
+# Licensed under GPLv3 License (https://github.com/winfuture/Bootstrap3-Webmin-Theme/blob/testing/LICENSE)					#
+#############################################################################################################################
+
 sub theme_header {
 	print '<!DOCTYPE HTML>' , "\n";
 	print '<html>' , "\n";
@@ -8,14 +14,17 @@ sub theme_header {
 	print '<link href="'. $gconfig{'webprefix'} . '/unauthenticated/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">' , "\n";
 	print '<link href="'. $gconfig{'webprefix'} . '/unauthenticated/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">' , "\n";
 	print '<link href="'. $gconfig{'webprefix'} . '/unauthenticated/assets/css/bootstrap-checkbox.css" rel="stylesheet" type="text/css">' , "\n";
+	print '<link href="'. $gconfig{'webprefix'} . '/unauthenticated/assets/css/bootstrap-select.min.css" rel="stylesheet" type="text/css">' , "\n";
 	print '<link href="'. $gconfig{'webprefix'} . '/unauthenticated/assets/css/bwtheme.css" rel="stylesheet" type="text/css">' , "\n";
 	print '<link href="'. $gconfig{'webprefix'} . '/unauthenticated/assets/css/circleprogress.css" rel="stylesheet" type="text/css">' , "\n";
+	print '<link href="'. $gconfig{'webprefix'} . '/favicon.ico" rel="icon" sizes="16x16">' , "\n";
 	print '<script src="'. $gconfig{'webprefix'} . '/unauthenticated/assets/js/jquery.min.js" type="text/javascript"></script>' , "\n";
 	print '<script src="'. $gconfig{'webprefix'} . '/unauthenticated/assets/js/bootstrap.min.js" type="text/javascript"></script>' , "\n";
+	print '<script src="'. $gconfig{'webprefix'} . '/unauthenticated/assets/js/bootstrap-select.min.js" type="text/javascript"></script>' , "\n";
 	print '<script src="'. $gconfig{'webprefix'} . '/unauthenticated/assets/js/bwtheme.js" type="text/javascript"></script>' , "\n";
 	print '</head>' , "\n";
 	print '<body>' , "\n";
-	
+
 if (@_ > 1) {
 	print '<div class="container">' . "\n";
 	my %this_module_info = &get_module_info(&get_module_name());
@@ -134,13 +143,13 @@ my ($w, $h) = (400, 300);
 if ($gconfig{'db_sizefile'}) {
 	($w, $h) = split(/x/, $gconfig{'db_sizefile'});
 	}
-return "<button class='btn btn-default' type=button onClick='ifield = form.$_[0]; chooser = window.open(\"$gconfig{'webprefix'}/chooser.cgi?add=$add&type=$_[1]&chroot=$chroot&file=\"+escape(ifield.value), \"chooser\", \"toolbar=no,menubar=no,scrollbars=no,resizable=yes,width=$w,height=$h\"); chooser.ifield = ifield; window.ifield = ifield'>...</button>\n";
+return "<button class='btn btn-bwtheme btn-default' type=button onClick='ifield = form.$_[0]; chooser = window.open(\"$gconfig{'webprefix'}/chooser.cgi?add=$add&type=$_[1]&chroot=$chroot&file=\"+escape(ifield.value), \"chooser\", \"toolbar=no,menubar=no,scrollbars=no,resizable=yes,width=$w,height=$h\"); chooser.ifield = ifield; window.ifield = ifield'>...</button>\n";
 }
 sub theme_popup_window_button
 {
 my ($url, $w, $h, $scroll, $fields) = @_;
 my $scrollyn = $scroll ? "yes" : "no";
-my $rv = "<input class='btn btn-default' type=button onClick='";
+my $rv = "<input class='btn btn-bwtheme btn-default' type=button onClick='";
 foreach my $m (@$fields) {
 	$rv .= "$m->[0] = form.$m->[1]; ";
 	}
@@ -164,7 +173,7 @@ sub theme_ui_upload
 {
 my ($name, $size, $dis, $tags) = @_;
 $size = &ui_max_text_width($size);
-return "<input style='margin: 4px 0;' class='ui_upload' type=file name=\"".&quote_escape($name)."\" ".
+return "<input style='margin: 4px 0;' class='btn btn-bwtheme btn-default' type=file name=\"".&quote_escape($name)."\" ".
        "size=$size ".
        ($dis ? "disabled=true" : "").
        ($tags ? " ".$tags : "").">";
@@ -189,7 +198,7 @@ sub theme_icons_table {
 sub theme_generate_icon {
 	my ($icon, $title, $link, $href, $width, $height, $before, $after) = @_;
 	# Decomment only when new icons are ready
-	# $icon =~ s/.gif/.png/;
+	$icon =~ s/.gif/.png/;
 	$width = !defined($width) ? '48' : $width;
 	$height = !defined($height) ? '48' : $height;
 
@@ -224,15 +233,74 @@ sub theme_generate_icon {
 	}
 }
 
-# Thi is the theme.pl part dedicated to all theme functions.
+# Thi is the bwtheme.pl part dedicated to all theme functions.
 # WARNING!!! Work in progress - Not all is implemented!!!
 # All the # theme_ui_x are are not yet implemented theme functions.
 
 ################################# Theme table generation functions #################################
 
-# theme_ui_table_start
+sub theme_ui_link {
+	my ($href, $text, $class, $tags) = @_;
+	my $rv;
 
-# theme_ui_table_end
+	$rv .= '<a class="bwtheme-link';
+	$rv .= ($class ? ' ' . $class : '');
+	$rv .= '" href="' . $href . '"';
+	$rv .= ($tags ? ' ' . $tags : '');
+	$rv .= '>' . $text . '</a>' . "\n";
+
+	return $rv;
+}
+
+sub theme_ui_table_start {
+	my ($heading, $tabletags, $cols, $tds, $rightheading) = @_;
+	if (defined($main::ui_table_cols)) {
+		push(@main::ui_table_cols_stack, $main::ui_table_cols);
+		push(@main::ui_table_pos_stack, $main::ui_table_pos);
+		push(@main::ui_table_default_tds_stack, $main::ui_table_default_tds);
+	}
+	my $colspan = 1;
+	my $rv;
+
+	$rv .= "<table class='ui_table' border $tabletags>\n";
+	if (defined($heading) || defined($rightheading)) {
+		$rv .= "<tr".($tb ? " ".$tb : "")." class='ui_table_head'>";
+		if (defined($heading)) {
+			$rv .= "<td><b>$heading</b></td>"
+			}
+		if (defined($rightheading)) {
+			$rv .= "<td align=right>$rightheading</td>";
+			$colspan++;
+			}
+		$rv .= "</tr>\n";
+		}
+	$rv .= "<tr".($cb ? " ".$cb : "")." class='ui_table_body'> <td colspan=$colspan>".
+	       "<table width=100%>\n";
+	$main::ui_table_cols = $cols || 4;
+	$main::ui_table_pos = 0;
+	$main::ui_table_default_tds = $tds;
+	return $rv;
+}
+
+sub theme_ui_table_end {
+	my $rv;
+	if ($main::ui_table_cols == 4 && $main::ui_table_pos) {
+		# Add an empty block to balance the table
+		$rv .= &ui_table_row(" ", " ");
+	}
+	if (@main::ui_table_cols_stack) {
+		$main::ui_table_cols = pop(@main::ui_table_cols_stack);
+		$main::ui_table_pos = pop(@main::ui_table_pos_stack);
+		$main::ui_table_default_tds = pop(@main::ui_table_default_tds_stack);
+	}
+	else {
+		$main::ui_table_cols = undef;
+		$main::ui_table_pos = undef;
+		$main::ui_table_default_tds = undef;
+	}
+	$rv .= "</table></td></tr></table>\n";
+	return $rv;
+}
 
 # theme_ui_table_row
 
@@ -364,7 +432,35 @@ sub theme_ui_password {
 
 # theme_ui_hidden
 
-# theme_ui_select
+sub theme_ui_select {
+	my ($name, $value, $opts, $size, $multiple, $missing, $dis, $tags) = @_;
+	my $rv;
+
+	$rv .= '<select class="selectpicker" data-width="auto" name="' . &quote_escape($name) . '" id="' . &quote_escape($name) . '"';
+	$rv .= ($multiple ? ' multiple' : '');
+	$rv .= ($size ? ' size="' . $size . '"' : '');
+	$rv .= ($dis ? ' disabled="true"' : '');
+	$rv .= ($tags ? ' ' . $tags : '') . '>' . "\n";
+
+	my ($o, %opt, $s);
+	my %sel = ref($value) ? (map { $_, 1 } @$value) : ( $value, 1);
+
+	foreach $o (@$opts) {
+		$o = [ $o ] if (!ref($o));
+		$rv .= "<option value=\"".&quote_escape($o->[0])."\"".
+		       ($sel{$o->[0]} ? " selected" : "").($o->[2] ne '' ? " ".$o->[2] : "").">".
+		       ($o->[1] || $o->[0])."</option>\n";
+		$opt{$o->[0]}++;
+	}
+	foreach $s (keys %sel) {
+		if (!$opt{$s} && $missing) {
+			$rv .= "<option value=\"".&quote_escape($s)."\" selected>".($s eq "" ? "&nbsp;" : $s)."</option>\n";
+		}
+	}
+
+	$rv .= '</select>' . "\n";
+	return $rv;
+}
 
 # theme_ui_multi_select
 
@@ -391,11 +487,11 @@ sub theme_ui_radio {
 		$rv .= '<label for="' . $id . '">' . $label . "</label>" . $after;
 		$rv .= '</div>' . "\n";
 	}
-	
+
 	return $rv;
 }
 
-# theme_ui_yesno_radio 
+# theme_ui_yesno_radio
 
 sub theme_ui_checkbox {
 	my ($name, $value, $label, $sel, $tags, $dis) = @_;
@@ -433,7 +529,7 @@ sub theme_ui_oneradio {
 	$rv .= '>';
 	$rv .= '<label for="' . $id . '">' . $label . "</label>" . $after;
 	$rv .= '</div>' . "\n";
-	
+
 	return $rv;
 }
 
@@ -458,7 +554,24 @@ sub theme_ui_textarea {
 
 # theme_ui_group_textbox
 
-# theme_ui_opt_textbox
+sub theme_ui_opt_textbox {
+	my ($name, $value, $size, $opt1, $opt2, $dis, $extra, $max, $tags) = @_;
+	my $dis1 = &js_disable_inputs([ $name, @$extra ], [ ]);
+	my $dis2 = &js_disable_inputs([ ], [ $name, @$extra ]);
+	my $rv;
+	$size = &ui_max_text_width($size);
+	$rv .= &ui_radio($name."_def", $value eq '' ? 1 : 0,
+			 [ [ 1, $opt1, "onClick='$dis1'" ],
+			   [ 0, $opt2 || " ", "onClick='$dis2'" ] ], $dis)."\n";
+	$rv .= "<input class='ui_opt_textbox form-control' type='text' ".
+	       "name=\"".&quote_escape($name)."\" ".
+	       "id=\"".&quote_escape($name)."\" ".
+	       "size=$size value=\"".&quote_escape($value)."\"".
+	       ($dis ? " disabled" : "").
+	       ($max ? " maxlength=$max" : "").
+	       ($tags ? " ".$tags : "").">";
+	return $rv;
+}
 
 sub theme_ui_submit {
 	my ($label, $name, $dis, $tags) = @_;
@@ -479,7 +592,7 @@ sub theme_ui_submit {
 		#$fa = '<i class="fa fa-refresh"></i>';
 	}
 
-	$rv .= '<button type="submit" class="btn ' . $btntype . '" ';
+	$rv .= '<button type="submit" class="btn btn-bwtheme ' . $btntype . '" ';
 	$rv .= ($name ne '' ? 'name="' . &quote_escape($name) . '" ' : '');
 	$rv .= ($name ne '' ? 'id="' . &quote_escape($name) . '" ' : '');
 	$rv .= ' value="' . &quote_escape($label) . '"'.
@@ -495,7 +608,7 @@ sub theme_ui_reset {
 	my ($label, $dis) = @_;
 	my $rv;
 
-	$rv .= '<button class="btn btn-default" type="reset" ';
+	$rv .= '<button class="btn btn-bwtheme btn-default" type="reset" ';
 	$rv .= ($dis ? 'disabled="disabled">' : '>');
 	$rv .= &quote_escape($label);
 	$rv .= '</button>' . "\n";
@@ -507,7 +620,7 @@ sub theme_ui_button {
 	my ($label, $name, $dis, $tags) = @_;
 	my $rv;
 
-	$rv .= '<button type="button" class="btn btn-default" ';
+	$rv .= '<button type="button" class="btn btn-bwtheme btn-default" ';
 	$rv .= ($name ne '' ? 'name="' . &quote_escape($name) . '" ' : '');
 	$rv .= ($dis ? 'disabled="disabled"' : '');
 	$rv .= ($tags ? ' ' . $tags : ''). '>';
@@ -635,6 +748,46 @@ sub theme_ui_tabs_end_tab {
 ################################# Theme collapsible section / tab functions #################################
 
 # theme_ui_grid_table
+
+sub theme_ui_grid_table {
+	my ($elements, $cols, $width, $tds, $tabletags, $title) = @_;
+	return "" if (!@$elements);
+	my $rv = "<table class='ui_grid_table'".
+		    ($width ? " width=$width%" : "").
+		    ($tabletags ? " ".$tabletags : "").
+		    ">\n";
+	my $i;
+	for($i=0; $i<@$elements; $i++) {
+		$rv .= "<tr class='ui_grid_row'>" if ($i%$cols == 0);
+		$rv .= "<td ".$tds->[$i%$cols]." valign=top class='ui_grid_cell'>".
+		       $elements->[$i]."</td>\n";
+		$rv .= "</tr>" if ($i%$cols == $cols-1);
+		}
+	if ($i%$cols) {
+		while($i%$cols) {
+			$rv .= "<td ".$tds->[$i%$cols]." class='ui_grid_cell'>".
+			       "<br></td>\n";
+			$i++;
+			}
+		$rv .= "</tr>\n";
+		}
+	$rv .= "</table>\n";
+	if (defined($title)) {
+		$rrv = $rv;
+		$rv = '<div class="panel panel-default">' . "\n";
+		$rv .= '<div class="panel-heading">' . "\n";
+		$rv .= $title . "\n";
+		$rv .= '</div>' . "\n";
+		$rv .= '<div class="panel-body">' . "\n";
+		$rv .= "<table class=ui_table border='0' ".
+			($width ? " width=$width%" : "").">\n".
+				"<tr><td>$rrv</td></tr>\n".
+			"</table>";
+		$rv .= '</div>' . "\n";
+		$rv .= '</div>' . "\n";
+		}
+	return $rv;
+}
 
 # theme_ui_radio_table
 

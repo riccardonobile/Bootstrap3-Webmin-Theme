@@ -28,7 +28,7 @@ body {
 	font-family: 'Lato Regular', sans-serif;
 	background-color: #f9f9f9;
 }
-.btn {
+.btn-bwtheme {
 	padding: 6px 13px;
 	border-radius: 3px;
 	border-width: 0;
@@ -37,7 +37,7 @@ body {
 	border-left-color: transparent;
 	border-right-color: transparent;
 }
-.btn:hover, .btn:focus {
+.btn-bwtheme:hover, .btn-bwtheme:focus {
 	border-top-color: transparent;
 	border-left-color: transparent;
 	border-right-color: transparent;

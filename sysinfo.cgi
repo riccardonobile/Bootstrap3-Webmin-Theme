@@ -1,8 +1,15 @@
+#############################################################################################################################
+# BWTheme 0.7.5 (https://github.com/winfuture/Bootstrap3-Webmin-Theme) - (http://theme.winfuture.it)						#
+# Copyright (c) 2015 Riccardo Nobile <riccardo.nobile@winfuture.it> and Simone Cragnolini <simone.cragnolini@winfuture.it>	#
+# Licensed under GPLv3 License (https://github.com/winfuture/Bootstrap3-Webmin-Theme/blob/testing/LICENSE)					#
+#############################################################################################################################
+
 #!/usr/bin/perl
-BEGIN { push(@INC, ".."); };
+BEGIN {push(@INC, "..");};
 use WebminCore;
 &ReadParse();
 &init_config();
+
 &load_theme_library();
 if (&get_product_name() eq "usermin") {
 	$level = 3;
@@ -10,7 +17,9 @@ if (&get_product_name() eq "usermin") {
 else {
 	$level = 0;
 }
+
 %text = &load_language($current_theme);
+do "bootstrap/bwtheme_lib.cgi";
 &header($title);
 print '<div id="wrapper" class="page">' . "\n";
 print '<div class="container">' . "\n";
@@ -232,64 +241,5 @@ if ($level == 0) {
 }
 # End of page
 print '</div>' . "\n";
-#print '<p id="about">Template developed and written by <a href="https://www.facebook.com/RiccardoNob" target="_blank">Riccardo Nobile</a> & <a href="https://www.facebook.com/simone.cragnolini" target="_blank">Simone Cragnolini</a></p>' . "\n";
-#print '<p id="about"><a href="http://winfuture.it/" target="_blank">WinFuture</a></p>' . "\n";
 print '</div>' . "\n";
-#print '</div>' . "\n";
 &footer();
-
-sub print_progressbar_colum {
-	my ($xs, $sm, $percent, $label) = @_;
-	use POSIX;
-	$percent = ceil($percent);
-	if ($percent < 75) {
-		$class = 'success';
-	} elsif ($percent < 90) {
-		$class = 'warning';
-	} else {
-		$class = 'danger';
-	}
-	print '<div class="col-xs-' . $xs . ' col-sm-' . $sm . '">' . "\n";
-	print '<div data-progress="' . $percent . '" class="progress progress-circle">' . "\n";
-	print '<div class="progress-bar-circle progress-bar-' . $class . '">' . "\n";
-	print '<div class="progress-bar-circle-mask progress-bar-circle-full">' . "\n";
-	print '<div class="progress-bar-circle-fill"></div>' . "\n";
-	print '</div>' . "\n";
-	print '<div class="progress-bar-circle-mask progress-bar-circle-half">' . "\n";
-	print '<div class="progress-bar-circle-fill"></div>' . "\n";
-	print '<div class="progress-bar-circle-fill progress-bar-circle-fix"></div>' . "\n";
-	print '</div>' . "\n";
-	print '<div class="progress-bar-circle-inset">' . "\n";
-	print '<div class="progress-bar-circle-title">' . "\n";
-	print '<strong class="text-muted">' . $label . '</strong>' . "\n";
-	print '</div>' . "\n";
-	print '<div class="progress-bar-circle-percent">' . "\n";
-	print '<span></span>' . "\n";
-	print '</div>' . "\n";
-	print '</div>' . "\n";
-	print '</div>' . "\n";
-	print '</div>' . "\n";
-	print '</div>' . "\n";
-}
-
-sub get_col_num {
-	my ($info, $max_col) = @_;
-	my $num_col = 0;
-	if ($info->{'cpu'}) { $num_col++; }
-	if ($info->{'mem'}) {
-		@m = @{$info->{'mem'}};
-		if (@m && $m[0]) { $num_col++; }
-		if (@m && $m[2]) { $num_col++; }
-	}
-	if ($info->{'disk_total'}) { $num_col++; }
-	my $col = $max_col / $num_col;
-	return $col;
-}
-
-sub print_table_row {
-	local ($title, $content) = @_;
-	print '<tr>' . "\n";
-	print '<td><strong>' . $title . '</strong></td>' . "\n";
-	print '<td>' . $content . '</td>' . "\n";
-	print '</tr>' . "\n";
-}

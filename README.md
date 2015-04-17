@@ -5,14 +5,17 @@ Visit the [site](http://theme.winfuture.it) for more info.
 
 ##Changelog
 
-####Version 0.7.0 (March 16, 2015)
-* Completely rewritten **login page**. Now the code is well optimized, commented and indented
-* Reintroduced the ability to insert a **Banner** before login screen
-* Moved all the CSS, JavaScript, Fonts, etc to `/unauthenticated/assets/`
-* Switch to the **minified** versione of all CSS and JavaScript frameworks files (Boostrap, FontAwesome, jQuery)
-* Checkboxes and radios stylized in pure css with [Awesome Bootstrap Checkbox](https://github.com/flatlogic/awesome-bootstrap-checkbox)
-* Fixed an issue with an animation of the **aside menu**
-* Update licence from GNU GPLv2 to GNU GPLv3 
+####Version 0.7.5 (April 17, 2015)
+* Completely rewritten **index page**. Now the code is well optimized, commented and indented
+* **Added FontAwesome icons** (Work In Progress)
+* Updated **Bootstrap** from 3.3.2 to 3.3.4 (See Bootstrap [changelog](https://github.com/twbs/bootstrap/releases/tag/v3.3.4) for details)
+* Added bwtheme-lib.cgi for all the theme functions
+* Added favicon.ico
+* Fixed some CSS issues
+* Updated **aside menu** JavaScript
+* Aside menu now display which module was selected
+* Stylized **theme_ui_grid_table**
+* Selects and multiselects stylized with [Bootstrap Multiselect](http://silviomoreto.github.io/bootstrap-select/)
 
 >[Changelog History](https://github.com/winfuture/Bootstrap3-Webmin-Theme/blob/testing/CHANGELOG.md)
 
@@ -42,7 +45,6 @@ You can do it with [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations
 **BWTheme** is released under the [GPLv3 License](http://opensource.org/licenses/GPL-3.0).
 
 This program is free software: you can redistribute it and/or modifyit under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
 
 ## Credits
 

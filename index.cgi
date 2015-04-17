@@ -1,8 +1,14 @@
-#!/usr/bin/perl
-BEGIN { push(@INC, ".."); };
+#############################################################################################################################
+# BWTheme 0.7.5 (https://github.com/winfuture/Bootstrap3-Webmin-Theme) - (http://theme.winfuture.it)						#
+# Copyright (c) 2015 Riccardo Nobile <riccardo.nobile@winfuture.it> and Simone Cragnolini <simone.cragnolini@winfuture.it>	#
+# Licensed under GPLv3 License (https://github.com/winfuture/Bootstrap3-Webmin-Theme/blob/testing/LICENSE)					#
+#############################################################################################################################
+
+BEGIN {push(@INC, "..");};
 use WebminCore;
 &ReadParse();
 &init_config();
+
 if ($in{'mod'}) {
 	$minfo = { &get_module_info($in{'mod'}) };
 }
@@ -10,7 +16,7 @@ else {
 	$minfo = &get_goto_module();
 }
 $goto = $minfo ? "$minfo->{'dir'}/" :
-$in{'page-container'} ? "" : "body.cgi";
+$in{'page-container'} ? "" : "sysinfo.cgi";
 
 if ($minfo) {
 	$cat = "?$minfo->{'category'}=1";
@@ -18,9 +24,13 @@ if ($minfo) {
 if ($in{'page-container'}) {
 	$goto .= "/".$in{'page-container'};
 }
+
 %text = &load_language($current_theme);
-%gaccess = &get_module_acl(undef, "");
+%gaccess = &get_module_acl( undef, "" );
 $title = &get_html_framed_title();
+
+do "bootstrap/bwtheme_lib.cgi";
+
 &header($title);
 print '<nav class="navbar navbar-default navbar-webmin navbar-fixed-top" role="navigation">' . "\n";
 print '<div class="container-fluid">' . "\n";
@@ -53,9 +63,9 @@ print '<p class="navbar-text pull-left">Welcome, ' . $user . '</p>' . "\n";
 &get_miniserv_config(\%miniserv);
 if ($miniserv{'logout'} && !$ENV{'SSL_USER'} && !$ENV{'LOCAL_USER'} && $ENV{'HTTP_USER_AGENT'} !~ /webmin/i) {
 	if ($main::session_id) {
-		print '<a href="'. $gconfig{'webprefix'} . '/session_login.cgi?logout=1" class="btn btn-danger navbar-btn pull-right"><i class="fa fa-sign-out"></i> Logout</a>' . "\n";
+		print '<a href="'. $gconfig{'webprefix'} . '/session_login.cgi?logout=1" class="btn btn-bwtheme btn-danger navbar-btn pull-right"><i class="fa fa-sign-out"></i> Logout</a>' . "\n";
 	} else {
-		print '<a href="switch_user.cgi" class="btn btn-danger navbar-btn pull-right"> Switch user</a>' . "\n";
+		print '<a href="switch_user.cgi" class="btn btn-bwtheme btn-danger navbar-btn pull-right"> Switch user</a>' . "\n";
 	}
 }
 print '</div>' . "\n";
@@ -83,74 +93,5 @@ print '</nav>' . "\n";
 print '</aside>' . "\n";
 print '<div class="iframe-container">' . "\n";
 print '<iframe name="page-container" src="' . $goto . '">' . "\n";
-#print '<object name="page-container" type="text/html" data="' . $goto . '"></object>' . "\n";
 print '</iframe>' . "\n";
 print '</div>' . "\n";
-
-
-
-
-
-
-
-
-
-
-
-
-sub print_menu_opener {
-	print '<ul class="aside-nav">' . "\n";
-	print '<li>' . "\n";
-	print '<a href="#" data-open="hideMenu"><i class="fa fa-fw fa-bars"></i><span class="aside-text">Hide Menu</span></a>' . "\n";
-	print '</li>' . "\n";
-}
-sub print_menu_category {
-	local ($category, $label) = @_;
-	use feature qw(switch);
-	given($category) {
-		when('webmin') { $icon = 'fa-cog'; }
-		when('usermin') { $icon = 'fa-cog'; }
-		when('system') { $icon = 'fa-wrench'; }
-		when('servers') { $icon = 'fa-rocket'; }
-		when('other') { $icon = 'fa-file'; }
-		when('net') { $icon = 'fa-shield'; }
-		when('info') { $icon = 'fa-info'; }
-		when('hardware') { $icon = 'fa-hdd-o'; }
-		when('cluster') { $icon = 'fa-power-off'; }
-		when('unused') { $icon = 'fa-puzzle-piece'; }
-		when('mail') { $icon = 'fa-envelope'; }
-		when('login') { $icon = 'fa-user'; }
-		when('apps') { $icon = 'fa-rocket'; }
-		default { $icon = 'fa-cog'; }
-	}
-	print '<li>' . "\n";
-	print '<a href="#" data-open="#' . $category . '">' . "\n";
-	print '<i class="fa fa-fw ' . $icon . '"></i><span class="aside-text">' . $label . '<span class="aside-arrow" ><i class="fa fa-angle-right"></i></span></span>' . "\n";
-	print '</a>' . "\n";
-	print '</li>' . "\n";
-}
-sub print_menu_closer {
-	print '</ul>' . "\n";
-}
-sub print_sub_category_opener {
-	local ($id) = @_;
-	print '<li class="submenu" id="' . $id . '">' . "\n";
-	print '<ul class="aside-nav">' . "\n";
-}
-sub print_sub_category {
-	local ($link, $label, $target) = @_;
-	print '<li>' . "\n";
-	print '<a href="' . $link .'" target="' . $target . '">' . $label . '</a>' . "\n";
-	print '</li>' . "\n";
-}
-sub print_sub_category_closer {
-	print '</ul>' . "\n";
-	print '</li>' . "\n";
-}
-sub print_menu_search {
-	print '<form class="search-aside" role="search" action="webmin_search.cgi" target="page-container">' . "\n";
-	print '<div class="form-group">' . "\n";
-	print '<input class="form-control" name="search" placeholder="Search in ' . &get_product_name() . '" type="text">' . "\n";
-	print '</div>' . "\n";
-	print '</form>' . "\n";
-}
