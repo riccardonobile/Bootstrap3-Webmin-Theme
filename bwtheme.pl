@@ -1,5 +1,5 @@
 #############################################################################################################################
-# BWTheme 0.7.5 (https://github.com/winfuture/Bootstrap3-Webmin-Theme) - (http://theme.winfuture.it)						#
+# BWTheme 0.9.0 (https://github.com/winfuture/Bootstrap3-Webmin-Theme) - (http://theme.winfuture.it)						#
 # Copyright (c) 2015 Riccardo Nobile <riccardo.nobile@winfuture.it> and Simone Cragnolini <simone.cragnolini@winfuture.it>	#
 # Licensed under GPLv3 License (https://github.com/winfuture/Bootstrap3-Webmin-Theme/blob/testing/LICENSE)					#
 #############################################################################################################################
@@ -430,7 +430,18 @@ sub theme_ui_password {
 	return $rv;
 }
 
-# theme_ui_hidden
+sub ui_hidden {
+	my ($name, $value) = @_;
+	my $rv;
+
+	$rv .= '<input style="display: none;" type="hidden" ';
+	$rv .= 'name="' . &quote_escape($name) . '" ';
+	#$rv .= 'id="' . &quote_escape($name) . '" ';
+	$rv .= 'value="' . &quote_escape($value) . '" ';
+	$rv .= '>' . "\n";
+
+	return $rv;
+}
 
 sub theme_ui_select {
 	my ($name, $value, $opts, $size, $multiple, $missing, $dis, $tags) = @_;
@@ -491,7 +502,18 @@ sub theme_ui_radio {
 	return $rv;
 }
 
-# theme_ui_yesno_radio
+sub theme_ui_yesno_radio {
+	my ($name, $value, $yes, $no, $dis) = @_;
+	my $rv;
+
+	$yes = 1 if (!defined($yes));
+	$no = 0 if (!defined($no));
+	$value = int($value);
+
+	$rv = &ui_radio($name, $value, [ [ $yes, $text{'yes'} ], [ $no, $text{'no'} ] ], $dis);
+
+	return $rv;
+}
 
 sub theme_ui_checkbox {
 	my ($name, $value, $label, $sel, $tags, $dis) = @_;
@@ -550,9 +572,27 @@ sub theme_ui_textarea {
 	return $rv;
 }
 
-# theme_ui_user_textbox
+sub theme_ui_user_textbox {
+	my ($name, $value, $form, $dis, $tags) = @_;
+	my $rv;
 
-# theme_ui_group_textbox
+	$rv .= &ui_textbox($name, $value, 13, $dis, undef, $tags);
+	$rv .= " ";
+	$rv .= &user_chooser_button($name, 0, $form);
+
+	return $rv;
+}
+
+sub theme_ui_group_textbox {
+	my ($name, $value, $form, $dis, $tags) = @_;
+	my $rv;
+
+	$rv .= &ui_textbox($name, $value, 13, $dis, undef, $tags);
+	$rv .= " ";
+	$rv .= &user_chooser_button($name, 0, $form);
+
+	return $rv;
+}
 
 sub theme_ui_opt_textbox {
 	my ($name, $value, $size, $opt1, $opt2, $dis, $extra, $max, $tags) = @_;
@@ -825,4 +865,17 @@ sub theme_ui_alert_box {
 
 # theme_ui_page_flipper
 
-# theme_js_redirect
+sub theme_js_redirect {
+	my ($url, $window) = @_;
+	my $rv;
+
+	$window ||= "window";
+	if ($url =~ /^\//) {
+		# If the URL is like /foo , add webprefix
+		$url = $gconfig{'webprefix'}.$url;
+	}
+
+	$rv .= "<script type='text/javascript'>" . ${window} . '.location = ' . &quote_escape($url) . ';</script>' . "\n";
+
+	return $rv;
+}

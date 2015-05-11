@@ -1,5 +1,5 @@
 #############################################################################################################################
-# BWTheme 0.7.5 (https://github.com/winfuture/Bootstrap3-Webmin-Theme) - (http://theme.winfuture.it)						#
+# BWTheme 0.9.0 (https://github.com/winfuture/Bootstrap3-Webmin-Theme) - (http://theme.winfuture.it)						#
 # Copyright (c) 2015 Riccardo Nobile <riccardo.nobile@winfuture.it> and Simone Cragnolini <simone.cragnolini@winfuture.it>	#
 # Licensed under GPLv3 License (https://github.com/winfuture/Bootstrap3-Webmin-Theme/blob/testing/LICENSE)					#
 #############################################################################################################################
@@ -60,7 +60,7 @@ if ($level == 0) {
 		&print_progressbar_colum(6, $col_width, $used, 'HDD');
 	}
 	print '</div>' . "\n";
-	# Info table 
+	# Info table
 	print '<table class="table table-hover">' . "\n";
 	# Hostname Info
 	$ip = $info && $info->{'ips'} ? $info->{'ips'}->[0]->[0] : &to_ipaddress(get_system_hostname());

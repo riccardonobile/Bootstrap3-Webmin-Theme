@@ -1,5 +1,5 @@
 #############################################################################################################################
-# BWTheme 0.7.5 (https://github.com/winfuture/Bootstrap3-Webmin-Theme) - (http://theme.winfuture.it)						#
+# BWTheme 0.9.0 (https://github.com/winfuture/Bootstrap3-Webmin-Theme) - (http://theme.winfuture.it)						#
 # Copyright (c) 2015 Riccardo Nobile <riccardo.nobile@winfuture.it> and Simone Cragnolini <simone.cragnolini@winfuture.it>	#
 # Licensed under GPLv3 License (https://github.com/winfuture/Bootstrap3-Webmin-Theme/blob/testing/LICENSE)					#
 #############################################################################################################################
@@ -111,7 +111,7 @@ sub get_col_num {
 		if (@m && $m[2]) { $num_col++; }
 	}
 	if ($info->{'disk_total'}) { $num_col++; }
-	my $col = $max_col / $num_col;
+	my $col = $max_col / ($num_col || 1);
 	return $col;
 }
 

@@ -1,5 +1,15 @@
 ##Changelog
 
+####Version 0.9.0 (May 11, 2015)
+* **IMPROVE:** Romanian translation (Thanks to sealview) [#11](https://github.com/winfuture/Bootstrap3-Webmin-Theme/pull/11)
+* **IMPROVE:** Now icons are the same color of the navbar (#206ECF)
+* **IMPROVE:** Updated **jQuery** from v2.1.3 to v2.1.4 (See jQuery changelog for details)
+* **IMPROVE:** Updated **Bootstrap Select** from v1.6.3 to v1.6.5 (See Bootstrap Select changelog for details)
+* **IMPROVE:** Updated **Awesome Bootstrap Checkbox** (See Awesome Bootstrap Checkbox GitHub repository for details)
+* **FIX:** Issue with OSX Yosemite error because #num_col gets initialized as 0 in `bwtheme_lib.cgi` Line 114 (Thanks to Cheers)
+* **FIX:** Fixed some missing icons in the menu (Work In Progress)
+* **NEW:** Added functions theme_ui_hidden, theme_ui_yesno_radio, theme_ui_user_textbox, theme_ui_group_textbox, theme_js_redirect in `bwtheme.pl`
+
 ####Version 0.7.5 (April 17, 2015)
 * Completely rewritten **index page**. Now the code is well optimized, commented and indented
 * **Added FontAwesome icons** (Work In Progress)
@@ -17,7 +27,7 @@
 * Reintroduced the ability to insert a **Banner** before login screen
 * Moved all the CSS, JavaScript, Fonts, etc to `/unauthenticated/assets/`
 * Switch to the **minified** versione of all CSS and JavaScript frameworks files (Boostrap, FontAwesome, jQuery)
-* Checkboxes and radios stylized in pure css with [Awesome Bootstrap Checkbox](http://blog.getbootstrap.com/2015/03/16/bootstrap-3-3-4-released/)
+* Checkboxes and radios stylized in pure css with [Awesome Bootstrap Checkbox](https://github.com/flatlogic/awesome-bootstrap-checkbox)
 * Fixed an issue with an animation of the **aside menu**
 
 ####Version 0.5.3 (March 1, 2015)

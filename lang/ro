@@ -1,0 +1,72 @@
+left_login=Autentifică: $1
+left_home=Informaţii Sistem
+left_oc=Sponsorizat de OpenCountry
+left_feedback=Trimite Feedback
+left_search_webmin=Caută în Webmin:
+left_search_usermin=Caută în Usermin:
+left_search=Caută:
+left_logs=Vezi Evenimentele Modulului
+left_others=Altele
+
+right_login=Autentificat cu
+right_from=Autentificat de la
+
+top_main_menu=Acasă
+top_logs=Loguri
+top_refresh=Actualizare
+top_webmin_server=Webmin-Server
+top_welcome=Bun venit
+
+body_header0=Informaţii Sistem
+body_host=Numele Sistemului
+body_os=Sistemul de Operare
+body_webmin=Versiunea Webmin
+body_time=Timpul pe Server
+
+body_kernel=Kernel şi CPU
+body_cpuinfo=Informaţii Procesor
+body_cputype=$5, $8 miezuri
+body_uptime=Durata activă a Sistemului
+body_updays=$1 zile, $2 ore, $3 minute
+body_uphours=$1 ore, $2 minute
+body_upmins=$1 minute
+
+body_procs=Procese în derulare
+body_cpuuse=CPU utilizat
+body_cpustats=$1% utilizator, $2% kernel, $4% IO, $3% inactiv
+body_real=Memorie Reală
+body_virt=Memorie Virtuală
+body_used=$1 total - $2 utilizat
+body_cpu=Sarcina medie a CPU
+
+body_load=$1 (1 min) $2 (5 min) $3 (15 min)
+body_disk=Spaţiu Disc Local
+body_kernelon=$1 $2 pe $3
+body_updates=Actualizări de Pachete
+body_upok=Toate pachetele instalate sunt la zi
+body_upneed=$1 actualizări disponibile
+body_upsec=$1 actualizări disponibile, din care $2 sunt actualizări de securitate
+body_cputemps=Temepraturi CPU
+body_drivetemps=Temperaturi Disc
+body_driveerr=$1 erori!
+body_drivefailed=Verificare SMART eşuată!
+
+body_header1=Informaţii Cont
+body_usermin=Versiune Usermin
+body_out=$1&nbsp;din&nbsp;$2
+body_uquota=Cote de disc şi utilizare
+
+login_message=Trebuie să introduci un utilizator şi parolă pentru a te autentifica în Serverul Webmin 
+login_user=Utilizator
+login_pass=Parola
+login_token=Jeton Token
+login_save=Ţine-mă minte
+login_signin=Conectare
+login_reset=Restabileşte
+
+session_failed=Autentificare eşuată. Încearcă din nou.
+session_twofailed=Doi factori de autentificare au eșuat: $1
+session_logout=Ieşire reuşită. Foloseşte formularul de jos pentru a te re-autentifica.
+session_timed_out=Sesiunea a expirat dupa $1 minute de inactivitate.
+
+__norefs=1
