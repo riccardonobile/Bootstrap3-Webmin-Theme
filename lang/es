@@ -1,11 +1,64 @@
 left_login=Login: $1
+left_home=Información del Sistema
+left_oc=Patrocinado por Tilellit
+left_feedback=Envía Sugerencias
+left_search_webmin=Buscar Webmin:
+left_search_usermin=Buscar Usermin:
+left_search=Buscar:
+left_logs=Ver Logs de los Módulos
+left_others=Otros
 
+right_login=Logueado como
+right_from=Logueado desde
 
+body_header0=Información del Sistema
+body_host=Hostname del Sistema
+body_os=Sistema Operativo
+body_webmin=Versión de Webmin
+body_time=Tiempo en el Sistema
+body_kernel=Kernel y CPU
+body_cpuinfo=Información del Procesador
 body_cputype=$5, $8 cores
+body_uptime=Uptime del Sistema
+body_updays=$1 días, $2 horas, $3 minutos
+body_uphours=$1 horas, $2 minutos
+body_upmins=$1 minutos
+body_procs=Procesos en Ejecución
+body_cpuuse=Uso de CPU
+body_cpustats=$1% usuario, $2% kernel, $4% IO, $3% espera
+body_real=Memoria Real
+body_virt=Memoria Virtual
+body_used=$1 total - $2 usada
+body_cpu=Medias de Carga CPU
 body_load=$1 (1 min) $2 (5 mins) $3 (15 mins)
+body_disk=Espacio en Disco Local
+body_kernelon=$1 $2 en $3
+body_updates=Actualizaciones de Paquetes
+body_upok=Todos los paquetes instalados están actualizados
+body_upneed=$1 actualizaciones de paquetes disponibles
+body_upsec=$1 actualizaciones de paquetes disponibles, de las cuales $2 son de Seguridad
+body_cputemps=Temperatura CPU
+body_drivetemps=Temperatura Disco
+body_driveerr=¡$1 errores!
+body_drivefailed=¡Comprobación SMART fallida!
 
+body_header1=Información de la Cuenta
+body_usermin=Versión de Usermin
+body_out=$1&nbsp;de&nbsp;$2
+body_uquota=Cuota de Disco y Uso
 
+login_danger=Peligro
+login_warning=Atención
+login_success=Éxito
+login_username=Usuario
+login_password=Contraseña
 login_token=Token
+login_remember=Recuérdame
+login_signin=Loguearse
 
+banner_login=Ir al login
 
+session_failed=Login fallido. Vuelva a intentarlo.
 session_twofailed=Two-factor authentication failed: $1
+session_logout=Logout correcto. Utilice el siguiente formulario para volver a entrar. 
+session_timeout=La sesión ha caducado tras $1 minutos de inactividad.
