@@ -1,0 +1,11 @@
+left_login=Login: $1
+
+
+body_cputype=$5, $8 cores
+body_load=$1 (1 min) $2 (5 mins) $3 (15 mins)
+
+
+login_token=Token
+
+
+session_twofailed=Two-factor authentication failed: $1
