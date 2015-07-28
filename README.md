@@ -5,15 +5,10 @@ Visit the [site](http://theme.winfuture.it) for more info.
 
 ##Changelog
 
-####Version 0.9.0 (May 11, 2015)
-* **IMPROVE:** Romanian translation (Thanks to sealview) [#11](https://github.com/winfuture/Bootstrap3-Webmin-Theme/pull/11)
-* **IMPROVE:** Now icons are the same color of the navbar (#206ECF)
-* **IMPROVE:** Updated **jQuery** from v2.1.3 to v2.1.4 (See jQuery changelog for details)
-* **IMPROVE:** Updated **Bootstrap Select** from v1.6.3 to v1.6.5 (See Bootstrap Select changelog for details)
-* **IMPROVE:** Updated **Awesome Bootstrap Checkbox** (See Awesome Bootstrap Checkbox GitHub repository for details)
-* **FIX:** Issue with OSX Yosemite error because #num_col gets initialized as 0 in `bwtheme_lib.cgi` Line 114 (Thanks to Cheers)
-* **FIX:** Fixed some missing icons in the menu (Work In Progress)
-* **NEW:** Added functions theme_ui_hidden, theme_ui_yesno_radio, theme_ui_user_textbox, theme_ui_group_textbox, theme_js_redirect in `bwtheme.pl`
+####Version 0.9.5 (July 28, 2015)
+* **FIX:** Fixed different table width
+* **FIX:** Fixed .tab-content top padding
+* **NEW:** Added auto refresh in the dashboard page
 
 >[Changelog History](https://github.com/winfuture/Bootstrap3-Webmin-Theme/blob/testing/CHANGELOG.md)
 
@@ -42,7 +37,7 @@ You can do it with [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations
 
 **BWTheme** is released under the [GPLv3 License](http://opensource.org/licenses/GPL-3.0).
 
-This program is free software: you can redistribute it and/or modifyit under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
 ## Credits
 

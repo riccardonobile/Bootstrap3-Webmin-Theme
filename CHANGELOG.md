@@ -1,5 +1,10 @@
 ##Changelog
 
+####Version 0.9.5 (July 28, 2015)
+* **FIX:** Fixed different table width
+* **FIX:** Fixed .tab-content top padding
+* **NEW:** Added auto refresh in the dashboard page
+
 ####Version 0.9.0 (May 11, 2015)
 * **IMPROVE:** Romanian translation (Thanks to sealview) [#11](https://github.com/winfuture/Bootstrap3-Webmin-Theme/pull/11)
 * **IMPROVE:** Now icons are the same color of the navbar (#206ECF)
