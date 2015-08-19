@@ -1,5 +1,5 @@
 #############################################################################################################################
-# BWTheme 0.9.0 (https://github.com/winfuture/Bootstrap3-Webmin-Theme) - (http://theme.winfuture.it)						#
+# BWTheme 0.9.5 (https://github.com/winfuture/Bootstrap3-Webmin-Theme) - (http://theme.winfuture.it)						#
 # Copyright (c) 2015 Riccardo Nobile <riccardo.nobile@winfuture.it> and Simone Cragnolini <simone.cragnolini@winfuture.it>	#
 # Licensed under GPLv3 License (https://github.com/winfuture/Bootstrap3-Webmin-Theme/blob/testing/LICENSE)					#
 #############################################################################################################################
@@ -242,4 +242,5 @@ if ($level == 0) {
 # End of page
 print '</div>' . "\n";
 print '</div>' . "\n";
+print '<script type="text/javascript">setInterval(function() {window.location.reload(true)}, 60*1000);</script>';
 &footer();

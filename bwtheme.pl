@@ -1,5 +1,5 @@
 #############################################################################################################################
-# BWTheme 0.9.0 (https://github.com/winfuture/Bootstrap3-Webmin-Theme) - (http://theme.winfuture.it)						#
+# BWTheme 0.9.5 (https://github.com/winfuture/Bootstrap3-Webmin-Theme) - (http://theme.winfuture.it)						#
 # Copyright (c) 2015 Riccardo Nobile <riccardo.nobile@winfuture.it> and Simone Cragnolini <simone.cragnolini@winfuture.it>	#
 # Licensed under GPLv3 License (https://github.com/winfuture/Bootstrap3-Webmin-Theme/blob/testing/LICENSE)					#
 #############################################################################################################################
@@ -262,7 +262,7 @@ sub theme_ui_table_start {
 	my $colspan = 1;
 	my $rv;
 
-	$rv .= "<table class='ui_table' border $tabletags>\n";
+	$rv .= "<table width=100% class='ui_table' border $tabletags>\n";
 	if (defined($heading) || defined($rightheading)) {
 		$rv .= "<tr".($tb ? " ".$tb : "")." class='ui_table_head'>";
 		if (defined($heading)) {
@@ -312,7 +312,7 @@ sub theme_ui_columns_start {
 	my ($heads, $width, $noborder, $tdtags, $title) = @_;
 	my ($rv, $i);
 
-	$rv .= '<table class="table table-striped table-rounded">' . "\n";
+	$rv .= '<table width=100% class="table table-striped table-rounded">' . "\n";
 	$rv .= '<thead>' . "\n";
 	$rv .= '<tr>' . "\n";
 	for($i=0; $i<@$heads; $i++) {
@@ -792,7 +792,7 @@ sub theme_ui_tabs_end_tab {
 sub theme_ui_grid_table {
 	my ($elements, $cols, $width, $tds, $tabletags, $title) = @_;
 	return "" if (!@$elements);
-	my $rv = "<table class='ui_grid_table'".
+	my $rv = "<table width=100% class='ui_grid_table'".
 		    ($width ? " width=$width%" : "").
 		    ($tabletags ? " ".$tabletags : "").
 		    ">\n";
@@ -819,7 +819,7 @@ sub theme_ui_grid_table {
 		$rv .= $title . "\n";
 		$rv .= '</div>' . "\n";
 		$rv .= '<div class="panel-body">' . "\n";
-		$rv .= "<table class=ui_table border='0' ".
+		$rv .= "<table width=100% class=ui_table border='0' ".
 			($width ? " width=$width%" : "").">\n".
 				"<tr><td>$rrv</td></tr>\n".
 			"</table>";
